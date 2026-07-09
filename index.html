@@ -4347,6 +4347,11 @@ function applyPasteData() {
     if (r.status === '⚠ 중복' || r.status.startsWith('✗') || r.status === '= 동일') continue;
     const { name, year, month, day, att, memo } = r;
     setAtt(name, year, month, day, att, memo);
+    // 결근이면 일요일 무급휴가 자동 적용
+    if (att === '결근') applyAbsenceRules(name, year, month, day, true);
+    // 결근 취소(결근→다른값)면 일요일 무급 원복
+    const existingVal = (() => { const ex = attendance[name]?.[year+'_'+month]?.[String(day)]; return ex && typeof ex === 'object' ? ex.v : ex; })();
+    if (existingVal && existingVal !== '결근' && r.status.startsWith('△')) applyAbsenceRules(name, year, month, day, false);
     applied++;
   }
   closeModal('paste-modal');
