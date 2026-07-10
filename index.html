@@ -544,16 +544,7 @@
   #lock-btn { background: #fff0e0; color: #cc6000; border: 1.5px solid #ffcc80; border-radius: 8px; padding: 7px 13px; font-size: 12px; cursor: pointer; font-family: var(--font); transition: all .15s; }
   #lock-btn:hover { background: #cc6000; color: #fff; }
 
-  /* 급여대장 */
-  .pay-th { background:var(--surface2); font-size:10px; font-weight:700; text-align:center; padding:6px 4px; white-space:nowrap; position:sticky; top:0; z-index:3; border-bottom:2px solid var(--border); }
-  .pay-td { font-size:11px; text-align:right; padding:5px 6px; border-bottom:1px solid var(--border); white-space:nowrap; }
-  .pay-td-left { text-align:left !important; }
-  .pay-td-center { text-align:center !important; }
-  .pay-input { width:80px; border:1px solid var(--border); border-radius:5px; padding:3px 5px; font-size:11px; text-align:right; background:var(--surface); color:var(--text); font-family:var(--mono); }
-  .pay-input:focus { outline:none; border-color:var(--accent); background:#fff8fa; }
-  .pay-total { font-weight:700; color:var(--accent); }
-  .pay-deduct { color:var(--danger); }
-  .pay-group-header { background:#f0f6ff; font-size:9px; font-weight:700; color:#1a6fb5; text-align:center; padding:2px; letter-spacing:.3px; }
+  
   .salary-table-wrap { overflow-x:auto; }
   .salary-table { width:100%; border-collapse:collapse; font-size:11px; }
   .salary-table th { background:var(--surface2); padding:7px 10px; font-size:10px; font-weight:700; text-align:center; border:1px solid var(--border); white-space:nowrap; }
@@ -599,7 +590,7 @@
   <div class="tab" onclick="showTab(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> 연차 현황</div>
   <div class="tab" onclick="showTab(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 연차 확인서</div>
   <div class="tab" onclick="showTab(6)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 이달의 이슈</div>
-  <div class="tab" onclick="showTab(7)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> 급여대장</div>
+  
 </div>
 
 <!-- ═══════════════════════════════ TAB 0: SUMMARY ═══════════════════════════════ -->
@@ -1921,10 +1912,7 @@
         <input class="form-input" id="em-leave" type="date">
       </div>
       <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label">호봉 (급여테이블 기준)</label>
-        <select class="form-select" id="em-grade" style="width:100%;">
-          <option value="">-- 호봉 선택 --</option>
-        <option value="KB손해보험 부천센터_제휴상담(사원)">KB손해보험 부천센터_제휴상담(사원)</option><option value="KB손해보험 부천센터_제휴상담(프로)">KB손해보험 부천센터_제휴상담(프로)</option><option value="KB손해보험 부천센터_장기사고(사원)">KB손해보험 부천센터_장기사고(사원)</option><option value="KB손해보험 부천센터_장기사고(프로)">KB손해보험 부천센터_장기사고(프로)</option><option value="KB손해보험 부천센터_컨설턴트(단축상담)">KB손해보험 부천센터_컨설턴트(단축상담)</option><option value="KB손해보험 부천센터_특수(사원)">KB손해보험 부천센터_특수(사원)</option><option value="KB손해보험 부천센터_특수(주임)">KB손해보험 부천센터_특수(주임)</option><option value="KB손해보험 부천센터_특수(프로)">KB손해보험 부천센터_특수(프로)</option><option value="KB손해보험 부천센터_보유계약(사원)">KB손해보험 부천센터_보유계약(사원)</option><option value="KB손해보험 부천센터_보유계약(주임)">KB손해보험 부천센터_보유계약(주임)</option><option value="KB손해보험 부천센터_보유계약(프로)">KB손해보험 부천센터_보유계약(프로)</option><option value="KB손해보험 부천센터_실효(사원)">KB손해보험 부천센터_실효(사원)</option><option value="KB손해보험 부천센터_실효(주임)">KB손해보험 부천센터_실효(주임)</option><option value="KB손해보험 부천센터_교육/QA(일반)">KB손해보험 부천센터_교육/QA(일반)</option><option value="KB손해보험 부천센터_교육/QA(주임)">KB손해보험 부천센터_교육/QA(주임)</option><option value="KB손해보험 부천센터_교육/QA(선임)">KB손해보험 부천센터_교육/QA(선임)</option><option value="KB손해보험 부천센터_교육/QA(프로)">KB손해보험 부천센터_교육/QA(프로)</option><option value="KB손해보험 부천센터_팀장(주임)">KB손해보험 부천센터_팀장(주임)</option><option value="KB손해보험 부천센터_팀장(선임)">KB손해보험 부천센터_팀장(선임)</option><option value="KB손해보험 부천센터_팀장(프로)">KB손해보험 부천센터_팀장(프로)</option><option value="KB손해보험 부천센터_실장">KB손해보험 부천센터_실장</option><option value="KB손해보험 부천센터_센터장">KB손해보험 부천센터_센터장</option></select>
+        
       </div>
       <div class="form-group" style="grid-column:1/-1;">
         <label class="form-label">메모</label>
@@ -2161,39 +2149,6 @@
     </div>
   </div>
   <div id="issue-wrap"></div>
-</div>
-
-<!-- ═══════════════════════════════ TAB 7: 급여대장 ═══════════════════════════════ -->
-<div id="panel7" class="panel">
-  <div class="ctrl-bar">
-    <select class="form-select" id="pay-year" style="width:90px;" onchange="renderPayroll()"></select>
-    <select class="form-select" id="pay-month" style="width:75px;" onchange="renderPayroll()"></select>
-    <button class="btn" onclick="renderPayroll()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
-    <button class="btn" onclick="openSalaryTable()" style="background:#f0f6ff;color:#1a6fb5;border-color:#b3d4f5;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 급여테이블</button>
-    <button class="btn" onclick="downloadPayrollTemplate()" style="background:#f0fff4;color:#2a7a2a;border-color:#a5d6a7;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 입력템플릿</button>
-    <label class="btn" style="background:#fff8e1;color:#996600;border-color:#ffe082;cursor:pointer;" title="엑셀 파일 업로드">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> 일괄업로드
-      <input type="file" accept=".xlsx,.xls" style="display:none;" onchange="uploadPayrollExcel(event)">
-    </label>
-    <button class="btn" onclick="exportPayrollExcel()" style="margin-left:auto;background:#e8f5e9;color:#2a7a2a;border-color:#a5d6a7;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 엑셀 내보내기</button>
-  </div>
-  <div class="emp-table-wrap" style="max-height:calc(100vh - 220px);">
-    <table class="summary-table" id="pay-table" style="font-size:11px;">
-      <thead id="pay-thead"></thead>
-      <tbody id="pay-tbody"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- 급여테이블 모달 -->
-<div class="modal-overlay" id="salary-table-modal">
-  <div class="modal" style="width:900px;max-height:85vh;overflow-y:auto;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <h3 style="margin:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 호봉별 급여테이블</h3>
-      <button class="btn" onclick="closeModal('salary-table-modal')">✕ 닫기</button>
-    </div>
-    <div id="salary-table-wrap"></div>
-  </div>
 </div>
 
 <!-- 팀 색상 설정 모달 -->
@@ -2845,7 +2800,6 @@ function showTab(i) {
   if (i===4) renderLeaveTable();
   if (i===5) renderCert();
   if (i===6) renderIssue();
-  if (i===7) renderPayroll();
 }
 
 // ══════════════════════════════
@@ -3406,7 +3360,6 @@ function openEditEmpModal(idx) {
   document.getElementById('em-name').value = e.name;
   document.getElementById('em-id').value = e.empId;
   document.getElementById('em-team').value = e.team||'';
-  document.getElementById('em-grade').value = e.grade||'';
   document.getElementById('em-job').value = e.job||'';
   document.getElementById('em-join').value = e.joinDate||'';
   document.getElementById('em-transfer').value = e.transferDate||'';
@@ -3433,7 +3386,6 @@ function saveEmp() {
     joinDate: document.getElementById('em-join').value,
     transferDate: document.getElementById('em-transfer').value,
     leaveDate: document.getElementById('em-leave').value,
-    grade: document.getElementById('em-grade').value,
     memo: document.getElementById('em-memo').value.trim(),
     parentalLeave: getParentalListData(),
     leaveHistory: getLeaveHistData(),
@@ -5445,448 +5397,6 @@ function toggleIssueSection(id) {
 // ══════════════════════════════
 
 // 급여테이블 데이터
-const SALARY_TABLE = [
-  {name:'KB손해보험 부천센터_제휴상담(사원)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:0,A:0,B:0,C:0,D:0,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_제휴상담(프로)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:800000,A:700000,B:600000,C:500000,D:400000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_장기사고(사원)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:0,A:0,B:0,C:0,D:0,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_장기사고(프로)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:800000,A:700000,B:600000,C:500000,D:400000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_컨설턴트(단축상담)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:50000,S:0,A:0,B:0,C:0,D:0,E:0,annualUnit:84480,overtimeUnit:15840},
-  {name:'KB손해보험 부천센터_특수(사원)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:400000,A:350000,B:300000,C:250000,D:200000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_특수(주임)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:550000,A:500000,B:450000,C:400000,D:300000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_특수(프로)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:850000,A:750000,B:650000,C:550000,D:400000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_보유계약(사원)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:150000,A:120000,B:100000,C:70000,D:50000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_보유계약(주임)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:250000,A:220000,B:200000,C:170000,D:150000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_보유계약(프로)',otHours:0,basePay:2156880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:100000,S:400000,A:350000,B:320000,C:300000,D:250000,E:0,annualUnit:86390,overtimeUnit:16200},
-  {name:'KB손해보험 부천센터_실효(사원)',otHours:0,basePay:866880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:50000,S:200000,A:150000,B:100000,C:80000,D:50000,E:0,annualUnit:87330,overtimeUnit:16380},
-  {name:'KB손해보험 부천센터_실효(주임)',otHours:0,basePay:866880,jobAllowance:0,posAllowance:0,tenureAllowance:0,otPay:0,meal:50000,S:350000,A:300000,B:250000,C:200000,D:150000,E:0,annualUnit:87330,overtimeUnit:16380},
-  {name:'KB손해보험 부천센터_교육/QA(일반)',otHours:3,basePay:2156880,jobAllowance:100000,posAllowance:0,tenureAllowance:0,otPay:50750,meal:100000,S:300000,A:250000,B:200000,C:150000,D:100000,E:0,annualUnit:90216,overtimeUnit:16915},
-  {name:'KB손해보험 부천센터_교육/QA(주임)',otHours:3,basePay:2156880,jobAllowance:100000,posAllowance:0,tenureAllowance:30000,otPay:51400,meal:100000,S:380000,A:310000,B:240000,C:170000,D:100000,E:0,annualUnit:91364,overtimeUnit:17131},
-  {name:'KB손해보험 부천센터_교육/QA(선임)',otHours:3,basePay:2156880,jobAllowance:130000,posAllowance:0,tenureAllowance:70000,otPay:52900,meal:100000,S:500000,A:400000,B:300000,C:200000,D:100000,E:0,annualUnit:94043,overtimeUnit:17633},
-  {name:'KB손해보험 부천센터_교육/QA(프로)',otHours:3,basePay:2156880,jobAllowance:200000,posAllowance:0,tenureAllowance:100000,otPay:55060,meal:100000,S:620000,A:490000,B:360000,C:230000,D:100000,E:0,annualUnit:97871,overtimeUnit:18351},
-  {name:'KB손해보험 부천센터_팀장(주임)',otHours:7,basePay:2156880,jobAllowance:0,posAllowance:100000,tenureAllowance:30000,otPay:119920,meal:100000,S:380000,A:310000,B:240000,C:170000,D:100000,E:0,annualUnit:91364,overtimeUnit:17131},
-  {name:'KB손해보험 부천센터_팀장(선임)',otHours:7,basePay:2156880,jobAllowance:0,posAllowance:200000,tenureAllowance:70000,otPay:126950,meal:100000,S:500000,A:400000,B:300000,C:200000,D:100000,E:0,annualUnit:96723,overtimeUnit:18136},
-  {name:'KB손해보험 부천센터_팀장(프로)',otHours:7,basePay:2156880,jobAllowance:0,posAllowance:250000,tenureAllowance:100000,otPay:130970,meal:100000,S:660000,A:520000,B:380000,C:240000,D:100000,E:0,annualUnit:99785,overtimeUnit:18710},
-  {name:'KB손해보험 부천센터_실장',otHours:12,basePay:2156880,jobAllowance:0,posAllowance:600000,tenureAllowance:150000,otPay:280550,meal:100000,S:700000,A:550000,B:400000,C:250000,D:100000,E:0,annualUnit:115096,overtimeUnit:21580},
-  {name:'KB손해보험 부천센터_센터장',otHours:20,basePay:2156880,jobAllowance:0,posAllowance:1150000,tenureAllowance:320000,otPay:534960,meal:100000,S:1150000,A:1110000,B:1050000,C:1000000,D:800000,E:0,annualUnit:142656,overtimeUnit:26748},
-];
-
-// 급여 수동입력 데이터 저장소: {name_ym: {grade,bonusVar,overtimeH,remainLeave,prevUnpaid,otherBonus}}
-let payrollManual = {};
-
-function getPayKey(name, year, month) { return `${name}_${year}_${month}`; }
-
-function getPayManual(name, year, month) {
-  return payrollManual[getPayKey(name, year, month)] || {grade:'',bonusVar:0,overtimeH:0,remainLeave:0,prevUnpaid:0,otherBonus:0};
-}
-
-function setPayManual(name, year, month, field, val) {
-  const key = getPayKey(name, year, month);
-  if (!payrollManual[key]) payrollManual[key] = {grade:'',bonusVar:0,overtimeH:0,remainLeave:0,prevUnpaid:0,otherBonus:0};
-  payrollManual[key][field] = val;
-}
-
-// 급여 계산 핵심 함수
-function calcPayroll(emp, year, month) {
-  const t = SALARY_TABLE.find(s => s.name === emp.grade);
-  if (!t) return null;
-
-  const days = getDaysInMonth(year, month);
-  const ym1 = `${year}-${String(month).padStart(2,'0')}-01`;
-  const ym2 = `${year}-${String(month).padStart(2,'0')}-${String(days).padStart(2,'0')}`;
-  const manual = getPayManual(emp.name, year, month);
-
-  // 무급 항목 집계 (근태탭에서)
-  const UNPAID_TYPES = ['결근','가족돌봄','보건','병가','휴직','무급휴가'];
-  let unpaidDays = 0;
-  for (let d = 1; d <= days; d++) {
-    const v = getAtt(emp.name, year, month, d);
-    if (UNPAID_TYPES.includes(v)) unpaidDays += 1;
-    else if (v === '무급조퇴') unpaidDays += 0.5;
-    // 휴직이력도 체크
-    if (isOnLeaveHistory(emp, year, month, d)) unpaidDays += 0;  // 이미 휴직으로 카운트됨
-  }
-
-  // 기본급 차감 기준일 계산
-  let divisor;
-  const isObTeam = emp.team === '실효OB';
-  if (isObTeam) {
-    // 실효OB: 근무기간(시작~종료일) 기준
-    const obDaysSet = getObWorkDays(year, month);
-    const obArr = [...obDaysSet].sort((a,b)=>a-b);
-    if (obArr.length > 0) {
-      const startD = obArr[0], endD = obArr[obArr.length-1];
-      divisor = endD - startD + 1;
-    } else divisor = days;
-  } else {
-    divisor = days; // 말일 기준
-  }
-
-  // 기본급 차감
-  const baseDeduct = Math.round(t.basePay / divisor * unpaidDays);
-  const monthlyBase = t.basePay - baseDeduct;
-
-  // 고정 수당
-  const jobAllow = t.jobAllowance;
-  const posAllow = t.posAllowance;
-  const tenureAllow = t.tenureAllowance;
-  const meal = t.meal;
-  const otPay = t.otPay;
-
-  // 업적수당 (등급별)
-  const gradeMap = {S:t.S,A:t.A,B:t.B,C:t.C,D:t.D,E:t.E};
-  const achieve = gradeMap[manual.grade] || 0;
-
-  // 성과급_변동 (수동)
-  const bonusVar = Number(manual.bonusVar) || 0;
-
-  // 시간외수당 = 시간외근무(h) × 시간외단가
-  const overtimePay = Math.round((Number(manual.overtimeH) || 0) * t.overtimeUnit);
-
-  // 연차수당 = 잔여연차(일) × 연차단가
-  const annualPay = Math.round((Number(manual.remainLeave) || 0) * t.annualUnit);
-
-  // 전월미지급금 (수동)
-  const prevUnpaid = Number(manual.prevUnpaid) || 0;
-
-  // 기타포상비 (수동)
-  const otherBonus = Number(manual.otherBonus) || 0;
-
-  // 합계
-  const total = monthlyBase + jobAllow + posAllow + tenureAllow + meal + otPay
-              + achieve + bonusVar + overtimePay + annualPay + prevUnpaid + otherBonus;
-
-  return {
-    basePay: t.basePay, baseDeduct, monthlyBase, unpaidDays,
-    jobAllow, posAllow, tenureAllow, meal, otPay,
-    grade: manual.grade, achieve, bonusVar,
-    overtimeH: manual.overtimeH, overtimePay,
-    remainLeave: manual.remainLeave, annualPay,
-    prevUnpaid, otherBonus, total
-  };
-}
-
-function initPayrollControls() {
-  const ysel = document.getElementById('pay-year');
-  const msel = document.getElementById('pay-month');
-  const now = new Date();
-  for (let y = 2024; y <= 2028; y++) {
-    const o = document.createElement('option');
-    o.value = y; o.textContent = y+'년';
-    if (y === now.getFullYear()) o.selected = true;
-    ysel.appendChild(o);
-  }
-  for (let m = 1; m <= 12; m++) {
-    const o = document.createElement('option');
-    o.value = m; o.textContent = m+'월';
-    if (m === now.getMonth()+1) o.selected = true;
-    msel.appendChild(o);
-  }
-
-  // 직원 모달 호봉 드롭다운 채우기
-  const gradeSelect = document.getElementById('em-grade');
-  if (gradeSelect) {
-    SALARY_TABLE.forEach(s => {
-      const o = document.createElement('option');
-      o.value = s.name; o.textContent = s.name;
-      gradeSelect.appendChild(o);
-    });
-  }
-}
-
-function renderPayroll() {
-  const year  = parseInt(document.getElementById('pay-year').value)  || new Date().getFullYear();
-  const month = parseInt(document.getElementById('pay-month').value) || new Date().getMonth()+1;
-  const days  = getDaysInMonth(year, month);
-  const ym1   = `${year}-${String(month).padStart(2,'0')}-01`;
-  const ym2   = `${year}-${String(month).padStart(2,'0')}-${String(days).padStart(2,'0')}`;
-
-  // 해당월 재직자 (하루라도 재직)
-  const emps = employees.filter(e => {
-    if (e.joinDate > ym2) return false;
-    if (e.leaveDate && e.leaveDate < ym1) return false;
-    return true;
-  });
-
-  const w = v => `<th class="pay-th">${v}</th>`;
-  const grp = (v, span) => `<th class="pay-th pay-group-header" colspan="${span}">${v}</th>`;
-
-  document.getElementById('pay-thead').innerHTML = `
-    <tr>
-      <th class="pay-th" rowspan="2">No</th>
-      <th class="pay-th" rowspan="2">성명</th>
-      <th class="pay-th" rowspan="2">팀</th>
-      <th class="pay-th" rowspan="2">호봉</th>
-      <th class="pay-th" rowspan="2">무급일수</th>
-      ${grp('기본급',3)}
-      ${grp('고정수당',4)}
-      ${grp('업적수당',2)}
-      ${grp('성과급',1)}
-      ${grp('시간외',2)}
-      ${grp('연차',2)}
-      ${grp('기타',2)}
-      <th class="pay-th" rowspan="2" style="color:var(--accent);">합계</th>
-    </tr>
-    <tr>
-      ${w('기본급')}${w('차감')}${w('월기본급')}
-      ${w('직무')}${w('직책')}${w('근속')}${w('급식비')}
-      ${w('등급')}${w('업적수당')}
-      ${w('성과급(변동)')}
-      ${w('시간(h)')}${w('시간외수당')}
-      ${w('잔여연차')}${w('연차수당')}
-      ${w('전월미지급')}${w('기타포상비')}
-    </tr>`;
-
-  const fmt = v => v ? Math.round(v).toLocaleString() : '-';
-  const td = (v, cls='') => `<td class="pay-td ${cls}">${v}</td>`;
-  const inp = (name, year, month, field, val, w='70px') =>
-    `<input class="pay-input" style="width:${w}" value="${val||''}"
-      onchange="setPayManual('${name}',${year},${month},'${field}',this.value);renderPayroll()">`;
-
-  let rows = '';
-  emps.forEach((e, i) => {
-    const p = calcPayroll(e, year, month);
-    if (!p) {
-      // 호봉 없는 직원
-      rows += `<tr>
-        ${td(i+1,'pay-td-center')}
-        ${td(e.name,'pay-td-left')}
-        ${td(getTeamBadge(e.team,'font-size:10px;'),'pay-td-left')}
-        ${td(`<span style="font-size:10px;color:var(--danger)">호봉미설정</span>`,'pay-td-center')}
-        <td colspan="17" style="text-align:center;font-size:10px;color:var(--text3);" class="pay-td">호봉을 설정해주세요</td>
-      </tr>`;
-      return;
-    }
-    const m = getPayManual(e.name, year, month);
-    const gradeOpts = ['S','A','B','C','D','E'].map(g =>
-      `<option value="${g}" ${m.grade===g?'selected':''}>${g}</option>`
-    ).join('');
-
-    rows += `<tr>
-      ${td(i+1,'pay-td-center')}
-      ${td(e.name,'pay-td-left')}
-      ${td(getTeamBadge(e.team,'font-size:10px;'),'pay-td-left')}
-      ${td(`<span style="font-size:9px;color:var(--text3);">${(e.grade||'').split('_')[1]||e.grade||'-'}</span>`,'pay-td-center')}
-      ${td(p.unpaidDays||'-','pay-td-center')}
-      ${td(fmt(p.basePay))}
-      ${td(p.baseDeduct>0?`<span class="pay-deduct">-${fmt(p.baseDeduct)}</span>`:'-')}
-      ${td(fmt(p.monthlyBase),'pay-total')}
-      ${td(p.jobAllow?fmt(p.jobAllow):'-')}
-      ${td(p.posAllow?fmt(p.posAllow):'-')}
-      ${td(p.tenureAllow?fmt(p.tenureAllow):'-')}
-      ${td(fmt(p.meal))}
-      <td class="pay-td pay-td-center">
-        <select class="pay-input" style="width:50px;" onchange="setPayManual('${e.name}',${year},${month},'grade',this.value);renderPayroll()">
-          <option value="">-</option>${gradeOpts}
-        </select>
-      </td>
-      ${td(p.achieve?fmt(p.achieve):'-','pay-total')}
-      <td class="pay-td">${inp(e.name,year,month,'bonusVar',m.bonusVar)}</td>
-      <td class="pay-td">${inp(e.name,year,month,'overtimeH',m.overtimeH,'50px')}</td>
-      ${td(p.overtimePay?fmt(p.overtimePay):'-')}
-      <td class="pay-td">${inp(e.name,year,month,'remainLeave',m.remainLeave,'50px')}</td>
-      ${td(p.annualPay?fmt(p.annualPay):'-')}
-      <td class="pay-td">${inp(e.name,year,month,'prevUnpaid',m.prevUnpaid)}</td>
-      <td class="pay-td">${inp(e.name,year,month,'otherBonus',m.otherBonus)}</td>
-      ${td(fmt(p.total),'pay-total')}
-    </tr>`;
-  });
-
-  document.getElementById('pay-tbody').innerHTML = rows;
-}
-
-// 수동입력 템플릿 다운로드
-function downloadPayrollTemplate() {
-  const XLSX = window.XLSX;
-  if (!XLSX) { showToast('잠시 후 다시 시도해주세요.', true); return; }
-
-  const year  = parseInt(document.getElementById('pay-year').value);
-  const month = parseInt(document.getElementById('pay-month').value);
-  const days  = getDaysInMonth(year, month);
-  const ym1   = `${year}-${String(month).padStart(2,'0')}-01`;
-  const ym2   = `${year}-${String(month).padStart(2,'0')}-${String(days).padStart(2,'0')}`;
-
-  const emps = employees.filter(e => {
-    if (e.joinDate > ym2) return false;
-    if (e.leaveDate && e.leaveDate < ym1) return false;
-    return true;
-  });
-
-  const headers = ['성명','사번','팀','호봉','등급(S/A/B/C/D/E)','성과급(변동)','시간외근무(h)','잔여연차(일)','전월미지급금','기타포상비'];
-  const data = [
-    [`${year}년 ${month}월 급여 수동입력 템플릿`],
-    ['※ 등급: S/A/B/C/D/E 중 하나 입력, 나머지 항목은 숫자만 입력'],
-    [],
-    headers,
-  ];
-
-  emps.forEach(e => {
-    const m = getPayManual(e.name, year, month);
-    data.push([
-      e.name, e.empId||'', e.team||'',
-      e.grade ? (e.grade.split('_')[1]||e.grade) : '',
-      m.grade||'', m.bonusVar||0, m.overtimeH||0,
-      m.remainLeave||0, m.prevUnpaid||0, m.otherBonus||0,
-    ]);
-  });
-
-  const ws = XLSX.utils.aoa_to_sheet(data);
-  ws['!cols'] = [{wch:12},{wch:12},{wch:20},{wch:30},{wch:16},{wch:14},{wch:14},{wch:14},{wch:14},{wch:14}];
-  const wb2 = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb2, ws, '수동입력');
-  XLSX.writeFile(wb2, `급여수동입력_${year}년${month}월_템플릿.xlsx`);
-  showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 템플릿 다운로드 완료. 입력 후 업로드해주세요.`);
-}
-
-// 수동입력 엑셀 업로드
-function uploadPayrollExcel(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';
-  const XLSX = window.XLSX;
-  if (!XLSX) { showToast('잠시 후 다시 시도해주세요.', true); return; }
-
-  const year  = parseInt(document.getElementById('pay-year').value);
-  const month = parseInt(document.getElementById('pay-month').value);
-
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const wb2 = XLSX.read(ev.target.result, { type: 'binary' });
-      const ws = wb2.Sheets[wb2.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:'' });
-
-      // 헤더 행 찾기
-      let headerRow = -1;
-      for (let i = 0; i < rows.length; i++) {
-        if (String(rows[i][0]).trim() === '성명') { headerRow = i; break; }
-      }
-      if (headerRow < 0) { showToast('올바른 템플릿 파일이 아닙니다.', true); return; }
-
-      let updated = 0, skipped = 0;
-      for (let i = headerRow + 1; i < rows.length; i++) {
-        const row = rows[i];
-        const name = String(row[0]||'').trim();
-        if (!name) continue;
-        const emp = employees.find(e => e.name === name);
-        if (!emp) { skipped++; continue; }
-
-        const grade = String(row[4]||'').trim().toUpperCase();
-        const validGrade = ['S','A','B','C','D','E'].includes(grade) ? grade : '';
-        setPayManual(name, year, month, 'grade', validGrade);
-        setPayManual(name, year, month, 'bonusVar',    Number(row[5])||0);
-        setPayManual(name, year, month, 'overtimeH',   Number(row[6])||0);
-        setPayManual(name, year, month, 'remainLeave', Number(row[7])||0);
-        setPayManual(name, year, month, 'prevUnpaid',  Number(row[8])||0);
-        setPayManual(name, year, month, 'otherBonus',  Number(row[9])||0);
-        updated++;
-      }
-
-      renderPayroll();
-      autoSave();
-      showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${updated}명 업로드 완료${skipped ? ` (${skipped}명 불일치 건너뜀)` : ''}`);
-    } catch(err) {
-      showToast('파일 읽기 오류: ' + err.message, true);
-    }
-  };
-  reader.readAsBinaryString(file);
-}
-
-function openSalaryTable() {
-  const rows = SALARY_TABLE.map(s => `
-    <tr>
-      <td>${s.name.split('_')[1] || s.name}</td>
-      <td>${s.basePay.toLocaleString()}</td>
-      <td>${s.jobAllowance.toLocaleString()}</td>
-      <td>${s.posAllowance.toLocaleString()}</td>
-      <td>${s.tenureAllowance.toLocaleString()}</td>
-      <td>${s.meal.toLocaleString()}</td>
-      <td>${s.otHours}h</td>
-      <td>${s.otPay.toLocaleString()}</td>
-      <td>${s.S.toLocaleString()}</td>
-      <td>${s.A.toLocaleString()}</td>
-      <td>${s.B.toLocaleString()}</td>
-      <td>${s.C.toLocaleString()}</td>
-      <td>${s.D.toLocaleString()}</td>
-      <td>${s.annualUnit.toLocaleString()}</td>
-      <td>${s.overtimeUnit.toLocaleString()}</td>
-    </tr>`).join('');
-
-  document.getElementById('salary-table-wrap').innerHTML = `
-    <div class="salary-table-wrap">
-      <table class="salary-table">
-        <thead>
-          <tr>
-            <th rowspan="2">호봉</th>
-            <th rowspan="2">기본급</th>
-            <th rowspan="2">직무수당</th>
-            <th rowspan="2">직책수당</th>
-            <th rowspan="2">근속수당</th>
-            <th rowspan="2">급식비</th>
-            <th colspan="2">고정OT</th>
-            <th colspan="5">업적수당(등급)</th>
-            <th rowspan="2">연차단가</th>
-            <th rowspan="2">시간외단가</th>
-          </tr>
-          <tr>
-            <th>시간</th><th>수당</th>
-            <th>S</th><th>A</th><th>B</th><th>C</th><th>D</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-  document.getElementById('salary-table-modal').classList.add('show');
-}
-
-async function exportPayrollExcel() {
-  const year  = parseInt(document.getElementById('pay-year').value);
-  const month = parseInt(document.getElementById('pay-month').value);
-  const days  = getDaysInMonth(year, month);
-  const ym1   = `${year}-${String(month).padStart(2,'0')}-01`;
-  const ym2   = `${year}-${String(month).padStart(2,'0')}-${String(days).padStart(2,'0')}`;
-
-  const emps = employees.filter(e => {
-    if (e.joinDate > ym2) return false;
-    if (e.leaveDate && e.leaveDate < ym1) return false;
-    return true;
-  });
-
-  // SheetJS로 엑셀 생성
-  const XLSX = window.XLSX;
-  if (!XLSX) { showToast('엑셀 라이브러리 로딩 중... 잠시 후 다시 시도해주세요.', true); return; }
-
-  const headers = ['No','성명','팀','호봉','무급일수','기본급','기본급차감','월기본급',
-    '직무수당','직책수당','근속수당','급식비','고정OT','등급','업적수당','성과급(변동)',
-    '시간외근무(h)','시간외수당','잔여연차','연차수당','전월미지급','기타포상비','합계'];
-
-  const data = [headers];
-  emps.forEach((e, i) => {
-    const p = calcPayroll(e, year, month);
-    const m = getPayManual(e.name, year, month);
-    if (!p) {
-      data.push([i+1, e.name, e.team, '호봉미설정', ...Array(headers.length-4).fill('')]);
-      return;
-    }
-    data.push([
-      i+1, e.name, e.team, e.grade||'',
-      p.unpaidDays, p.basePay, p.baseDeduct, p.monthlyBase,
-      p.jobAllow, p.posAllow, p.tenureAllow, p.meal, p.otPay,
-      m.grade||'', p.achieve, p.bonusVar||0,
-      m.overtimeH||0, p.overtimePay,
-      m.remainLeave||0, p.annualPay,
-      p.prevUnpaid||0, p.otherBonus||0, p.total
-    ]);
-  });
-
-  const ws = XLSX.utils.aoa_to_sheet(data);
-  // 숫자 컬럼 너비 설정
-  ws['!cols'] = headers.map((h,i) => ({wch: i < 4 ? 20 : 12}));
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, `${year}년${month}월 급여대장`);
-  XLSX.writeFile(wb, `급여대장_${year}년${month}월.xlsx`);
-  showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 급여대장_${year}년${month}월.xlsx 저장됨`);
-}
-
 function initIssueControls() {
   const ysel = document.getElementById('issue-year');
   const msel = document.getElementById('issue-month');
@@ -6685,7 +6195,6 @@ async function init() {
   initLeaveControls();
   initCertControls();
   initIssueControls();
-  initPayrollControls();
   renderSummaryDash();
   renderEmpTable(); // 직원명단 첫 진입 시 바로 표시
 
