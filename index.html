@@ -1812,6 +1812,7 @@
     </select>
     <button class="btn btn-warn" onclick="confirmResetMonthAtt()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 이달 초기화</button>
     <button class="btn-save" onclick="openPasteModal()" style="background:#16a34a;border-color:#16a34a;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 엑셀 붙여넣기</button>
+    <button class="btn" onclick="exportAttExcel()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 엑셀 내보내기</button>
   </div>
 
   <div class="card">
@@ -4165,9 +4166,91 @@ function saveBulkEdit() {
   autoSave();
 }
 
-// ══════════════════════════════
-//  엑셀 붙여넣기
-// ══════════════════════════════
+function exportAttExcel() {
+  const year  = parseInt(document.getElementById('att-year').value);
+  const month = parseInt(document.getElementById('att-month').value);
+  const ym    = year + '_' + month;
+  const lastDay = getDaysInMonth(year, month);
+  const days  = Array.from({length: lastDay}, (_, i) => i + 1);
+  const teamFilter = document.getElementById('att-team-filter')?.value || '';
+
+  let emps = employees.filter(e => {
+    if (teamFilter && e.team !== teamFilter) return false;
+    if (e.leaveDate) {
+      const ldY = parseInt(e.leaveDate.slice(0,4)), ldM = parseInt(e.leaveDate.slice(5,7));
+      if (year > ldY || (year === ldY && month > ldM)) return false;
+    }
+    if (e.joinDate) {
+      const jY = parseInt(e.joinDate.slice(0,4)), jM = parseInt(e.joinDate.slice(5,7));
+      if (year < jY || (year === jY && month < jM)) return false;
+    }
+    return true;
+  });
+
+  const TEAM_ORDER = ['제휴상담 1팀','제휴상담 2팀','제휴상담 3팀','제휴지원팀',
+    '장기사고 1팀','장기사고 2팀','장기사고 3팀','장기사고 4팀','장기사고 5팀','장기사고 6팀',
+    '보유계약지원','실효OB','관리자'];
+  emps.sort((a,b) => {
+    const ai = TEAM_ORDER.indexOf(a.team), bi = TEAM_ORDER.indexOf(b.team);
+    if (ai !== bi) return (ai===-1?99:ai) - (bi===-1?99:bi);
+    return a.name.localeCompare(b.name,'ko');
+  });
+
+  const DOW = ['일','월','화','수','목','금','토'];
+  const dayHeaders = days.map(d => `${d}(${DOW[new Date(year,month-1,d).getDay()]})`);
+  const header = ['No','이름','사번','팀','입사일','퇴사일', ...dayHeaders, '출근','연차','반차','결근','청휴','병가','무급','공휴일','기타'];
+
+  const dataRows = emps.map((e, idx) => {
+    const row = [idx+1, e.name, e.empId||'', e.team, e.joinDate||'', e.leaveDate||''];
+    let cnt = {출근:0,연차:0,반차:0,결근:0,청휴:0,병가:0,무급휴가:0,공휴일:0,기타:0};
+
+    days.forEach(d => {
+      const dStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const raw  = attendance[e.name]?.[ym]?.[String(d)];
+      const v    = raw && typeof raw === 'object' ? (raw.v||'') : (raw||'');
+      const dow  = new Date(year, month-1, d).getDay();
+
+      let cell = '';
+      if (!v) {
+        if (e.joinDate && dStr < e.joinDate) cell = '';
+        else if (e.leaveDate && dStr > e.leaveDate) cell = '';
+        else if (isHoliday(year,month,d)) cell = '공휴일';
+        else if (dow===0) cell = '휴일';
+        else if (dow===6) cell = '휴무';
+        else cell = '○';
+      } else {
+        cell = v; // 메모 제외, 근태값만
+      }
+      row.push(cell);
+
+      const base = v || (isHoliday(year,month,d)?'공휴일': dow===0?'휴일': dow===6?'휴무':'○');
+      if (base==='○') cnt['출근']++;
+      else if (base==='연차') cnt['연차']++;
+      else if (base==='반차') cnt['반차']++;
+      else if (base==='결근') cnt['결근']++;
+      else if (base==='청휴') cnt['청휴']++;
+      else if (base==='병가') cnt['병가']++;
+      else if (base==='무급휴가') cnt['무급휴가']++;
+      else if (base==='공휴일') cnt['공휴일']++;
+      else if (!['휴일','휴무',''].includes(base)) cnt['기타']++;
+    });
+
+    row.push(cnt['출근'],cnt['연차'],cnt['반차'],cnt['결근'],cnt['청휴'],cnt['병가'],cnt['무급휴가'],cnt['공휴일'],cnt['기타']);
+    return row;
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet([header, ...dataRows]);
+  ws['!cols'] = [{wch:5},{wch:10},{wch:10},{wch:14},{wch:12},{wch:12},
+    ...days.map(()=>({wch:6})),
+    {wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5},{wch:5}];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, `${year}년${month}월 근태`);
+  XLSX.writeFile(wb, `근태관리_${year}년${month}월.xlsx`);
+  showToast(`✅ ${year}년 ${month}월 근태 엑셀 다운로드 완료`);
+}
+
+
 let _pasteRows = []; // 파싱된 행 [{date,name,team,att,memo,status,year,month,day}]
 
 function openPasteModal() {
