@@ -4214,6 +4214,15 @@ function exportAttExcel() {
       if (!v) {
         if (e.joinDate && dStr < e.joinDate) cell = '';
         else if (e.leaveDate && dStr > e.leaveDate) cell = '';
+        else if (isOnLeaveHistory(e, year, month, d)) {
+          const lh = (e.leaveHistory||[]).find(l => {
+            if (!l.startDate) return false;
+            const s = new Date(l.startDate.replace(/-/g,'/'));
+            const en = l.endDate ? new Date(l.endDate.replace(/-/g,'/')) : new Date('9999/12/31');
+            return new Date(year,month-1,d) >= s && new Date(year,month-1,d) <= en;
+          });
+          cell = lh?.type || '휴직';
+        }
         else if (isHoliday(year,month,d)) cell = '공휴일';
         else if (dow===0) cell = '휴일';
         else if (dow===6) cell = '휴무';
