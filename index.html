@@ -4219,19 +4219,21 @@ function exportAttExcel() {
       const dow  = new Date(year, month-1, d).getDay();
 
       let cell = '';
-      if (!v) {
-        if (e.joinDate && dStr < e.joinDate) cell = '';
-        else if (e.leaveDate && dStr > e.leaveDate) cell = '';
-        else if (isOnLeaveHistory(e, year, month, d)) {
-          const lh = (e.leaveHistory||[]).find(l => {
-            if (!l.startDate) return false;
-            const s = new Date(l.startDate.replace(/-/g,'/'));
-            const en = l.endDate ? new Date(l.endDate.replace(/-/g,'/')) : new Date('9999/12/31');
-            return new Date(year,month-1,d) >= s && new Date(year,month-1,d) <= en;
-          });
-          cell = lh?.type || '휴직';
-        }
-        else if (isHoliday(year,month,d)) cell = '공휴일';
+      if (e.joinDate && dStr < e.joinDate) {
+        cell = ''; // 입사 전
+      } else if (e.leaveDate && dStr > e.leaveDate) {
+        cell = ''; // 퇴사 후
+      } else if (isOnLeaveHistory(e, year, month, d)) {
+        // 휴직 중: 직접 입력값 무시하고 휴직 타입 표시
+        const lh = (e.leaveHistory||[]).find(l => {
+          if (!l.startDate) return false;
+          const s = new Date(l.startDate.replace(/-/g,'/'));
+          const en = l.endDate ? new Date(l.endDate.replace(/-/g,'/')) : new Date('9999/12/31');
+          return new Date(year,month-1,d) >= s && new Date(year,month-1,d) <= en;
+        });
+        cell = lh?.type || '휴직';
+      } else if (!v) {
+        if (isHoliday(year,month,d)) cell = '공휴일';
         else if (dow===0) cell = '휴일';
         else if (dow===6) cell = '휴무';
         else cell = '○';
@@ -4240,16 +4242,16 @@ function exportAttExcel() {
       }
       row.push(cell);
 
-      const base = v || (isHoliday(year,month,d)?'공휴일': dow===0?'휴일': dow===6?'휴무':'○');
-      if (base==='○') cnt['출근']++;
-      else if (base==='연차') cnt['연차']++;
-      else if (base==='반차') cnt['반차']++;
-      else if (base==='결근') cnt['결근']++;
-      else if (base==='청휴') cnt['청휴']++;
-      else if (base==='병가') cnt['병가']++;
-      else if (base==='무급휴가') cnt['무급휴가']++;
-      else if (base==='공휴일') cnt['공휴일']++;
-      else if (!['휴일','휴무',''].includes(base)) cnt['기타']++;
+      // cell 기준으로 집계 (입사전/퇴사후/휴직 등 이미 반영된 값)
+      if (cell === '○') cnt['출근']++;
+      else if (cell === '연차') cnt['연차']++;
+      else if (cell === '반차') cnt['반차']++;
+      else if (cell === '결근') cnt['결근']++;
+      else if (cell === '청휴') cnt['청휴']++;
+      else if (cell === '병가') cnt['병가']++;
+      else if (cell === '무급휴가') cnt['무급휴가']++;
+      else if (cell === '공휴일') cnt['공휴일']++;
+      else if (!['휴일','휴무',''].includes(cell)) cnt['기타']++;
     });
 
     row.push(cnt['출근'],cnt['연차'],cnt['반차'],cnt['결근'],cnt['청휴'],cnt['병가'],cnt['무급휴가'],cnt['공휴일'],cnt['기타']);
