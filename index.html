@@ -2352,14 +2352,14 @@
       <div class="form-group" id="hm-contractend-wrap" style="display:none;"><label class="form-label">계약종료일</label><input type="date" id="hm-contractend" class="form-input"></div>
       <div class="form-group"><label class="form-label">주민번호 (앞6자리-뒷1자리)</label>
         <div style="display:flex;gap:6px;align-items:center;">
-          <input type="text" id="hm-ssn1" class="form-input" placeholder="YYMMDD" maxlength="6" style="width:90px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo()">
+          <input type="text" id="hm-ssn1" class="form-input" placeholder="YYMMDD" maxlength="6" style="width:90px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo();if(this.value.length===6)document.getElementById('hm-ssn2').focus();">
           <span>-</span>
-          <input type="text" id="hm-ssn2" class="form-input" placeholder="1" maxlength="1" style="width:40px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo()">
+          <input type="text" id="hm-ssn2" class="form-input" placeholder="1" maxlength="1" style="width:40px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo();">
           <span id="hm-gender" style="font-size:12px;color:var(--accent);font-weight:600;"></span>
           <span id="hm-age" style="font-size:12px;color:var(--text2);"></span>
         </div>
       </div>
-      <div class="form-group"><label class="form-label">연락처</label><input type="text" id="hm-phone" class="form-input" placeholder="010-0000-0000"></div>
+      <div class="form-group"><label class="form-label">연락처</label><input type="text" id="hm-phone" class="form-input" placeholder="010-0000-0000" maxlength="13" oninput="formatPhone(this)"></div>
     </div>
     <div class="form-group" style="margin-top:8px;"><label class="form-label">주소</label><input type="text" id="hm-addr" class="form-input" placeholder="주소 입력"></div>
     <div class="form-group" style="margin-top:8px;"><label class="form-label">메모</label><textarea id="hm-memo" class="form-input" rows="2" style="resize:none;" placeholder="특이사항 메모"></textarea></div>
@@ -6353,20 +6353,30 @@ function closeNoticePopup() {
 
 // 공지사항 목록 팝업 열기 (헤더 버튼) - 숨김 무시하고 강제 열기
 function openNoticePopup() {
+  noticePage = 1;
   renderNoticePopupList();
   document.getElementById('notice-no-show').checked = false;
   document.getElementById('notice-popup-modal').classList.add('show');
 }
 
-function renderNoticePopupList() {
+let noticePage = 1;
+const NOTICE_PER_PAGE = 5;
+
+function renderNoticePopupList(page) {
+  if (page !== undefined) noticePage = page;
   const list = document.getElementById('notice-popup-list');
   if (!list) return;
-  const sorted = getSortedNotices();
+  const sorted = getSortedNotices().filter(item => !item.hidden);
   if (!sorted.length) {
     list.innerHTML = '<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">등록된 공지사항이 없습니다.</div>';
     return;
   }
-  list.innerHTML = sorted.map(item => `
+
+  const totalPages = Math.ceil(sorted.length / NOTICE_PER_PAGE);
+  noticePage = Math.max(1, Math.min(noticePage, totalPages));
+  const pageItems = sorted.slice((noticePage-1)*NOTICE_PER_PAGE, noticePage*NOTICE_PER_PAGE);
+
+  const itemsHtml = pageItems.map(item => `
     <div style="padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;"
          onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''"
          onclick="openNoticeDetail('${item.id}', 'popup')">
@@ -6377,6 +6387,16 @@ function renderNoticePopupList() {
       <div style="font-size:11px;color:var(--text3);margin-top:4px;">${item.date}</div>
     </div>
   `).join('');
+
+  const pagerHtml = totalPages > 1 ? `
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px;border-top:1px solid var(--border);">
+      <button class="btn" onclick="renderNoticePopupList(${noticePage-1})" ${noticePage===1?'disabled':''} style="padding:4px 10px;font-size:12px;">‹ 이전</button>
+      <span style="font-size:12px;color:var(--text2);">${noticePage} / ${totalPages}</span>
+      <button class="btn" onclick="renderNoticePopupList(${noticePage+1})" ${noticePage===totalPages?'disabled':''} style="padding:4px 10px;font-size:12px;">다음 ›</button>
+    </div>
+  ` : '';
+
+  list.innerHTML = itemsHtml + pagerHtml;
 }
 
 // 공지 상세 팝업
@@ -6409,7 +6429,7 @@ function renderNoticeManageList() {
     return;
   }
   list.innerHTML = sorted.map((item, idx) => `
-    <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;${item.hidden ? 'opacity:0.45;' : ''}">
       <!-- 순서 버튼 -->
       <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0;">
         <button class="btn" onclick="moveNoticeUp('${item.id}')" style="padding:1px 5px;font-size:10px;line-height:1.4;" title="위로">▲</button>
@@ -6419,12 +6439,14 @@ function renderNoticeManageList() {
       <div style="flex:1;overflow:hidden;">
         <div style="display:flex;align-items:center;gap:6px;">
           ${item.pin ? '<span style="color:var(--danger);font-size:12px;font-weight:900;flex-shrink:0;">[중요]</span>' : ''}
+          ${item.hidden ? '<span style="font-size:11px;color:var(--text3);border:1px solid var(--border);border-radius:4px;padding:0 5px;flex-shrink:0;">숨김</span>' : ''}
           <span style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title}</span>
         </div>
         <div style="font-size:11px;color:var(--text3);margin-top:2px;">${item.date}</div>
       </div>
-      <!-- 수정/삭제 버튼 -->
+      <!-- 숨김/수정/삭제 버튼 -->
       <div style="display:flex;gap:6px;flex-shrink:0;">
+        <button class="btn" onclick="toggleNoticeHidden('${item.id}')" style="font-size:11px;padding:4px 8px;" title="${item.hidden ? '표시' : '숨김'}">${item.hidden ? '표시' : '숨김'}</button>
         <button class="btn" onclick="editNoticeItem('${item.id}')" style="font-size:11px;padding:4px 8px;">수정</button>
         <button class="btn btn-danger" onclick="deleteNoticeItem('${item.id}')" style="font-size:11px;padding:4px 8px;">삭제</button>
       </div>
@@ -6434,6 +6456,17 @@ function renderNoticeManageList() {
 
 function openNewNoticeFromManage() {
   openNewNotice();
+}
+
+// 공지 숨김/표시 토글
+function toggleNoticeHidden(id) {
+  const item = noticeItems.find(n => n.id === id);
+  if (!item) return;
+  item.hidden = !item.hidden;
+  saveNoticeItems();
+  renderNoticeManageList();
+  renderNoticePopupList();
+  showToast(item.hidden ? '공지를 숨겼습니다.' : '공지를 표시합니다.');
 }
 
 // 새 공지 등록 폼 열기
@@ -6565,6 +6598,7 @@ function loadNotice() {
     const todayStr = new Date().toISOString().slice(0,10);
     const hideUntil = localStorage.getItem('att_notice_hide');
     if (hideUntil !== todayStr) {
+      noticePage = 1;
       renderNoticePopupList();
       document.getElementById('notice-popup-modal').classList.add('show');
     }
