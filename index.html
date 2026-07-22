@@ -7600,6 +7600,58 @@ async function init() {
     console.log('✅ 구분 미입력 직원 → 정규직 일괄 적용 완료');
   }
 
+  // ── 결근 규칙 소급 적용 (기존 데이터 일괄 재처리) ──
+  // 1. 금결근+다음주 월결근 → 토·일 결근 (무급 우선순위 덮어쓰기)
+  // 2. 결근 있는 주 일요일 → 무급휴가 (누락된 것 채우기)
+  (function reapplyAbsenceRules() {
+    const years = [2024, 2025, 2026];
+    employees.forEach(e => {
+      const name = e.name;
+      years.forEach(year => {
+        for (let month = 1; month <= 12; month++) {
+          const days = getDaysInMonth(year, month);
+          for (let day = 1; day <= days; day++) {
+            const val = getAtt(name, year, month, day);
+            if (val !== '결근') continue;
+            const d = new Date(year, month-1, day);
+            const dow = d.getDay(); // 0=일,1=월,...,5=금,6=토
+
+            // ── 금결근 + 다음주 월결근 → 토·일 결근 ──
+            if (dow === 5) {
+              const mon = new Date(d); mon.setDate(d.getDate()+3);
+              const my=mon.getFullYear(), mm=mon.getMonth()+1, md=mon.getDate();
+              if (getAtt(name, my, mm, md) === '결근') {
+                // 토요일
+                const sat = new Date(d); sat.setDate(d.getDate()+1);
+                const sy=sat.getFullYear(), sm=sat.getMonth()+1, sd=sat.getDate();
+                if (!isHoliday(sy,sm,sd)) setAtt(name,sy,sm,sd,'결근','');
+                // 일요일
+                const sun = new Date(d); sun.setDate(d.getDate()+2);
+                const uy=sun.getFullYear(), um=sun.getMonth()+1, ud=sun.getDate();
+                if (!isHoliday(uy,um,ud)) setAtt(name,uy,um,ud,'결근','');
+              }
+            }
+
+            // ── 결근 있는 주 일요일 → 무급휴가 (금~월 연속 케이스 제외) ──
+            // 해당 주 일요일 계산
+            const diff = dow === 0 ? 0 : 7 - dow;
+            const sun = new Date(d); sun.setDate(d.getDate()+diff);
+            const sy=sun.getFullYear(), sm=sun.getMonth()+1, sd=sun.getDate();
+            const sunVal = getAtt(name, sy, sm, sd);
+            // 이미 결근이면 건드리지 않음
+            if (sunVal === '결근') continue;
+            // 금~월 연속결근으로 토·일 결근 처리된 주인지 확인
+            // (이 주 금요일이 결근이고 다음주 월요일도 결근인 케이스 → 일요일=결근이어야 함, 이미 위에서 처리됨)
+            // 그 외 → 무급휴가
+            if (!isHoliday(sy,sm,sd)) setAtt(name,sy,sm,sd,'무급휴가','');
+          }
+        }
+      });
+    });
+    autoSave();
+    console.log('✅ 결근 규칙 소급 적용 완료');
+  })();
+
   loadTeamColors();
   populateTeamFilter();
   initSummaryDashControls();
