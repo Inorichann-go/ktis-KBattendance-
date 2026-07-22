@@ -656,7 +656,6 @@
   <div class="ctrl-bar">
     <select class="form-select" id="sum-base-year" style="width:95px;" onchange="renderSummaryDash()"></select>
     <select class="form-select" id="sum-base-month" style="width:80px;" onchange="renderSummaryDash()"></select>
-    <button class="btn" onclick="renderSummaryDash()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
   </div>
   <div id="summary-dash">
     
@@ -3701,13 +3700,27 @@ function populateTeamFilter() {
 
 function openAddEmpModal() {
   if (!isAdminMode()) return;
-  editEmpIdx = -1;
-  document.getElementById('emp-modal-title').textContent = '직원 추가';
-  ['em-name','em-id','em-team','em-job','em-memo'].forEach(id => document.getElementById(id).value='');
-  ['em-join','em-transfer','em-leave'].forEach(id => document.getElementById(id).value='');
-  renderParentalList([]);
-  renderLeaveHistList([]);
-  document.getElementById('emp-modal').classList.add('show');
+  // 입사상세 팝업 바로 열기 (신규 직원)
+  document.getElementById('hm-name').value = '';
+  document.getElementById('hm-empid').value = '';
+  document.getElementById('hm-team').value = '';
+  document.getElementById('hm-joindate').value = '';
+  document.getElementById('hm-ssn1').value = '';
+  document.getElementById('hm-ssn2').value = '';
+  document.getElementById('hm-phone').value = '';
+  document.getElementById('hm-addr').value = '';
+  document.getElementById('hm-memo').value = '';
+  document.getElementById('hm-emptype').value = '정규직';
+  document.getElementById('hm-contractend').value = '';
+  document.getElementById('hm-error').textContent = '';
+  document.getElementById('hm-gender').textContent = '';
+  document.getElementById('hm-age').textContent = '';
+  document.getElementById('hire-modal').setAttribute('data-emp-idx', '');
+  document.getElementById('hire-modal').removeAttribute('data-from-emp-modal');
+  calcHireInfo();
+  toggleContractEnd();
+  document.getElementById('hire-modal').classList.add('show');
+  setTimeout(() => document.getElementById('hm-name').focus(), 100);
 }
 function openEditEmpModal(idx) {
   if (!isAdminMode()) return;
