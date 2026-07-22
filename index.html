@@ -594,12 +594,12 @@
     <span style="font-size:14px;font-weight:600;color:#1e293b;">KB손해보험 부천센터 근태관리 시스템</span>
   </div>
   <div class="header-right">
-    <span id="save-status" style="font-size:11px;color:var(--text3);"></span>
-    <span id="mode-badge" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600;display:none;"></span>
-    <button id="mode-switch-btn" class="btn" onclick="switchToAdmin()" style="font-size:12px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      관리자 전환
+    <button class="btn" onclick="openNoticePopup()" style="font-size:12px;padding:5px 11px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg>
+      공지사항
     </button>
+    <span id="save-status" style="font-size:11px;color:var(--text3);"></span>
+    <span id="mode-badge" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600;display:inline;"></span>
     <!-- 설정 드롭다운 -->
     <div style="position:relative;" id="settings-wrap">
       <button id="btn-settings" class="btn" onclick="toggleSettingsMenu()" style="font-size:12px;padding:6px 10px;">
@@ -609,7 +609,7 @@
         <div id="menu-admin-only" style="display:none;">
           <button class="settings-item" onclick="openNoticeEdit();toggleSettingsMenu()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg>
-            공지사항 편집
+            공지사항 관리
           </button>
           <button class="settings-item" onclick="importData();toggleSettingsMenu()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
@@ -1251,7 +1251,6 @@
     </div></div>
 </div>
 
-<!-- ═══════════════════════════════ TAB 1: 직원 명단 ═══════════════════════════════ -->
 <div id="panel1" class="panel">
   <div class="ctrl-bar">
     <input class="form-input" id="search-emp" placeholder="이름 / 사번 / 팀 검색..." style="width:210px;" oninput="renderEmpTable()">
@@ -2546,63 +2545,94 @@
 </div>
 
 <!-- 공지사항 팝업 -->
-<div class="modal-overlay" id="notice-modal" style="z-index:9999;">
-  <div class="modal" style="width:560px;max-height:85vh;overflow-y:auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <h3 style="margin:0;" id="notice-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg> 공지사항</h3>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span id="notice-date" style="font-size:11px;color:var(--text3);"></span>
-        <button class="btn admin-only" id="notice-edit-inline-btn" onclick="openNoticeEdit();closeModal('notice-modal');" style="font-size:11px;padding:4px 8px;">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          편집
-        </button>
-      </div>
+<!-- 공지사항 목록 팝업 -->
+<div class="modal-overlay" id="notice-popup-modal" style="z-index:9990;">
+  <div class="modal" style="width:560px;max-height:80vh;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
+      <h3 style="margin:0;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg>
+        공지사항
+      </h3>
+      <button class="btn" onclick="closeModal('notice-popup-modal')" style="padding:4px 10px;font-size:20px;line-height:1;">×</button>
     </div>
-    <div id="notice-body" style="font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-break:break-word;min-height:40px;"></div>
-
-    <!-- 오늘/이번달 특이사항 -->
-    <div id="notice-events-wrap" style="margin-top:16px;border-top:1px solid var(--border);padding-top:14px;">
-      <div style="display:flex;gap:0;margin-bottom:10px;border-bottom:1px solid var(--border);">
-        <div id="nevt-tab-today" onclick="switchNoticeEvtTab('today')"
-          style="padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;border-bottom:2px solid var(--accent);color:var(--accent);margin-bottom:-1px;">오늘</div>
-        <div id="nevt-tab-month" onclick="switchNoticeEvtTab('month')"
-          style="padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:var(--text3);margin-bottom:-1px;">이번달</div>
-      </div>
-      <div id="nevt-today"></div>
-      <div id="nevt-month" style="display:none;"></div>
-    </div>
-
-    <div class="modal-btns" style="margin-top:20px;">
+    <div id="notice-popup-list" style="overflow-y:auto;flex:1;"></div>
+    <div class="modal-btns" style="margin-top:14px;flex-shrink:0;">
       <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);cursor:pointer;">
         <input type="checkbox" id="notice-no-show" style="width:14px;height:14px;accent-color:var(--accent);">
         오늘 하루 보지 않기
       </label>
-      <button class="btn-save" onclick="closeNotice()">확인</button>
+      <button class="btn-save" onclick="closeNoticePopup()">확인</button>
     </div>
   </div>
 </div>
 
-<!-- 공지사항 편집 모달 -->
-<div class="modal-overlay" id="notice-edit-modal">
+<!-- 공지사항 관리 모달 (설정 메뉴에서 열림) -->
+<div class="modal-overlay" id="notice-manage-modal" style="z-index:9991;">
+  <div class="modal" style="width:640px;max-height:85vh;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
+      <h3 style="margin:0;">공지사항 관리</h3>
+      <button class="btn" onclick="closeModal('notice-manage-modal')" style="padding:4px 10px;font-size:20px;line-height:1;">×</button>
+    </div>
+    <div id="notice-manage-list" style="overflow-y:auto;flex:1;border:1px solid var(--border);border-radius:8px;"></div>
+    <div style="margin-top:14px;flex-shrink:0;">
+      <button class="btn-save" onclick="openNewNoticeFromManage()" style="width:100%;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        새 공지 등록
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 공지사항 상세 팝업 -->
+<div class="modal-overlay" id="notice-detail-modal" style="z-index:9999;">
+  <div class="modal" style="width:540px;max-height:80vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="margin:0;font-size:16px;" id="nd-title"></h3>
+      <button class="btn" onclick="closeModal('notice-detail-modal')" style="padding:4px 10px;font-size:20px;line-height:1;">×</button>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:14px;display:flex;gap:12px;">
+      <span id="nd-date"></span>
+      <span id="nd-pin" style="color:var(--danger);font-weight:700;display:none;">📌 중요</span>
+    </div>
+    <div id="nd-body" style="font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-break:break-word;min-height:60px;"></div>
+    <div class="modal-btns" style="margin-top:20px;">
+      <div style="display:flex;gap:8px;" id="nd-admin-btns" class="admin-only">
+        <button class="btn" onclick="editNoticeItem(currentNoticeId)" style="font-size:12px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정
+        </button>
+        <button class="btn btn-danger" onclick="deleteNoticeItem(currentNoticeId)" style="font-size:12px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg> 삭제
+        </button>
+      </div>
+      <button class="btn-save" onclick="closeModal('notice-detail-modal')">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 공지사항 작성/수정 모달 -->
+<div class="modal-overlay" id="notice-edit-modal" style="z-index:9999;">
   <div class="modal" style="width:540px;">
-    <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg> 공지사항 편집</h3>
+    <h3 id="ne-modal-title" style="margin:0 0 18px;">공지사항 등록</h3>
     <div class="form-group" style="margin-bottom:12px;">
-      <label class="form-label">제목</label>
-      <input class="form-input" id="notice-edit-title" placeholder="공지사항 제목" style="width:100%;">
+      <label class="form-label">제목 *</label>
+      <input class="form-input" id="ne-title" placeholder="공지사항 제목" style="width:100%;">
     </div>
     <div class="form-group" style="margin-bottom:12px;">
       <label class="form-label">내용</label>
-      <textarea id="notice-edit-body" placeholder="공지사항 내용을 입력하세요..." style="width:100%;min-height:160px;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);resize:vertical;box-sizing:border-box;line-height:1.7;"></textarea>
+      <textarea id="ne-body" placeholder="공지사항 내용을 입력하세요..." style="width:100%;min-height:140px;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);resize:vertical;box-sizing:border-box;line-height:1.7;"></textarea>
     </div>
-    <div class="form-group" style="margin-bottom:4px;">
+    <div class="form-group" style="margin-bottom:14px;">
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
-        <input type="checkbox" id="notice-edit-active" style="width:15px;height:15px;accent-color:var(--accent);">
-        팝업 활성화 (파일 열 때마다 표시)
+        <input type="checkbox" id="ne-pin" style="width:15px;height:15px;accent-color:var(--danger);">
+        <span style="color:var(--danger);font-weight:600;">📌 중요 (최상단 고정)</span>
       </label>
     </div>
+    <input type="hidden" id="ne-id">
     <div class="modal-btns">
       <button class="btn" onclick="closeModal('notice-edit-modal')">취소</button>
-      <button class="btn-save" onclick="saveNotice()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 저장</button>
+      <button class="btn-save" onclick="saveNoticeItem()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 저장
+      </button>
     </div>
   </div>
 </div>
@@ -3109,7 +3139,7 @@ let _localStorageAvailable = false;
 function showTab(i) {
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', j===i));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
-  if (i===0) { renderSummaryDash(); renderSpecialEvents(); }
+  if (i===0) renderSummaryDash();
   if (i===1) renderEmpTable();
   if (i===2) renderAttTable();
   if (i===3) renderSummary();
@@ -3261,7 +3291,6 @@ function renderSummaryDash() {
 
   function makeGroupTable(groups, getKey) {
     const rows = groups.map(key => {
-      // 전체 = 해당월 재직자 + 해당월 퇴사자(오늘 기준 이미 퇴사)
       const grpAll     = allEmps.filter(e => getKey(e) === key && (
         activeEmps.includes(e) ||
         (e.leaveDate && e.leaveDate >= ym1 && e.leaveDate <= ym2 && e.leaveDate < todayStr)
@@ -3275,24 +3304,33 @@ function renderSummaryDash() {
       const grpAvg     = grpActive.length
         ? (grpActive.reduce((s,e)=>s+(calcTenure(e)||0),0)/grpActive.length).toFixed(1) : '-';
       const pct = activeEmps.length ? Math.round(grpActive.length/activeEmps.length*100) : 0;
-      return { key, total:grpAll.length, active:grpActive.length, onLeave:grpOnLeave.length, return:grpReturn.length, join:grpJoin.length, leave:grpLeave.length, short:grpShort.length, avg:grpAvg, pct };
+      return { key, total:grpAll.length, active:grpActive.length, onLeave:grpOnLeave.length, return:grpReturn.length, join:grpJoin.length, leave:grpLeave.length, short:grpShort.length, avg:grpAvg, pct,
+        names:{ onLeave:grpOnLeave.map(e=>e.name), return:grpReturn.map(e=>e.name), join:grpJoin.map(e=>e.name), leave:grpLeave.map(e=>e.name) }
+      };
     });
 
-    const totalAll     = new Set([...activeEmps, ...leaveEmps]).size;
-    const totalActive  = activeEmps.filter(e => !isOnLeaveInMonth(e)).length;
-    const totalOnLeave = activeEmps.filter(e => isOnLeaveInMonth(e)).length;
-    const totalReturn  = allEmps.filter(e => isReturnInMonth(e)).length;
+    const totalOnLeaveEmps = activeEmps.filter(e => isOnLeaveInMonth(e));
+    const totalReturnEmps  = allEmps.filter(e => isReturnInMonth(e));
     const totRow = {
-      key:'Total', total:totalAll, active:totalActive, onLeave:totalOnLeave, return:totalReturn,
-      join:joinEmps.length, leave:leaveEmps.length, short:shortEmps.length,
-      avg: avgTenure, pct:100
+      key:'Total',
+      total: new Set([...activeEmps, ...leaveEmps]).size,
+      active: activeEmps.filter(e => !isOnLeaveInMonth(e)).length,
+      onLeave: totalOnLeaveEmps.length, return: totalReturnEmps.length,
+      join: joinEmps.length, leave: leaveEmps.length, short: shortEmps.length,
+      avg: avgTenure, pct:100,
+      names:{ onLeave:totalOnLeaveEmps.map(e=>e.name), return:totalReturnEmps.map(e=>e.name), join:joinEmps.map(e=>e.name), leave:leaveEmps.map(e=>e.name) }
     };
 
-    const trs = [...rows, totRow].map((r,i) => {
+    const trs = [...rows, totRow].map((r) => {
       const isTot = r.key === 'Total';
-      const n = v => v > 0
-        ? `<span class="dash-num">${v}</span>`
-        : `<span class="dash-num dash-num-0">-</span>`;
+      // 툴팁 없는 셀
+      const n = v => v > 0 ? `<span class="dash-num">${v}</span>` : `<span class="dash-num dash-num-0">-</span>`;
+      // 툴팁 있는 셀 (휴직/복직/입사/퇴사)
+      const nt = (v, names) => {
+        if (v <= 0) return `<span class="dash-num dash-num-0">-</span>`;
+        const tip = names?.length ? names.join(', ') : '';
+        return `<span class="dash-num" title="${tip}" style="cursor:default;border-bottom:1px dotted currentColor;">${v}</span>`;
+      };
       const barW = Math.round(r.pct);
       return `<tr${isTot?' class="total-row"':''}>
         <td class="left">${isTot?'<strong>Total</strong>':r.key}</td>
@@ -3302,10 +3340,10 @@ function renderSummaryDash() {
             <div style="width:${barW}%;height:100%;background:var(--accent);border-radius:2px;"></div>
           </div>
         </td>
-        <td style="color:#cc6000">${n(r.onLeave)}</td>
-        <td style="color:#3dba8c">${n(r.return)}</td>
-        <td style="color:#3a78cc">${n(r.join)}</td>
-        <td style="color:#e04040">${n(r.leave)}</td>
+        <td style="color:#cc6000">${nt(r.onLeave, r.names?.onLeave)}</td>
+        <td style="color:#3dba8c">${nt(r.return,  r.names?.return)}</td>
+        <td style="color:#3a78cc">${nt(r.join,    r.names?.join)}</td>
+        <td style="color:#e04040">${nt(r.leave,   r.names?.leave)}</td>
         <td style="color:#5090dd">${n(r.short)}</td>
         <td style="color:var(--text2);font-family:var(--mono)">${r.avg}</td>
       </tr>`;
@@ -4634,6 +4672,13 @@ function initHireResignControls() {
   });
   renderHireTable();
   renderResignTable();
+}
+
+function formatPhone(el) {
+  const digits = el.value.replace(/\D/g, '').slice(0, 11);
+  if (digits.length <= 3) el.value = digits;
+  else if (digits.length <= 7) el.value = digits.slice(0,3) + '-' + digits.slice(3);
+  else el.value = digits.slice(0,3) + '-' + digits.slice(3,7) + '-' + digits.slice(7);
 }
 
 function toggleContractEnd() {
@@ -5970,15 +6015,13 @@ function renderLeaveTable() {
 }
 
 function getAlertBadge(name, year, month) {
-  let absent = 0, unpaid = 0;
+  let unpaid = 0;
   const days = getDaysInMonth(year, month);
   for (let d = 1; d <= days; d++) {
     const v = getAtt(name, year, month, d);
-    if (v === '결근') absent++;
     if (v === '무급휴가') unpaid++;
   }
   let html = '';
-  if (absent >= 2) html += `<span class="alert-badge" title="${month}월 결근 ${absent}일">결근 ${absent}</span>`;
   if (unpaid >= 3) html += `<span class="warn-badge" title="${month}월 무급 ${unpaid}일">무급 ${unpaid}</span>`;
   return html;
 }
@@ -6262,222 +6305,275 @@ async function saveAsHtml() {
     showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> HTML 저장 실패: ' + err.message, true);
   }
 }
-// ══════════════════════════════
-//  오늘/이번달 특이사항
+
 // ══════════════════════════════
 
 // 평일 전날 계산 (주말/공휴일이면 직전 평일)
-function getPrevWorkday(dateStr) {
-  let d = new Date(dateStr);
-  d.setDate(d.getDate() - 1);
-  while (d.getDay() === 0 || d.getDay() === 6 || isHoliday(d.getFullYear(), d.getMonth()+1, d.getDate())) {
-    d.setDate(d.getDate() - 1);
-  }
-  return d.toISOString().slice(0,10);
+
+
+
+
+
+
+
+// ══════════════════════════════
+//  공지사항 시스템
+// ══════════════════════════════
+let noticeItems = []; // [{id, title, body, pin, date, order}]
+let currentNoticeId = null;
+
+function loadNoticeItems() {
+  try {
+    const raw = localStorage.getItem('att_notice_items');
+    noticeItems = raw ? JSON.parse(raw) : [];
+  } catch(e) { noticeItems = []; }
 }
 
-function getSpecialEvents(targetDateStr) {
-  // targetDateStr: 'YYYY-MM-DD' 또는 null(이번달 전체)
-  const today = new Date().toISOString().slice(0,10);
-  const yr = parseInt((targetDateStr||today).slice(0,4));
-  const mo = parseInt((targetDateStr||today).slice(5,7));
-  const isMonth = !targetDateStr;
+function saveNoticeItems() {
+  try { localStorage.setItem('att_notice_items', JSON.stringify(noticeItems)); } catch(e) {}
+}
 
-  const events = [];
+// 정렬: 중요 먼저 → order 순 → 날짜 역순
+function getSortedNotices() {
+  return [...noticeItems].sort((a, b) => {
+    if (!!a.pin !== !!b.pin) return b.pin ? 1 : -1;
+    if ((a.order ?? 999) !== (b.order ?? 999)) return (a.order ?? 999) - (b.order ?? 999);
+    return new Date(b.date) - new Date(a.date);
+  });
+}
 
-  employees.forEach(e => {
-    const name = e.name;
-    const empId = e.empId || '';
+// 공지사항 팝업 닫기 (오늘 하루 보지 않기 처리)
+function closeNoticePopup() {
+  if (document.getElementById('notice-no-show')?.checked) {
+    try { localStorage.setItem('att_notice_hide', new Date().toISOString().slice(0,10)); } catch(e) {}
+  }
+  document.getElementById('notice-no-show').checked = false;
+  closeModal('notice-popup-modal');
+}
 
-    // ── 휴직 시작/종료 ──
-    (e.leaveHistory||[]).forEach(l => {
-      if (!l.startDate) return;
-      if (isMonth) {
-        const sy = parseInt(l.startDate.slice(0,4)), sm = parseInt(l.startDate.slice(5,7));
-        if (sy === yr && sm === mo) events.push({ type:'휴직시작', name, team:e.team, date:l.startDate, detail:l.type||'휴직' });
-        if (l.endDate) {
-          const ey = parseInt(l.endDate.slice(0,4)), em = parseInt(l.endDate.slice(5,7));
-          if (ey === yr && em === mo) events.push({ type:'휴직종료', name, team:e.team, date:l.endDate, detail:l.type||'휴직' });
-        }
-      } else {
-        if (l.startDate === targetDateStr) events.push({ type:'휴직시작', name, team:e.team, date:l.startDate, detail:l.type||'휴직' });
-        if (l.endDate === targetDateStr) events.push({ type:'휴직종료', name, team:e.team, date:l.endDate, detail:l.type||'휴직' });
-      }
-    });
+// 공지사항 목록 팝업 열기 (헤더 버튼) - 숨김 무시하고 강제 열기
+function openNoticePopup() {
+  renderNoticePopupList();
+  document.getElementById('notice-no-show').checked = false;
+  document.getElementById('notice-popup-modal').classList.add('show');
+}
 
-    // ── 육아단축 시작/종료 ──
-    (e.parentalLeave||[]).forEach(p => {
-      if (!p.startDate) return;
-      if (isMonth) {
-        const sy = parseInt(p.startDate.slice(0,4)), sm = parseInt(p.startDate.slice(5,7));
-        if (sy === yr && sm === mo) events.push({ type:'육아단축시작', name, team:e.team, date:p.startDate, detail:`${p.hours||4}h/일` });
-        if (p.endDate) {
-          const ey = parseInt(p.endDate.slice(0,4)), em = parseInt(p.endDate.slice(5,7));
-          if (ey === yr && em === mo) events.push({ type:'육아단축종료', name, team:e.team, date:p.endDate, detail:`${p.hours||4}h/일` });
-        }
-      } else {
-        if (p.startDate === targetDateStr) events.push({ type:'육아단축시작', name, team:e.team, date:p.startDate, detail:`${p.hours||4}h/일` });
-        if (p.endDate === targetDateStr) events.push({ type:'육아단축종료', name, team:e.team, date:p.endDate, detail:`${p.hours||4}h/일` });
-      }
-    });
+function renderNoticePopupList() {
+  const list = document.getElementById('notice-popup-list');
+  if (!list) return;
+  const sorted = getSortedNotices();
+  if (!sorted.length) {
+    list.innerHTML = '<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">등록된 공지사항이 없습니다.</div>';
+    return;
+  }
+  list.innerHTML = sorted.map(item => `
+    <div style="padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;"
+         onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''"
+         onclick="openNoticeDetail('${item.id}', 'popup')">
+      <div style="display:flex;align-items:flex-start;gap:8px;">
+        ${item.pin ? '<span style="color:var(--danger);font-size:12px;font-weight:900;flex-shrink:0;">[중요]</span>' : ''}
+        <span style="font-size:13px;font-weight:${item.pin?'700':'600'};color:${item.pin?'var(--danger)':'var(--text)'};">${item.title}</span>
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px;">${item.date}</div>
+    </div>
+  `).join('');
+}
 
-    // ── 2주년 비례연차 발생 전일 알림 ──
-    if (!e.joinDate) return;
-    const joinDate = new Date(e.joinDate.replace(/-/g,'/'));
-    const anniv2 = new Date(joinDate);
-    anniv2.setFullYear(joinDate.getFullYear() + 2);
-    const anniv2Str = anniv2.toISOString().slice(0,10);
-    const prevDay = getPrevWorkday(anniv2Str);
+// 공지 상세 팝업
+function openNoticeDetail(id, from) {
+  const item = noticeItems.find(n => n.id === id);
+  if (!item) return;
+  currentNoticeId = id;
+  document.getElementById('nd-title').innerHTML = item.pin
+    ? `<span style="color:var(--danger);font-weight:900;">[중요]</span> ${item.title}`
+    : item.title;
+  document.getElementById('nd-date').textContent = item.date;
+  document.getElementById('nd-body').textContent = item.body || '';
+  document.getElementById('nd-pin').style.display = 'none'; // 제목에 이미 표시
+  document.getElementById('notice-detail-modal').classList.add('show');
+}
 
-    if (isMonth) {
-      const py = parseInt(prevDay.slice(0,4)), pm = parseInt(prevDay.slice(5,7));
-      if (py === yr && pm === mo) {
-        events.push({ type:'연차알림', name, team:e.team, date:prevDay, detail:`2주년(${anniv2Str}) 비례연차 발생 예정` });
-      }
-    } else {
-      if (prevDay === targetDateStr) {
-        events.push({ type:'연차알림', name, team:e.team, date:prevDay, detail:`2주년(${anniv2Str}) 비례연차 발생 예정` });
+// ── 공지 관리 모달 ──
+function openNoticeManage() {
+  if (!isAdminMode()) return;
+  renderNoticeManageList();
+  document.getElementById('notice-manage-modal').classList.add('show');
+}
+
+function renderNoticeManageList() {
+  const list = document.getElementById('notice-manage-list');
+  if (!list) return;
+  const sorted = getSortedNotices();
+  if (!sorted.length) {
+    list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px;">등록된 공지가 없습니다. 아래 버튼으로 등록하세요.</div>';
+    return;
+  }
+  list.innerHTML = sorted.map((item, idx) => `
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+      <!-- 순서 버튼 -->
+      <div style="display:flex;flex-direction:column;gap:2px;flex-shrink:0;">
+        <button class="btn" onclick="moveNoticeUp('${item.id}')" style="padding:1px 5px;font-size:10px;line-height:1.4;" title="위로">▲</button>
+        <button class="btn" onclick="moveNoticeDown('${item.id}')" style="padding:1px 5px;font-size:10px;line-height:1.4;" title="아래로">▼</button>
+      </div>
+      <!-- 제목/날짜 -->
+      <div style="flex:1;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          ${item.pin ? '<span style="color:var(--danger);font-size:12px;font-weight:900;flex-shrink:0;">[중요]</span>' : ''}
+          <span style="font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title}</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px;">${item.date}</div>
+      </div>
+      <!-- 수정/삭제 버튼 -->
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <button class="btn" onclick="editNoticeItem('${item.id}')" style="font-size:11px;padding:4px 8px;">수정</button>
+        <button class="btn btn-danger" onclick="deleteNoticeItem('${item.id}')" style="font-size:11px;padding:4px 8px;">삭제</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openNewNoticeFromManage() {
+  openNewNotice();
+}
+
+// 새 공지 등록 폼 열기
+function openNewNotice() {
+  if (!isAdminMode()) return;
+  currentNoticeId = null;
+  document.getElementById('ne-modal-title').textContent = '공지사항 등록';
+  document.getElementById('ne-title').value = '';
+  document.getElementById('ne-body').value = '';
+  document.getElementById('ne-pin').checked = false;
+  document.getElementById('ne-id').value = '';
+  document.getElementById('notice-edit-modal').classList.add('show');
+  setTimeout(() => document.getElementById('ne-title').focus(), 100);
+}
+
+// 공지 수정 폼 열기
+function editNoticeItem(id) {
+  if (!isAdminMode()) return;
+  const item = noticeItems.find(n => n.id === id);
+  if (!item) return;
+  document.getElementById('ne-modal-title').textContent = '공지사항 수정';
+  document.getElementById('ne-title').value = item.title;
+  document.getElementById('ne-body').value = item.body || '';
+  document.getElementById('ne-pin').checked = !!item.pin;
+  document.getElementById('ne-id').value = id;
+  document.getElementById('notice-edit-modal').classList.add('show');
+  setTimeout(() => document.getElementById('ne-title').focus(), 100);
+}
+
+// 공지 저장
+function saveNoticeItem() {
+  const title = document.getElementById('ne-title').value.trim();
+  if (!title) { showToast('제목을 입력해주세요.'); return; }
+  const body  = document.getElementById('ne-body').value.trim();
+  const pin   = document.getElementById('ne-pin').checked;
+  const id    = document.getElementById('ne-id').value;
+  const now   = new Date();
+  const dateStr = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+
+  if (id) {
+    const idx = noticeItems.findIndex(n => n.id === id);
+    if (idx >= 0) noticeItems[idx] = { ...noticeItems[idx], title, body, pin, date: dateStr };
+  } else {
+    // 신규: 같은 pin 그룹 내 최상단(order 가장 작은 것보다 하나 앞)
+    const sameGroup = noticeItems.filter(n => !!n.pin === pin);
+    const minOrder = sameGroup.length ? Math.min(...sameGroup.map(n=>n.order??0)) : 0;
+    noticeItems.unshift({ id: Date.now().toString(), title, body, pin, date: dateStr, order: minOrder - 1 });
+  }
+  // order 재정렬
+  const pinGroup    = noticeItems.filter(n => n.pin).sort((a,b)=>(a.order??0)-(b.order??0));
+  const normalGroup = noticeItems.filter(n => !n.pin).sort((a,b)=>(a.order??0)-(b.order??0));
+  pinGroup.forEach((n,i) => n.order = i);
+  normalGroup.forEach((n,i) => n.order = i + 1000);
+  noticeItems = [...pinGroup, ...normalGroup];
+
+  saveNoticeItems();
+  closeModal('notice-edit-modal');
+  renderNoticeManageList();
+  renderNoticePopupList();
+  showToast('✅ 공지사항이 저장됐습니다.');
+}
+
+// 공지 삭제
+function deleteNoticeItem(id) {
+  if (!isAdminMode()) return;
+  if (!confirm('이 공지사항을 삭제할까요?')) return;
+  noticeItems = noticeItems.filter(n => n.id !== id);
+  saveNoticeItems();
+  renderNoticeManageList();
+  renderNoticePopupList();
+  closeModal('notice-detail-modal');
+  showToast('✅ 삭제됐습니다.');
+}
+
+// 순서 이동 (같은 pin 그룹 내)
+function moveNoticeUp(id) {
+  if (!isAdminMode()) return;
+  const item = noticeItems.find(n => n.id === id);
+  if (!item) return;
+  // 같은 pin 그룹 내에서 order 기준 정렬 후 이전 항목과 swap
+  const group = noticeItems.filter(n => !!n.pin === !!item.pin)
+                            .sort((a,b) => (a.order??0) - (b.order??0));
+  const gIdx = group.findIndex(n => n.id === id);
+  if (gIdx === 0) return; // 이미 맨 위
+  const prev = group[gIdx - 1];
+  const tmp = item.order ?? 0;
+  item.order = prev.order ?? 0;
+  prev.order = tmp;
+  saveNoticeItems();
+  renderNoticeManageList();
+  renderNoticePopupList();
+}
+
+function moveNoticeDown(id) {
+  if (!isAdminMode()) return;
+  const item = noticeItems.find(n => n.id === id);
+  if (!item) return;
+  const group = noticeItems.filter(n => !!n.pin === !!item.pin)
+                            .sort((a,b) => (a.order??0) - (b.order??0));
+  const gIdx = group.findIndex(n => n.id === id);
+  if (gIdx === group.length - 1) return; // 이미 맨 아래
+  const next = group[gIdx + 1];
+  const tmp = item.order ?? 0;
+  item.order = next.order ?? 0;
+  next.order = tmp;
+  saveNoticeItems();
+  renderNoticeManageList();
+  renderNoticePopupList();
+}
+
+// 마이그레이션 + 초기 로드
+function loadNotice() {
+  loadNoticeItems();
+  // 기존 att_notice 마이그레이션
+  try {
+    const raw = localStorage.getItem('att_notice');
+    if (raw && noticeItems.length === 0) {
+      const old = JSON.parse(raw);
+      if (old.title || old.body) {
+        noticeItems.push({ id: Date.now().toString(), title: old.title || '공지사항', body: old.body || '', pin: false,
+          date: old.date || '', order: 1000 });
+        saveNoticeItems();
+        localStorage.removeItem('att_notice');
       }
     }
-  });
-
-  return events.sort((a,b) => a.date.localeCompare(b.date));
-}
-
-const EVT_STYLE = {
-  '휴직시작':    { bg:'#fff7ed', color:'#c2410c', border:'#fed7aa', label:'휴직 시작' },
-  '휴직종료':    { bg:'#f0fdf4', color:'#15803d', border:'#bbf7d0', label:'휴직 종료' },
-  '육아단축시작':{ bg:'#eff6ff', color:'#1d4ed8', border:'#bfdbfe', label:'육아단축 시작' },
-  '육아단축종료':{ bg:'#f5f3ff', color:'#6d28d9', border:'#ddd6fe', label:'육아단축 종료' },
-  '연차알림':    { bg:'#fefce8', color:'#a16207', border:'#fde68a', label:'연차 발생 예정' },
-};
-
-function renderEventsHTML(events, isMonth) {
-  if (!events.length) return `<div style="font-size:12px;color:var(--text3);padding:4px 0;">해당 사항 없음</div>`;
-  return events.map(ev => {
-    const s = EVT_STYLE[ev.type] || { bg:'var(--surface2)', color:'var(--text)', border:'var(--border)', label:ev.type };
-    const dateLabel = isMonth ? `<span style="font-size:11px;color:var(--text3);margin-right:6px;">${ev.date.slice(5).replace('-','/')}</span>` : '';
-    return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);${isMonth?'opacity:.85':''}">
-      ${dateLabel}
-      <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${s.bg};color:${s.color};border:1px solid ${s.border};white-space:nowrap;flex-shrink:0;">${s.label}</span>
-      <span style="font-size:13px;font-weight:600;">${ev.name}</span>
-      <span style="font-size:11px;color:var(--text3);">${ev.team}</span>
-      <span style="font-size:11px;color:var(--text2);margin-left:auto;">${ev.detail}</span>
-    </div>`;
-  }).join('');
-}
-
-function renderSpecialEvents() {
-  const today = new Date().toISOString().slice(0,10);
-  const todayEvents = getSpecialEvents(today);
-  const monthEvents = getSpecialEvents(null);
-
-  // Summary 탭
-  const st = document.getElementById('sevt-today');
-  const sm = document.getElementById('sevt-month');
-  if (st) st.innerHTML = renderEventsHTML(todayEvents, false);
-  if (sm) sm.innerHTML = renderEventsHTML(monthEvents, true);
-
-  // 공지 팝업
-  const nt = document.getElementById('nevt-today');
-  const nm = document.getElementById('nevt-month');
-  if (nt) nt.innerHTML = renderEventsHTML(todayEvents, false);
-  if (nm) nm.innerHTML = renderEventsHTML(monthEvents, true);
-
-  // 특이사항 없으면 섹션 숨기기
-  const wrap = document.getElementById('notice-events-wrap');
-  if (wrap) wrap.style.display = (todayEvents.length || monthEvents.length) ? '' : 'none';
-}
-
-function switchNoticeEvtTab(tab) {
-  const isToday = tab === 'today';
-  document.getElementById('nevt-today').style.display = isToday ? '' : 'none';
-  document.getElementById('nevt-month').style.display = isToday ? 'none' : '';
-  document.getElementById('nevt-tab-today').style.cssText += isToday ? ';font-weight:700;color:var(--accent);border-bottom-color:var(--accent);' : ';font-weight:600;color:var(--text3);border-bottom-color:transparent;';
-  document.getElementById('nevt-tab-month').style.cssText += isToday ? ';font-weight:600;color:var(--text3);border-bottom-color:transparent;' : ';font-weight:700;color:var(--accent);border-bottom-color:var(--accent);';
-}
-
-function switchSummaryEvtTab(tab) {
-  const isToday = tab === 'today';
-  document.getElementById('sevt-today').style.display = isToday ? '' : 'none';
-  document.getElementById('sevt-month').style.display = isToday ? 'none' : '';
-  const tBtn = document.getElementById('sevt-tab-today');
-  const mBtn = document.getElementById('sevt-tab-month');
-  if (tBtn) { tBtn.style.background = isToday ? 'var(--accent)' : 'var(--surface3)'; tBtn.style.color = isToday ? '#fff' : 'var(--text3)'; }
-  if (mBtn) { mBtn.style.background = isToday ? 'var(--surface3)' : 'var(--accent)'; mBtn.style.color = isToday ? 'var(--text3)' : '#fff'; }
-}
-
-function loadNotice() {
-  // 특이사항 항상 렌더링 (Summary 탭용)
-  renderSpecialEvents();
-
-  try {
+  } catch(e) {}
+  // 공지사항이 있고, 오늘 하루 보지 않기가 설정되지 않은 경우에만 팝업 표시
+  if (noticeItems.length > 0) {
     const todayStr = new Date().toISOString().slice(0,10);
     const hideUntil = localStorage.getItem('att_notice_hide');
-    const todayEvents = getSpecialEvents(todayStr);
-    const monthEvents = getSpecialEvents(null);
-    const hasEvents = todayEvents.length > 0 || monthEvents.length > 0;
-
-    const raw = localStorage.getItem('att_notice');
-    const notice = raw ? JSON.parse(raw) : null;
-    const hasNotice = notice?.active;
-
-    // 오늘 하루 보지 않기면 팝업 안 띄움
-    if (hideUntil === todayStr) return;
-    // 공지도 없고 특이사항도 없으면 팝업 안 띄움
-    if (!hasNotice && !hasEvents) return;
-
-    if (hasNotice) {
-      document.getElementById('notice-title').innerHTML = notice.title || '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg> 공지사항';
-      document.getElementById('notice-body').textContent = notice.body || '';
-      document.getElementById('notice-date').textContent = notice.date || '';
-    } else {
-      document.getElementById('notice-title').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> 오늘의 특이사항';
-      document.getElementById('notice-body').textContent = '';
-      document.getElementById('notice-date').textContent = '';
+    if (hideUntil !== todayStr) {
+      renderNoticePopupList();
+      document.getElementById('notice-popup-modal').classList.add('show');
     }
-    document.getElementById('notice-no-show').checked = false;
-    document.getElementById('notice-modal').classList.add('show');
-  } catch(e) {}
-}
-
-function closeNotice() {
-  const noShow = document.getElementById('notice-no-show').checked;
-  if (noShow) {
-    const todayStr = new Date().toISOString().slice(0,10);
-    try { localStorage.setItem('att_notice_hide', todayStr); } catch(e) {}
   }
-  closeModal('notice-modal');
 }
 
-function openNoticeEdit() {
-  try {
-    const raw = localStorage.getItem('att_notice');
-    const notice = raw ? JSON.parse(raw) : { title:'', body:'', active:false };
-    document.getElementById('notice-edit-title').value    = notice.title || '';
-    document.getElementById('notice-edit-body').value     = notice.body  || '';
-    document.getElementById('notice-edit-active').checked = !!notice.active;
-  } catch(e) {
-    document.getElementById('notice-edit-title').value    = '';
-    document.getElementById('notice-edit-body').value     = '';
-    document.getElementById('notice-edit-active').checked = false;
-  }
-  document.getElementById('notice-edit-modal').classList.add('show');
-}
+// 설정 메뉴 "공지사항 편집" → 관리 모달로 연결
+function openNoticeEdit() { openNoticeManage(); }
 
-function saveNotice() {
-  const title  = document.getElementById('notice-edit-title').value.trim();
-  const body   = document.getElementById('notice-edit-body').value.trim();
-  const active = document.getElementById('notice-edit-active').checked;
-  const date   = new Date().toLocaleDateString('ko-KR');
-  try {
-    localStorage.setItem('att_notice', JSON.stringify({ title, body, active, date }));
-    // 저장 시 오늘 숨김 해제 (수정 후 바로 보이게)
-    localStorage.removeItem('att_notice_hide');
-  } catch(e) {}
-  closeModal('notice-edit-modal');
-  showToast(active ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 공지사항이 저장되었습니다. 다음 실행 시 팝업이 표시됩니다.' : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 공지사항이 저장되었습니다. (팝업 비활성화)');
-}
 let _issueMemoTimer = null;
 function getIssueMemoKey(year, month) {
   return `issue_memo_${year}_${month}`;
@@ -7341,13 +7437,15 @@ function applyMode(mode) {
 
   // 배지
   if (badge) {
+    badge.style.display = 'inline';
     if (isAdmin) {
-      badge.style.display = 'inline';
       badge.textContent = '관리자';
       badge.style.background = '#1d4ed8';
       badge.style.color = '#fff';
     } else {
-      badge.style.display = 'none';
+      badge.textContent = '열람';
+      badge.style.background = '#e2e8f0';
+      badge.style.color = '#64748b';
     }
   }
 
