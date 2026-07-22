@@ -7585,6 +7585,21 @@ function isAdminMode() { return currentMode === 'admin'; }
 
 async function init() {
   await loadData();
+
+  // ── 구분 미입력 직원 → 정규직 일괄 설정 (최초 1회) ──
+  let needSave = false;
+  employees.forEach(e => {
+    if (!e.hireInfo) e.hireInfo = {};
+    if (!e.hireInfo.emptype) {
+      e.hireInfo.emptype = '정규직';
+      needSave = true;
+    }
+  });
+  if (needSave) {
+    autoSave();
+    console.log('✅ 구분 미입력 직원 → 정규직 일괄 적용 완료');
+  }
+
   loadTeamColors();
   populateTeamFilter();
   initSummaryDashControls();
