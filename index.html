@@ -540,7 +540,6 @@
   body.view-mode [onclick*="saveIssueMemo"],
   body.view-mode [onclick*="clearIssueMemo"],
   body.view-mode [onclick*="toggleIssueMemoEdit"],
-  body.view-mode .team-color-btn,
   body.view-mode input[onchange*="teamColor"],
   body.view-mode .att-cell { pointer-events: none !important; cursor: default !important; }
 
@@ -642,9 +641,9 @@
 <div class="tabs">
   <div class="tab active" onclick="showTab(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Summary</div>
   <div class="tab" onclick="showTab(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 직원 명단</div>
-  <div class="tab" onclick="showTab(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 개인 근태</div>
-  <div class="tab" onclick="showTab(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 월별 요약</div>
-  <div class="tab" onclick="showTab(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> 입퇴사 현황</div>
+  <div class="tab" onclick="showTab(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 월별 요약</div>
+  <div class="tab" onclick="showTab(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 개인 근태</div>
+  <div class="tab" onclick="showTab(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> 근태 상세</div>
   <div class="tab" onclick="showTab(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> 연차 현황</div>
   <div class="tab" onclick="showTab(6)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 연차 확인서</div>
   <div class="tab" onclick="showTab(7)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 이달의 이슈</div>
@@ -1260,9 +1259,8 @@
       <option value="onleave">휴직</option>
       <option value="left">퇴사자</option>
     </select>
-    <button class="btn-add" onclick="openAddEmpModal()">＋ 직원 추가</button>
     <button class="btn btn-warn" onclick="resetEmpData()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 명단 초기화</button>
-    <button class="btn team-color-btn" onclick="openTeamColorModal()" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> 팀 색상</button>
+    <button class="btn team-color-btn admin-only" onclick="openTeamColorModal()" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> 팀 색상</button>
     <span style="flex:1;"></span>
     <span id="emp-count" style="font-size:12px;color:var(--text2);font-weight:600;">총 204명</span>
   </div>
@@ -1864,40 +1862,6 @@
   <div class="pagination" id="emp-pages"><button class="page-btn active">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">4</button><button class="page-btn">5</button><button class="page-btn">6</button><button class="page-btn">7</button></div>
 </div>
 
-<!-- ═══════════════════════════════ TAB 2: 개인 근태 ═══════════════════════════════ -->
-<div id="panel2" class="panel">
-  <div class="ctrl-bar">
-    <select class="form-select" id="att-year" style="width:90px;"></select>
-    <select class="form-select" id="att-month" style="width:80px;"></select>
-    <select class="form-select" id="att-team-filter" style="width:150px;"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
-    <select class="form-select" id="att-status-filter" style="width:100px;" onchange="renderAttTable()">
-      <option value="">전체</option>
-      <option value="active">재직중</option>
-      <option value="onleave">휴직</option>
-      <option value="left">퇴사자</option>
-    </select>
-    <input class="form-input" id="att-search" placeholder="이름 검색..." style="width:130px;" oninput="renderAttTable()">
-    <select class="form-select" id="att-sort" style="width:120px;" onchange="renderAttTable()">
-      <option value="default">기본순</option>
-      <option value="name">이름순</option>
-      <option value="team">팀순</option>
-      <option value="joinDate">입사일순</option>
-    </select>
-    <button class="btn btn-warn" onclick="confirmResetMonthAtt()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 이달 초기화</button>
-    <button class="btn-save" onclick="openPasteModal()" style="background:#16a34a;border-color:#16a34a;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 엑셀 붙여넣기</button>
-    <button class="btn" onclick="exportAttExcel()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 엑셀 내보내기</button>
-  </div>
-
-  <div class="card">
-    <div class="att-grid-wrap">
-      <table class="att-grid" id="att-table">
-        <thead id="att-thead"></thead>
-        <tbody id="att-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════════════════════════ TAB 3: 월별 요약 ═══════════════════════════════ -->
 <div id="panel3" class="panel">
   <div class="ctrl-bar">
@@ -1952,82 +1916,20 @@
   </div>
   <div class="pagination" id="sum-pages"></div>
 </div>
-<div class="modal-overlay" id="emp-modal">
-  <div class="modal" style="width:520px;">
-    <h3 id="emp-modal-title">직원 추가</h3>
-    <div class="form-grid" style="grid-template-columns:1fr 1fr;">
-      <div class="form-group">
-        <label class="form-label">성명 *</label>
-        <input class="form-input" id="em-name">
-      </div>
-      <div class="form-group">
-        <label class="form-label">사번</label>
-        <input class="form-input" id="em-id">
-      </div>
-      <div class="form-group">
-        <label class="form-label">팀</label>
-        <input class="form-input" id="em-team" list="team-list">
-        <datalist id="team-list"><option value="관리자"></option><option value="보유계약지원"></option><option value="실효OB"></option><option value="장기사고 1팀"></option><option value="장기사고 2팀"></option><option value="장기사고 3팀"></option><option value="장기사고 4팀"></option><option value="장기사고 5팀"></option><option value="장기사고 6팀"></option><option value="제휴상담 1팀"></option><option value="제휴상담 2팀"></option><option value="제휴상담 3팀"></option><option value="제휴지원팀"></option></datalist>
-      </div>
-      <div class="form-group">
-        <label class="form-label">업무</label>
-        <input class="form-input" id="em-job">
-      </div>
-      <div class="form-group">
-        <label class="form-label">입사일</label>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <input class="form-input" id="em-join" type="date" style="flex:1;">
-          <button type="button" class="btn" onclick="openHireModalFromEmp()" style="padding:6px 10px;font-size:11px;white-space:nowrap;flex-shrink:0;" title="입사 상세정보">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-            상세
-          </button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">전보일</label>
-        <input class="form-input" id="em-transfer" type="date">
-      </div>
-      <div class="form-group">
-        <label class="form-label">퇴사일</label>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <input class="form-input" id="em-leave" type="date" style="flex:1;">
-          <button type="button" class="btn" onclick="openResignModalFromEmp()" style="padding:6px 10px;font-size:11px;white-space:nowrap;flex-shrink:0;" title="퇴사 상세정보">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-            상세
-          </button>
-        </div>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label">메모</label>
-        <textarea class="form-input" id="em-memo" rows="2" style="resize:vertical;" placeholder="육아휴직 복직 예정, 계약 만료일 등..."></textarea>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label" style="display:flex;align-items:center;justify-content:space-between;">
-          육아기 단축근무 이력
-          <button type="button" class="btn" style="font-size:11px;padding:3px 10px;" onclick="addParentalRow()">+ 추가</button>
-        </label>
-        <div class="parental-list" id="parental-list">
-          <div style="font-size:11px;color:var(--text3);padding:4px 0;">단축근무 이력이 없습니다.</div>
-        </div>
-        <div style="font-size:10px;color:var(--text3);margin-top:4px;">※ 기간 내 사용 연차는 단축시간(h)으로 차감됩니다. 종료일 미입력 시 현재 진행중으로 처리.</div>
-      </div>
-      <div class="form-group" style="grid-column:1/-1;">
-        <label class="form-label" style="display:flex;align-items:center;justify-content:space-between;">
-          휴직 이력
-          <button type="button" class="btn" style="font-size:11px;padding:3px 10px;" onclick="addLeaveHistRow()">+ 추가</button>
-        </label>
-        <div class="parental-list" id="leave-hist-list">
-          <div style="font-size:11px;color:var(--text3);padding:4px 0;">휴직 이력이 없습니다.</div>
-        </div>
-        <div style="font-size:10px;color:var(--text3);margin-top:4px;">※ 휴직 기간은 개인근태에 휴직구분으로 표시되며 수정 불가합니다.</div>
-      </div>
+<!-- 직원 상세보기 팝업 (읽기전용) -->
+<div class="modal-overlay" id="emp-detail-modal">
+  <div class="modal" style="width:520px;max-height:85vh;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
+      <h3 style="margin:0;" id="emp-detail-name"></h3>
+      <button class="btn" onclick="closeModal('emp-detail-modal')" style="padding:4px 10px;font-size:20px;line-height:1;">×</button>
     </div>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('emp-modal')">취소</button>
-      <button class="btn-save" onclick="saveEmp()">저장</button>
+    <div id="emp-detail-content" style="overflow-y:auto;flex:1;"></div>
+    <div class="modal-btns" style="margin-top:14px;flex-shrink:0;">
+      <button class="btn admin-only" id="emp-detail-edit-btn" style="font-size:12px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        입사현황에서 수정
+      </button>
+      <button class="btn-save" onclick="closeModal('emp-detail-modal')">닫기</button>
     </div>
   </div>
 </div>
@@ -2049,12 +1951,48 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════ TAB 2: 개인 근태 ═══════════════════════════════ -->
+<div id="panel2" class="panel">
+  <div class="ctrl-bar">
+    <select class="form-select" id="att-year" style="width:90px;"></select>
+    <select class="form-select" id="att-month" style="width:80px;"></select>
+    <select class="form-select" id="att-team-filter" style="width:150px;"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
+    <select class="form-select" id="att-status-filter" style="width:100px;" onchange="renderAttTable()">
+      <option value="">전체</option>
+      <option value="active">재직중</option>
+      <option value="onleave">휴직</option>
+      <option value="left">퇴사자</option>
+    </select>
+    <input class="form-input" id="att-search" placeholder="이름 검색..." style="width:130px;" oninput="renderAttTable()">
+    <select class="form-select" id="att-sort" style="width:120px;" onchange="renderAttTable()">
+      <option value="default">기본순</option>
+      <option value="name">이름순</option>
+      <option value="team">팀순</option>
+      <option value="joinDate">입사일순</option>
+    </select>
+    <button class="btn btn-warn" onclick="confirmResetMonthAtt()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 이달 초기화</button>
+    <button class="btn-save" onclick="openPasteModal()" style="background:#16a34a;border-color:#16a34a;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 엑셀 붙여넣기</button>
+    <button class="btn" onclick="exportAttExcel()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 엑셀 내보내기</button>
+  </div>
+
+  <div class="card">
+    <div class="att-grid-wrap">
+      <table class="att-grid" id="att-table">
+        <thead id="att-thead"></thead>
+        <tbody id="att-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════ TAB 4: 입퇴사 현황 ═══════════════════════════════ -->
 <div id="panel4" class="panel">
   <!-- 하위 탭 -->
   <div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;">
     <div class="sub-tab active" onclick="showSubTab('hire')" id="sub-hire" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid var(--accent);color:var(--accent);margin-bottom:-2px;">입사 현황</div>
     <div class="sub-tab" onclick="showSubTab('leave')" id="sub-leave" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">퇴사 현황</div>
+    <div class="sub-tab" onclick="showSubTab('parental')" id="sub-parental" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">육아단축</div>
+    <div class="sub-tab" onclick="showSubTab('leavehist')" id="sub-leavehist" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">휴직</div>
   </div>
 
   <!-- 입사 현황 -->
@@ -2069,13 +2007,14 @@
         <option value="10">10월</option><option value="11">11월</option><option value="12">12월</option>
       </select>
       <input class="form-input" id="hire-search" placeholder="이름 검색..." style="width:130px;" oninput="renderHireTable()">
+      <button class="btn-add admin-only" onclick="openAddEmpModal()" style="margin-left:4px;">＋ 직원 추가</button>
       <span id="hire-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
     </div>
     <div style="overflow-x:auto;">
       <table class="summary-table" id="hire-table">
         <thead>
           <tr>
-            <th>No</th><th>이름</th><th>사번</th><th>팀</th><th>입사일</th>
+            <th>No</th><th>이름</th><th>사번</th><th>팀</th><th>입사일</th><th>전보일</th>
             <th>구분</th><th>계약종료일</th><th>성별</th><th>나이</th><th>주민번호</th><th>연락처</th><th>주소</th><th>메모</th><th style="width:36px;"></th>
           </tr>
         </thead>
@@ -2097,6 +2036,7 @@
       </select>
       <input class="form-input" id="resign-search" placeholder="이름 검색..." style="width:130px;" oninput="renderResignTable()">
       <span id="resign-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
+      <button class="btn-add admin-only" onclick="openQuickResignModal()" style="font-size:12px;">＋ 퇴사 추가</button>
       <button class="btn admin-only" onclick="openResignReasonMgr()" style="font-size:12px;margin-left:auto;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         퇴사사유 관리
@@ -2111,6 +2051,47 @@
           </tr>
         </thead>
         <tbody id="resign-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- 육아단축 탭 -->
+  <div id="subtab-parental" style="display:none;">
+    <div class="ctrl-bar" style="margin-bottom:14px;">
+      <input class="form-input" id="parental-filter" placeholder="이름 검색..." style="width:160px;" oninput="renderParentalTable()">
+      <button class="btn-add admin-only" onclick="openParentalAddModal()" style="font-size:12px;">＋ 육아단축 추가</button>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);cursor:pointer;margin-left:4px;">
+        <input type="checkbox" id="parental-active-only" onchange="renderParentalTable()" style="accent-color:var(--accent);">
+        진행중만 보기
+      </label>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="summary-table" id="parental-table">
+        <thead><tr>
+          <th>No</th><th>이름</th><th>팀</th><th>입사일</th><th>근속</th><th>시작일</th><th>종료일</th><th>단축시간</th><th style="width:36px;"></th>
+        </tr></thead>
+        <tbody id="parental-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 휴직 탭 -->
+  <div id="subtab-leavehist" style="display:none;">
+    <div class="ctrl-bar" style="margin-bottom:14px;">
+      <input class="form-input" id="leavehist-filter" placeholder="이름 검색..." style="width:160px;" oninput="renderLeaveHistTable()">
+      <button class="btn-add admin-only" onclick="openLeaveHistAddModal()" style="font-size:12px;">＋ 휴직 추가</button>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);cursor:pointer;margin-left:4px;">
+        <input type="checkbox" id="leavehist-active-only" onchange="renderLeaveHistTable()" style="accent-color:var(--accent);">
+        진행중만 보기
+      </label>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="summary-table" id="leavehist-table">
+        <thead><tr>
+          <th>No</th><th>이름</th><th>팀</th><th>입사일</th><th>근속</th><th>휴직구분</th><th>시작일</th><th>종료일</th><th style="width:36px;"></th>
+        </tr></thead>
+        <tbody id="leavehist-tbody"></tbody>
       </table>
     </div>
   </div>
@@ -2332,14 +2313,15 @@
       <div class="form-group"><label class="form-label">이름 *</label><input type="text" id="hm-name" class="form-input" placeholder="홍길동"></div>
       <div class="form-group"><label class="form-label">사번 *</label><input type="text" id="hm-empid" class="form-input" placeholder="2390001"></div>
       <div class="form-group"><label class="form-label">팀 *</label>
-        <select id="hm-team" class="form-select">
-          <option value="">선택</option>
+        <input type="text" id="hm-team" class="form-input" placeholder="팀 입력 또는 선택" list="hm-team-list" autocomplete="off">
+        <datalist id="hm-team-list">
           <option>제휴상담 1팀</option><option>제휴상담 2팀</option><option>제휴상담 3팀</option><option>제휴지원팀</option>
           <option>장기사고 1팀</option><option>장기사고 2팀</option><option>장기사고 3팀</option><option>장기사고 4팀</option><option>장기사고 5팀</option><option>장기사고 6팀</option>
           <option>보유계약지원</option><option>실효OB</option><option>관리자</option>
-        </select>
+        </datalist>
       </div>
       <div class="form-group"><label class="form-label">입사일 *</label><input type="date" id="hm-joindate" class="form-input"></div>
+      <div class="form-group"><label class="form-label">전보일</label><input type="date" id="hm-transferdate" class="form-input"></div>
       <div class="form-group"><label class="form-label">구분 *</label>
         <select id="hm-emptype" class="form-select" onchange="toggleContractEnd()">
           <option value="">선택</option>
@@ -2371,20 +2353,89 @@
 </div>
 
 <!-- 퇴사 처리 모달 -->
-<div class="modal-overlay" id="resign-modal">
-  <div class="modal" style="width:420px;">
-    <h3 style="margin:0 0 4px;">퇴사 처리</h3>
-    <div id="resign-emp-info" style="font-size:13px;color:var(--text2);margin-bottom:16px;"></div>
-    <div class="form-group"><label class="form-label">퇴사일 *</label><input type="date" id="rm-leavedate" class="form-input"></div>
-    <div class="form-group" style="margin-top:12px;"><label class="form-label">퇴사사유 *</label>
-      <select id="rm-reason" class="form-select">
-        <option value="">선택해주세요</option>
+<!-- 육아단축 추가/수정 모달 -->
+<div class="modal-overlay" id="parental-add-modal">
+  <div class="modal" style="width:440px;">
+    <h3 id="parental-modal-title" style="margin:0 0 16px;">육아단축 추가</h3>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label class="form-label">직원 *</label>
+      <input type="text" id="pm-search" class="form-input" placeholder="이름 또는 사번 검색..." oninput="searchPmEmp()" autocomplete="off">
+      <div id="pm-search-result" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;display:none;margin-top:4px;"></div>
+      <input type="hidden" id="pm-emp-idx">
+      <div id="pm-emp-name" style="font-size:12px;color:var(--accent);margin-top:4px;font-weight:700;"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div class="form-group"><label class="form-label">시작일 *</label><input type="date" id="pm-start" class="form-input"></div>
+      <div class="form-group"><label class="form-label">종료일 (미입력=진행중)</label><input type="date" id="pm-end" class="form-input"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label class="form-label">단축시간 *</label>
+      <select id="pm-hours" class="form-select">
+        <option value="4">4h</option><option value="5">5h</option><option value="6">6h</option><option value="7">7h</option>
       </select>
     </div>
-    <div class="form-group" style="margin-top:12px;"><label class="form-label">메모</label>
+    <input type="hidden" id="pm-edit-idx">
+    <div style="font-size:10px;color:var(--text3);margin-bottom:12px;">※ 기간 내 사용 연차는 단축시간(h)으로 차감됩니다.</div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('parental-add-modal')">취소</button>
+      <button class="btn-save" onclick="saveParentalEntry()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 휴직 추가/수정 모달 -->
+<div class="modal-overlay" id="leavehist-add-modal">
+  <div class="modal" style="width:440px;">
+    <h3 id="leavehist-modal-title" style="margin:0 0 16px;">휴직 추가</h3>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label class="form-label">직원 *</label>
+      <input type="text" id="lm-search" class="form-input" placeholder="이름 또는 사번 검색..." oninput="searchLmEmp()" autocomplete="off">
+      <div id="lm-search-result" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;display:none;margin-top:4px;"></div>
+      <input type="hidden" id="lm-emp-idx">
+      <div id="lm-emp-name" style="font-size:12px;color:var(--accent);margin-top:4px;font-weight:700;"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label class="form-label">휴직구분 *</label>
+      <select id="lm-type" class="form-select">
+        <option>산휴</option><option>육아휴직</option><option>육아휴직(부모연장)</option>
+        <option>육아휴직(임신중)</option><option>병가휴직</option><option>가족돌봄휴직</option><option>유산휴가</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div class="form-group"><label class="form-label">시작일 *</label><input type="date" id="lm-start" class="form-input"></div>
+      <div class="form-group"><label class="form-label">종료일 (미입력=진행중)</label><input type="date" id="lm-end" class="form-input"></div>
+    </div>
+    <input type="hidden" id="lm-edit-idx">
+    <div style="font-size:10px;color:var(--text3);margin-bottom:12px;">※ 휴직 기간은 개인근태에 휴직구분으로 표시됩니다.</div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('leavehist-add-modal')">취소</button>
+      <button class="btn-save" onclick="saveLeaveHistEntry()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 퇴사처리 - 직원 검색 팝업 -->
+<!-- 통합 퇴사처리 팝업 (검색+입력) -->
+<div class="modal-overlay" id="resign-modal">
+  <div class="modal" style="width:460px;">
+    <h3 style="margin:0 0 16px;">퇴사 처리</h3>
+    <!-- 직원 검색 -->
+    <div class="form-group" style="margin-bottom:12px;">
+      <label class="form-label">직원 *</label>
+      <input type="text" id="rm-search" class="form-input" placeholder="이름 또는 사번 검색..." oninput="searchResignEmp()" autocomplete="off">
+      <div id="qr-search-result" style="max-height:160px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;display:none;margin-top:4px;"></div>
+      <input type="hidden" id="rm-emp-idx">
+      <div id="resign-emp-info" style="font-size:12px;color:var(--accent);margin-top:4px;font-weight:700;"></div>
+    </div>
+    <!-- 퇴사 정보 -->
+    <div class="form-group" style="margin-bottom:12px;"><label class="form-label">퇴사일 *</label><input type="date" id="rm-leavedate" class="form-input"></div>
+    <div class="form-group" style="margin-bottom:12px;"><label class="form-label">퇴사사유 *</label>
+      <select id="rm-reason" class="form-select"><option value="">선택해주세요</option></select>
+    </div>
+    <div class="form-group" style="margin-bottom:8px;"><label class="form-label">메모</label>
       <textarea id="rm-memo" class="form-input" rows="2" style="resize:none;" placeholder="특이사항 메모"></textarea>
     </div>
-    <div id="rm-error" style="color:var(--danger);font-size:12px;min-height:16px;margin-top:8px;"></div>
+    <div id="rm-error" style="color:var(--danger);font-size:12px;min-height:16px;"></div>
     <div class="modal-btns" style="margin-top:14px;">
       <button class="btn" onclick="closeModal('resign-modal')">취소</button>
       <button class="btn-save" style="background:var(--danger);border-color:var(--danger);" onclick="saveResignInfo()">퇴사 처리</button>
@@ -3067,6 +3118,7 @@ async function dbSave() {
         employees, attendance,
         payroll_manual: payrollManual,
         team_colors: teamColors,
+        admin_pw_hash: window._adminPwHash || null,
         updated_at: new Date().toISOString()
       })
     });
@@ -3093,6 +3145,7 @@ async function dbLoad() {
     if (row.team_colors)    teamColors    = row.team_colors;
     if (row.notice)         window.issueMemos = row.notice;
     else                    window.issueMemos = {};
+    if (row.admin_pw_hash)  window._adminPwHash = row.admin_pw_hash;
     return true;
   } catch(err) {
     console.error('dbLoad error:', err);
@@ -3140,8 +3193,8 @@ function showTab(i) {
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
   if (i===0) renderSummaryDash();
   if (i===1) renderEmpTable();
-  if (i===2) renderAttTable();
-  if (i===3) renderSummary();
+  if (i===2) renderSummary();
+  if (i===3) renderAttTable();
   if (i===4) { initHireResignControls(); showSubTab('hire'); }
   if (i===5) renderLeaveTable();
   if (i===6) renderCert();
@@ -3631,7 +3684,7 @@ function renderEmpTable() {
 
     return `<tr>
       <td style="color:var(--text3)">${e.no}</td>
-      <td style="font-weight:600">${e.name}${alertHtml}${parentalEmpTag}</td>
+      <td style="font-weight:600;">${e.name}${alertHtml}${parentalEmpTag}</td>
       <td style="font-family:var(--mono);font-size:11px;color:var(--text3)">${e.empId}</td>
       <td>${getTeamBadge(e.team)}</td>
       <td style="color:var(--text2)">${e.job}</td>
@@ -3644,8 +3697,8 @@ function renderEmpTable() {
       ${memoHtml}
       <td>
         <div class="action-btns">
-          <button class="btn btn-sm" onclick="openEditEmpModal(${realIdx})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-          <button class="btn btn-sm btn-danger" onclick="deleteEmp(${realIdx})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+          <button class="btn btn-sm" onclick="openEmpDetail(${realIdx})" title="상세보기"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+          <button class="btn btn-sm btn-danger admin-only" onclick="deleteEmp(${realIdx})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
         </div>
       </td>
     </tr>`;
@@ -3712,6 +3765,7 @@ function openAddEmpModal() {
   document.getElementById('hm-memo').value = '';
   document.getElementById('hm-emptype').value = '정규직';
   document.getElementById('hm-contractend').value = '';
+  document.getElementById('hm-transferdate').value = '';
   document.getElementById('hm-error').textContent = '';
   document.getElementById('hm-gender').textContent = '';
   document.getElementById('hm-age').textContent = '';
@@ -3722,23 +3776,18 @@ function openAddEmpModal() {
   document.getElementById('hire-modal').classList.add('show');
   setTimeout(() => document.getElementById('hm-name').focus(), 100);
 }
-function openEditEmpModal(idx) {
-  if (!isAdminMode()) return;
-  editEmpIdx = idx;
-  const e = employees[idx];
-  document.getElementById('emp-modal-title').textContent = '직원 수정';
-  document.getElementById('em-name').value = e.name;
-  document.getElementById('em-id').value = e.empId;
-  document.getElementById('em-team').value = e.team||'';
-  document.getElementById('em-job').value = e.job||'';
-  document.getElementById('em-join').value = e.joinDate||'';
-  document.getElementById('em-transfer').value = e.transferDate||'';
-  document.getElementById('em-leave').value = e.leaveDate||'';
-  document.getElementById('em-memo').value = e.memo||'';
-  renderParentalList(e.parentalLeave || []);
-  renderLeaveHistList(e.leaveHistory || []);
-  document.getElementById('emp-modal').classList.add('show');
+function openEditEmpModal(idx) { openEmpDetail(idx); }
+function getJobFromTeam(team) {
+  if (!team) return '';
+  if (team.includes('장기사고')) return '장기사고';
+  if (team.includes('제휴상담')) return '제휴상담';
+  if (team === '보유계약지원') return '보유계약';
+  if (team === '실효OB') return '실효OB';
+  if (team === '제휴지원팀') return '제휴지원';
+  if (team === '관리자') return '관리자';
+  return team; // 알 수 없는 팀은 팀명 그대로
 }
+
 function saveEmp() {
   const name = document.getElementById('em-name').value.trim();
   if (!name) { alert('성명을 입력해주세요.'); return; }
@@ -3748,12 +3797,13 @@ function saveEmp() {
     const dup = employees.find((e, idx) => e.empId === empId && idx !== editEmpIdx);
     if (dup) { alert(`사번 중복!\n이미 등록된 사번입니다.\n(${dup.name} · ${dup.team})`); return; }
   }
+  const team = document.getElementById('em-team').value.trim();
   const existing = editEmpIdx >= 0 ? employees[editEmpIdx] : {};
   const emp = {
     no: editEmpIdx>=0 ? employees[editEmpIdx].no : (employees.length ? Math.max(...employees.map(e=>e.no))+1 : 1),
     name, empId,
-    team: document.getElementById('em-team').value.trim(),
-    job: document.getElementById('em-job').value.trim(),
+    team,
+    job: getJobFromTeam(team),
     joinDate: document.getElementById('em-join').value,
     transferDate: document.getElementById('em-transfer').value,
     leaveDate: document.getElementById('em-leave').value,
@@ -3766,7 +3816,6 @@ function saveEmp() {
   };
   if (editEmpIdx>=0) employees[editEmpIdx] = emp;
   else employees.push(emp);
-  closeModal('emp-modal');
   populateTeamFilter();
   renderEmpTable();
   showToast(editEmpIdx>=0 ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 직원 정보가 수정되었습니다.' : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 직원이 추가되었습니다.');
@@ -3880,6 +3929,352 @@ function deleteEmp(idx) {
   populateTeamFilter(); renderEmpTable();
   showToast('삭제되었습니다.');
   autoSave();
+}
+
+// ══════════════════════════════
+//  육아단축 탭 (테이블형)
+// ══════════════════════════════
+function renderParentalTable() {
+  const q = (document.getElementById('parental-filter')?.value||'').trim().toLowerCase();
+  const activeOnly = document.getElementById('parental-active-only')?.checked;
+  const tbody = document.getElementById('parental-tbody');
+  if (!tbody) return;
+  // 모든 직원의 parentalLeave 이력을 flat하게 펼치기
+  let rows = [];
+  employees.forEach((e, empIdx) => {
+    (e.parentalLeave||[]).forEach((p, pIdx) => {
+      if (q && !e.name.toLowerCase().includes(q) && !(e.empId||'').includes(q)) return;
+      if (activeOnly && p.endDate) return;
+      rows.push({ e, empIdx, p, pIdx });
+    });
+  });
+  // 시작일 기준 최신순
+  rows.sort((a,b) => (b.p.startDate||'').localeCompare(a.p.startDate||''));
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:30px;">육아단축 이력이 없습니다.</td></tr>`;
+    return;
+  }
+  const isAdmin = isAdminMode();
+  tbody.innerHTML = rows.map(({e, empIdx, p, pIdx}, i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td style="font-weight:700;">${e.name}</td>
+      <td>${getTeamBadge(e.team,'font-size:10px;')}</td>
+      <td style="font-size:12px;">${e.joinDate||'-'}</td>
+      <td style="font-size:12px;font-family:var(--mono);">${calcTenure(e)||'-'}개월</td>
+      <td style="font-size:12px;">${p.startDate||'-'}</td>
+      <td style="font-size:12px;">${p.endDate||'<span style="color:var(--accent);font-size:11px;">진행중</span>'}</td>
+      <td style="font-size:12px;">${p.hours}h</td>
+      <td>${isAdmin ? `<div class="action-btns">
+        <button class="btn btn-sm" onclick="editParentalEntry(${empIdx},${pIdx})" title="수정"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="btn btn-sm btn-danger" onclick="deleteParentalEntry(${empIdx},${pIdx})" title="삭제"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button>
+      </div>` : ''}</td>
+    </tr>`).join('');
+}
+
+function openParentalAddModal() {
+  if (!isAdminMode()) return;
+  document.getElementById('parental-modal-title').textContent = '육아단축 추가';
+  document.getElementById('pm-search').value = '';
+  document.getElementById('pm-emp-idx').value = '';
+  document.getElementById('pm-emp-name').textContent = '';
+  document.getElementById('pm-search-result').style.display = 'none';
+  document.getElementById('pm-start').value = '';
+  document.getElementById('pm-end').value = '';
+  document.getElementById('pm-hours').value = '4';
+  document.getElementById('pm-edit-idx').value = '';
+  document.getElementById('parental-add-modal').classList.add('show');
+}
+
+function editParentalEntry(empIdx, pIdx) {
+  if (!isAdminMode()) return;
+  const e = employees[empIdx];
+  const p = e.parentalLeave[pIdx];
+  document.getElementById('parental-modal-title').textContent = '육아단축 수정';
+  document.getElementById('pm-search').value = e.name;
+  document.getElementById('pm-emp-idx').value = empIdx;
+  document.getElementById('pm-emp-name').textContent = `${e.name} (${e.team})`;
+  document.getElementById('pm-search-result').style.display = 'none';
+  document.getElementById('pm-start').value = p.startDate||'';
+  document.getElementById('pm-end').value = p.endDate||'';
+  document.getElementById('pm-hours').value = p.hours||4;
+  document.getElementById('pm-edit-idx').value = pIdx;
+  document.getElementById('parental-add-modal').classList.add('show');
+}
+
+function searchPmEmp() {
+  const q = document.getElementById('pm-search').value.trim().toLowerCase();
+  const result = document.getElementById('pm-search-result');
+  if (!q) { result.style.display='none'; return; }
+  const matched = employees.filter(e => !e.leaveDate &&
+    (e.name.toLowerCase().includes(q)||(e.empId||'').includes(q))).slice(0,8);
+  if (!matched.length) { result.innerHTML='<div style="padding:10px;font-size:13px;color:var(--text3);">없음</div>'; result.style.display='block'; return; }
+  result.innerHTML = matched.map(e => {
+    const idx = employees.indexOf(e);
+    return `<div style="padding:9px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border);"
+      onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''"
+      onclick="selectPmEmp(${idx})"><b>${e.name}</b> <span style="color:var(--text3);font-size:11px;">${e.empId||''} · ${e.team||''}</span></div>`;
+  }).join('');
+  result.style.display='block';
+}
+
+function selectPmEmp(idx) {
+  const e = employees[idx];
+  document.getElementById('pm-emp-idx').value = idx;
+  document.getElementById('pm-search').value = e.name;
+  document.getElementById('pm-emp-name').textContent = `${e.name} (${e.team})`;
+  document.getElementById('pm-search-result').style.display='none';
+}
+
+function saveParentalEntry() {
+  const empIdx = parseInt(document.getElementById('pm-emp-idx').value);
+  if (isNaN(empIdx)||!employees[empIdx]) { showToast('직원을 선택해주세요.'); return; }
+  const start = document.getElementById('pm-start').value;
+  if (!start) { showToast('시작일을 입력해주세요.'); return; }
+  const entry = { startDate: start, endDate: document.getElementById('pm-end').value, hours: parseInt(document.getElementById('pm-hours').value)||4 };
+  const pIdx = document.getElementById('pm-edit-idx').value;
+  if (!employees[empIdx].parentalLeave) employees[empIdx].parentalLeave = [];
+  if (pIdx !== '') employees[empIdx].parentalLeave[parseInt(pIdx)] = entry;
+  else employees[empIdx].parentalLeave.push(entry);
+  autoSave();
+  renderParentalTable();
+  closeModal('parental-add-modal');
+  showToast('✅ 육아단축 이력 저장 완료');
+}
+
+function deleteParentalEntry(empIdx, pIdx) {
+  if (!isAdminMode()) return;
+  if (!confirm('이 이력을 삭제할까요?')) return;
+  employees[empIdx].parentalLeave.splice(pIdx, 1);
+  autoSave();
+  renderParentalTable();
+  showToast('✅ 삭제됐습니다.');
+}
+
+// ══════════════════════════════
+//  휴직 탭 (테이블형)
+// ══════════════════════════════
+function renderLeaveHistTable() {
+  const q = (document.getElementById('leavehist-filter')?.value||'').trim().toLowerCase();
+  const activeOnly = document.getElementById('leavehist-active-only')?.checked;
+  const tbody = document.getElementById('leavehist-tbody');
+  if (!tbody) return;
+  let rows = [];
+  employees.forEach((e, empIdx) => {
+    (e.leaveHistory||[]).forEach((l, lIdx) => {
+      if (q && !e.name.toLowerCase().includes(q) && !(e.empId||'').includes(q)) return;
+      if (activeOnly && l.endDate) return;
+      rows.push({ e, empIdx, l, lIdx });
+    });
+  });
+  rows.sort((a,b) => (b.l.startDate||'').localeCompare(a.l.startDate||''));
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:30px;">휴직 이력이 없습니다.</td></tr>`;
+    return;
+  }
+  const isAdmin = isAdminMode();
+  tbody.innerHTML = rows.map(({e, empIdx, l, lIdx}, i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td style="font-weight:700;">${e.name}</td>
+      <td>${getTeamBadge(e.team,'font-size:10px;')}</td>
+      <td style="font-size:12px;">${e.joinDate||'-'}</td>
+      <td style="font-size:12px;font-family:var(--mono);">${calcTenure(e)||'-'}개월</td>
+      <td style="font-size:12px;">${l.type||'-'}</td>
+      <td style="font-size:12px;">${l.startDate||'-'}</td>
+      <td style="font-size:12px;">${l.endDate||'<span style="color:var(--accent);font-size:11px;">진행중</span>'}</td>
+      <td>${isAdmin ? `<div class="action-btns">
+        <button class="btn btn-sm" onclick="editLeaveHistEntry(${empIdx},${lIdx})" title="수정"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="btn btn-sm btn-danger" onclick="deleteLeaveHistEntry(${empIdx},${lIdx})" title="삭제"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button>
+      </div>` : ''}</td>
+    </tr>`).join('');
+}
+
+function openLeaveHistAddModal() {
+  if (!isAdminMode()) return;
+  document.getElementById('leavehist-modal-title').textContent = '휴직 추가';
+  document.getElementById('lm-search').value = '';
+  document.getElementById('lm-emp-idx').value = '';
+  document.getElementById('lm-emp-name').textContent = '';
+  document.getElementById('lm-search-result').style.display = 'none';
+  document.getElementById('lm-type').value = '병가휴직';
+  document.getElementById('lm-start').value = '';
+  document.getElementById('lm-end').value = '';
+  document.getElementById('lm-edit-idx').value = '';
+  document.getElementById('leavehist-add-modal').classList.add('show');
+}
+
+function editLeaveHistEntry(empIdx, lIdx) {
+  if (!isAdminMode()) return;
+  const e = employees[empIdx];
+  const l = e.leaveHistory[lIdx];
+  document.getElementById('leavehist-modal-title').textContent = '휴직 수정';
+  document.getElementById('lm-search').value = e.name;
+  document.getElementById('lm-emp-idx').value = empIdx;
+  document.getElementById('lm-emp-name').textContent = `${e.name} (${e.team})`;
+  document.getElementById('lm-search-result').style.display = 'none';
+  document.getElementById('lm-type').value = l.type||'병가휴직';
+  document.getElementById('lm-start').value = l.startDate||'';
+  document.getElementById('lm-end').value = l.endDate||'';
+  document.getElementById('lm-edit-idx').value = lIdx;
+  document.getElementById('leavehist-add-modal').classList.add('show');
+}
+
+function searchLmEmp() {
+  const q = document.getElementById('lm-search').value.trim().toLowerCase();
+  const result = document.getElementById('lm-search-result');
+  if (!q) { result.style.display='none'; return; }
+  const matched = employees.filter(e => e.name.toLowerCase().includes(q)||(e.empId||'').includes(q)).slice(0,8);
+  if (!matched.length) { result.innerHTML='<div style="padding:10px;font-size:13px;color:var(--text3);">없음</div>'; result.style.display='block'; return; }
+  result.innerHTML = matched.map(e => {
+    const idx = employees.indexOf(e);
+    return `<div style="padding:9px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border);"
+      onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''"
+      onclick="selectLmEmp(${idx})"><b>${e.name}</b> <span style="color:var(--text3);font-size:11px;">${e.empId||''} · ${e.team||''}</span></div>`;
+  }).join('');
+  result.style.display='block';
+}
+
+function selectLmEmp(idx) {
+  const e = employees[idx];
+  document.getElementById('lm-emp-idx').value = idx;
+  document.getElementById('lm-search').value = e.name;
+  document.getElementById('lm-emp-name').textContent = `${e.name} (${e.team})`;
+  document.getElementById('lm-search-result').style.display='none';
+}
+
+function saveLeaveHistEntry() {
+  const empIdx = parseInt(document.getElementById('lm-emp-idx').value);
+  if (isNaN(empIdx)||!employees[empIdx]) { showToast('직원을 선택해주세요.'); return; }
+  const start = document.getElementById('lm-start').value;
+  if (!start) { showToast('시작일을 입력해주세요.'); return; }
+  const entry = { type: document.getElementById('lm-type').value, startDate: start, endDate: document.getElementById('lm-end').value };
+  const lIdx = document.getElementById('lm-edit-idx').value;
+  if (!employees[empIdx].leaveHistory) employees[empIdx].leaveHistory = [];
+  if (lIdx !== '') employees[empIdx].leaveHistory[parseInt(lIdx)] = entry;
+  else employees[empIdx].leaveHistory.push(entry);
+  autoSave();
+  renderLeaveHistTable();
+  closeModal('leavehist-add-modal');
+  showToast('✅ 휴직 이력 저장 완료');
+}
+
+function deleteLeaveHistEntry(empIdx, lIdx) {
+  if (!isAdminMode()) return;
+  if (!confirm('이 이력을 삭제할까요?')) return;
+  employees[empIdx].leaveHistory.splice(lIdx, 1);
+  autoSave();
+  renderLeaveHistTable();
+  showToast('✅ 삭제됐습니다.');
+}
+
+// ══════════════════════════════
+//  직원 상세보기 팝업 (읽기 전용)
+// ══════════════════════════════
+function togglePrivateInfo(btn) {
+  const wrap = document.getElementById('private-info-wrap');
+  const arrow = document.getElementById('private-arrow');
+  const isOpen = wrap.style.display !== 'none';
+  wrap.style.display = isOpen ? 'none' : '';
+  arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
+  btn.querySelector('svg + *') || (btn.childNodes[1].textContent = isOpen ? ' 개인정보 보기' : ' 개인정보 닫기');
+}
+
+function openEmpDetail(idx) {
+  const e = employees[idx];
+  if (!e) return;
+  const info = e.hireInfo || {};
+  const ssn = info.ssn1 ? `${info.ssn1}-${info.ssn2||'?'}` : '-';
+  let gender='-', age='-';
+  if (info.ssn1?.length===6 && info.ssn2) {
+    const code=parseInt(info.ssn2);
+    gender=[1,3,5,7,9].includes(code)?'남':'여';
+    const century=[1,2,5,6].includes(code)?1900:2000;
+    const by=century+parseInt(info.ssn1.slice(0,2)), bm=parseInt(info.ssn1.slice(2,4)), bd=parseInt(info.ssn1.slice(4,6));
+    const now=new Date(); let a=now.getFullYear()-by;
+    if(now.getMonth()+1<bm||(now.getMonth()+1===bm&&now.getDate()<bd))a--;
+    age=a+'세';
+  }
+  // 육아단축 이력
+  const pList = (e.parentalLeave||[]);
+  const pHtml = pList.length ? pList.map(p=>
+    `<div style="font-size:12px;padding:4px 8px;background:var(--surface2);border-radius:6px;margin-bottom:4px;">
+      ${p.startDate} ~ ${p.endDate||'진행중'} · ${p.hours}h
+    </div>`).join('') : '<span style="font-size:12px;color:var(--text3);">이력 없음</span>';
+
+  // 휴직 이력
+  const lList = (e.leaveHistory||[]);
+  const lHtml = lList.length ? lList.map(l=>
+    `<div style="font-size:12px;padding:4px 8px;background:var(--surface2);border-radius:6px;margin-bottom:4px;">
+      [${l.type}] ${l.startDate} ~ ${l.endDate||'진행중'}
+    </div>`).join('') : '<span style="font-size:12px;color:var(--text3);">이력 없음</span>';
+
+  // 2컬럼 행
+  const row2 = (l1, v1, l2, v2) => `
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);">
+      <div style="display:flex;gap:0;padding:9px 8px 9px 0;">
+        <div style="width:72px;flex-shrink:0;font-size:12px;color:var(--text3);font-weight:600;">${l1}</div>
+        <div style="font-size:13px;color:var(--text);">${v1||'-'}</div>
+      </div>
+      <div style="display:flex;gap:0;padding:9px 0 9px 8px;border-left:1px solid var(--border);">
+        <div style="width:72px;flex-shrink:0;font-size:12px;color:var(--text3);font-weight:600;">${l2}</div>
+        <div style="font-size:13px;color:var(--text);">${v2||'-'}</div>
+      </div>
+    </div>`;
+  // 1컬럼 행
+  const row1 = (label, val) => `
+    <div style="display:flex;gap:0;border-bottom:1px solid var(--border);padding:9px 0;">
+      <div style="width:80px;flex-shrink:0;font-size:12px;color:var(--text3);font-weight:600;">${label}</div>
+      <div style="font-size:13px;color:var(--text);">${val||'-'}</div>
+    </div>`;
+
+  const content = document.getElementById('emp-detail-content');
+  const hasContractEnd = ['계약직','촉탁직'].includes(info.emptype) && info.contractend;
+  const hasTransfer = !!e.transferDate;
+
+  content.innerHTML = `
+    <div style="padding:0 4px;">
+      ${row2('이름', `<b>${e.name}</b>`, '사번', e.empId)}
+      ${row2('팀', e.team, '업무', e.job)}
+      ${row1('입사일', e.joinDate)}
+      ${hasTransfer ? row1('전보일', e.transferDate) : ''}
+      ${row1('구분', info.emptype)}
+      ${hasContractEnd ? row1('계약종료일', info.contractend) : ''}
+      ${e.leaveDate ? row1('퇴사일', e.leaveDate) : ''}
+      ${info.memo ? row1('메모', info.memo) : ''}
+
+      <!-- 개인정보 접기/펼치기 -->
+      <div style="margin-top:8px;">
+        <button onclick="togglePrivateInfo(this)"
+          style="font-size:12px;color:var(--text3);background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;width:100%;text-align:left;display:flex;align-items:center;gap:6px;">
+          <svg id="private-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s;flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
+          개인정보 보기
+        </button>
+        <div id="private-info-wrap" style="display:none;margin-top:4px;">
+          ${row2('성별', gender, '나이', age)}
+          ${row1('주민번호', ssn)}
+          ${row1('연락처', info.phone)}
+          ${row1('주소', info.addr)}
+        </div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">육아기 단축근무 이력</div>
+        ${pHtml}
+      </div>
+      <div style="margin-top:14px;padding-bottom:8px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">휴직 이력</div>
+        ${lHtml}
+      </div>
+    </div>`;
+
+  document.getElementById('emp-detail-name').textContent = e.name;
+  // 관리자 편집 버튼
+  const editBtn = document.getElementById('emp-detail-edit-btn');
+  if (editBtn) {
+    editBtn.setAttribute('onclick', `closeModal('emp-detail-modal');showTab(4);showSubTab('hire');`);
+  }
+  document.getElementById('emp-detail-modal').classList.add('show');
 }
 
 // ══════════════════════════════
@@ -4659,8 +5054,9 @@ function saveResignReasons() {
 }
 
 function showSubTab(name) {
-  ['hire','leave'].forEach(t => {
-    document.getElementById('subtab-'+t).style.display = t===name ? '' : 'none';
+  ['hire','leave','parental','leavehist'].forEach(t => {
+    const el = document.getElementById('subtab-'+t);
+    if (el) el.style.display = t===name ? '' : 'none';
     const btn = document.getElementById('sub-'+t);
     if (!btn) return;
     btn.style.color = t===name ? 'var(--accent)' : 'var(--text3)';
@@ -4668,6 +5064,8 @@ function showSubTab(name) {
   });
   if (name==='hire') renderHireTable();
   else if (name==='leave') renderResignTable();
+  else if (name==='parental') { renderParentalTable(); }
+  else if (name==='leavehist') { renderLeaveHistTable(); }
 }
 
 function initHireResignControls() {
@@ -4727,6 +5125,7 @@ function openHireModalFromEmp() {
   document.getElementById('hm-empid').value   = document.getElementById('em-id')?.value || '';
   document.getElementById('hm-team').value    = document.getElementById('em-team')?.value || '';
   document.getElementById('hm-joindate').value = document.getElementById('em-join')?.value || '';
+  document.getElementById('hm-transferdate').value = document.getElementById('em-transfer')?.value || '';
   // 기존 hireInfo가 있으면 채우기
   const emp = editEmpIdx >= 0 ? employees[editEmpIdx] : null;
   const info = emp?.hireInfo || {};
@@ -4781,6 +5180,7 @@ function openHireModal(empIdx) {
   document.getElementById('hm-empid').value = emp?.empId || '';
   document.getElementById('hm-team').value = emp?.team || '';
   document.getElementById('hm-joindate').value = emp?.joinDate || '';
+  document.getElementById('hm-transferdate').value = emp?.transferDate || '';
   document.getElementById('hm-ssn1').value = info.ssn1 || '';
   document.getElementById('hm-ssn2').value = info.ssn2 || '';
   document.getElementById('hm-phone').value = info.phone || '';
@@ -4794,7 +5194,6 @@ function openHireModal(empIdx) {
   document.getElementById('hire-modal').setAttribute('data-emp-idx', empIdx !== undefined ? empIdx : '');
   calcHireInfo();
   toggleContractEnd();
-  closeModal('emp-modal');
   document.getElementById('hire-modal').classList.add('show');
 }
 
@@ -4814,94 +5213,121 @@ function saveHireInfo() {
   const hireInfo = { ssn1, ssn2, phone, addr, memo,
     emptype: document.getElementById('hm-emptype').value,
     contractend: document.getElementById('hm-contractend').value || '' };
+  const transferDate = document.getElementById('hm-transferdate').value || '';
   const idxStr = document.getElementById('hire-modal').getAttribute('data-emp-idx');
   const idx = parseInt(idxStr);
   if (!isNaN(idx) && idx >= 0 && employees[idx]) {
     employees[idx].hireInfo = hireInfo;
     employees[idx].joinDate = joinDate;
+    employees[idx].transferDate = transferDate;
     employees[idx].name = name;
     employees[idx].empId = empId;
     employees[idx].team = team;
   } else {
     const no = Math.max(0, ...employees.map(e=>e.no||0)) + 1;
-    employees.push({ no, name, empId, team, job:'', joinDate, transferDate:'', leaveDate:'', hours:8, memo:'', grade:'', parentalLeave:[], leaveHistory:[], hireInfo });
+    employees.push({ no, name, empId, team, job:'', joinDate, transferDate, leaveDate:'', hours:8, memo:'', grade:'', parentalLeave:[], leaveHistory:[], hireInfo });
   }
   closeModal('hire-modal');
-  // 직원 모달에서 열었으면 날짜/이름 자동 반영하고 직원 모달 다시 열기
-  const fromEmp = document.getElementById('hire-modal').getAttribute('data-from-emp-modal');
   document.getElementById('hire-modal').removeAttribute('data-from-emp-modal');
-  if (fromEmp === '1') {
-    const emJoin = document.getElementById('em-join');
-    if (emJoin) emJoin.value = joinDate;
-    if (!isNaN(idx) && idx >= 0 && employees[idx]) {
-      employees[idx].hireInfo = hireInfo;
-    }
-    document.getElementById('emp-modal').classList.add('show');
-    renderHireTable();
-    showToast('✅ 입사 정보가 저장됐습니다.');
-    autoSave();
-  } else {
-    renderEmpTable();
-    renderHireTable();
-    showToast('✅ 입사 정보가 저장됐습니다.');
-    autoSave();
+  renderEmpTable();
+  renderHireTable();
+  // 신규 직원 추가면 입퇴사 현황 탭으로 이동
+  if (isNaN(idx) || idx < 0) {
+    showTab(4);
+    showSubTab('hire');
   }
+  showToast('✅ 입사 정보가 저장됐습니다.');
+  autoSave();
+}
+
+// ── 퇴사 처리 (직원명단 버튼) ──
+function openQuickResignModal() {
+  if (!isAdminMode()) return;
+  document.getElementById('rm-search').value = '';
+  document.getElementById('rm-emp-idx').value = '';
+  document.getElementById('resign-emp-info').textContent = '';
+  document.getElementById('qr-search-result').style.display = 'none';
+  document.getElementById('qr-search-result').innerHTML = '';
+  document.getElementById('rm-leavedate').value = '';
+  document.getElementById('rm-memo').value = '';
+  document.getElementById('rm-error').textContent = '';
+  const sel = document.getElementById('rm-reason');
+  sel.innerHTML = '<option value="">선택해주세요</option>';
+  resignReasons.forEach(r => { const o = document.createElement('option'); o.value=r; o.textContent=r; sel.appendChild(o); });
+  document.getElementById('resign-modal').classList.add('show');
+  setTimeout(() => document.getElementById('rm-search').focus(), 100);
+}
+
+function searchResignEmp() {
+  const q = document.getElementById('rm-search').value.trim().toLowerCase();
+  const result = document.getElementById('qr-search-result');
+  if (!q) { result.style.display = 'none'; return; }
+  const matched = employees.filter(e => !e.leaveDate &&
+    (e.name.toLowerCase().includes(q) || (e.empId||'').toLowerCase().includes(q)));
+  if (!matched.length) {
+    result.innerHTML = '<div style="padding:12px;font-size:13px;color:var(--text3);">검색 결과 없음</div>';
+    result.style.display = 'block'; return;
+  }
+  result.innerHTML = matched.slice(0,8).map(e => {
+    const idx = employees.indexOf(e);
+    return `<div style="padding:9px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border);"
+      onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''"
+      onclick="selectResignEmp(${idx})">
+      <b>${e.name}</b> <span style="color:var(--text3);font-size:11px;">${e.empId||''} · ${e.team||''}</span>
+    </div>`;
+  }).join('');
+  result.style.display = 'block';
+}
+
+function selectResignEmp(idx) {
+  const e = employees[idx];
+  if (!e) return;
+  document.getElementById('rm-emp-idx').value = idx;
+  document.getElementById('rm-search').value = e.name;
+  document.getElementById('resign-emp-info').textContent = `${e.name} (${e.empId||'-'}) · ${e.team} · 입사 ${e.joinDate||'-'}`;
+  document.getElementById('qr-search-result').style.display = 'none';
+  // 기존 퇴사정보 있으면 채우기
+  document.getElementById('rm-leavedate').value = e.leaveDate || '';
+  const sel = document.getElementById('rm-reason');
+  if (e.resignInfo?.reason) {
+    Array.from(sel.options).forEach(o => { o.selected = o.value === e.resignInfo.reason; });
+  }
+  document.getElementById('rm-memo').value = e.resignInfo?.memo || '';
 }
 
 function openResignModal(empIdx) {
   if (!isAdminMode()) return;
-  if (empIdx === undefined || empIdx < 0 || !employees[empIdx]) { showToast('직원을 먼저 선택해주세요.', true); return; }
   const emp = employees[empIdx];
-  document.getElementById('resign-emp-info').textContent = `${emp.name} (${emp.empId||'-'}) · ${emp.team}`;
+  if (!emp) return;
+  document.getElementById('rm-search').value = emp.name;
+  document.getElementById('rm-emp-idx').value = empIdx;
+  document.getElementById('resign-emp-info').textContent = `${emp.name} (${emp.empId||'-'}) · ${emp.team} · 입사 ${emp.joinDate||'-'}`;
+  document.getElementById('qr-search-result').style.display = 'none';
   document.getElementById('rm-leavedate').value = emp.leaveDate || '';
   document.getElementById('rm-memo').value = emp.resignInfo?.memo || '';
   document.getElementById('rm-error').textContent = '';
   const sel = document.getElementById('rm-reason');
   sel.innerHTML = '<option value="">선택해주세요</option>';
-  resignReasons.forEach(r => {
-    const o = document.createElement('option');
-    o.value = r; o.textContent = r;
-    if (emp.resignInfo?.reason === r) o.selected = true;
-    sel.appendChild(o);
-  });
-  document.getElementById('resign-modal').setAttribute('data-emp-idx', empIdx);
-  closeModal('emp-modal');
+  resignReasons.forEach(r => { const o = document.createElement('option'); o.value=r; o.textContent=r; if(emp.resignInfo?.reason===r) o.selected=true; sel.appendChild(o); });
   document.getElementById('resign-modal').classList.add('show');
 }
 
 function saveResignInfo() {
+  const empIdx = parseInt(document.getElementById('rm-emp-idx').value);
+  if (isNaN(empIdx) || !employees[empIdx]) { document.getElementById('rm-error').textContent = '직원을 선택해주세요.'; return; }
   const leaveDate = document.getElementById('rm-leavedate').value;
   const reason = document.getElementById('rm-reason').value;
   const memo = document.getElementById('rm-memo').value.trim();
   const errEl = document.getElementById('rm-error');
   if (!leaveDate) { errEl.textContent = '퇴사일을 입력해주세요.'; return; }
   if (!reason) { errEl.textContent = '퇴사사유를 선택해주세요.'; return; }
-
-  const idx = parseInt(document.getElementById('resign-modal').getAttribute('data-emp-idx'));
-  const fromEmp = document.getElementById('resign-modal').getAttribute('data-from-emp-modal');
-
-  // 기존 직원이면 바로 저장, 신규(-1)면 직원 모달에 날짜만 반영
-  if (!isNaN(idx) && idx >= 0 && employees[idx]) {
-    employees[idx].leaveDate = leaveDate;
-    employees[idx].resignInfo = { reason, memo };
-  }
-
+  employees[empIdx].leaveDate = leaveDate;
+  employees[empIdx].resignInfo = { reason, memo };
   closeModal('resign-modal');
-  document.getElementById('resign-modal').removeAttribute('data-from-emp-modal');
-
-  if (fromEmp === '1') {
-    const emLeave = document.getElementById('em-leave');
-    if (emLeave) emLeave.value = leaveDate;
-    document.getElementById('emp-modal').classList.add('show');
-    renderResignTable();
-    showToast('✅ 퇴사 정보가 저장됐습니다.');
-    autoSave();
-  } else {
-    renderEmpTable();
-    renderResignTable();
-    showToast('✅ 퇴사 처리가 완료됐습니다.');
-    autoSave();
-  }
+  renderEmpTable();
+  renderResignTable();
+  showToast('✅ 퇴사 처리가 완료됐습니다.');
+  autoSave();
 }
 
 function openResignReasonMgr() {
@@ -4963,9 +5389,9 @@ function renderHireTable() {
     const emptypeBadge = info.emptype
       ? `<span style="font-size:11px;padding:2px 7px;border-radius:10px;background:${info.emptype==='정규직'?'#eff4ff':info.emptype==='계약직'?'#fff7ed':'#f5f3ff'};color:${info.emptype==='정규직'?'#2563eb':info.emptype==='계약직'?'#c2410c':'#7c3aed'};border:1px solid ${info.emptype==='정규직'?'#bfdbfe':info.emptype==='계약직'?'#fed7aa':'#ddd6fe'};">${info.emptype}</span>` : '-';
     const empIdx = employees.findIndex(emp => emp.name === e.name && emp.empId === e.empId);
-    const editBtn = `<td style="text-align:center;"><button class="btn" onclick="openEditEmpModal(${empIdx})" style="padding:4px 6px;font-size:11px;" title="직원 정보 수정"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></td>`;
-    return `<tr><td>${i+1}</td><td style="font-weight:700;">${e.name}</td><td style="font-size:11px;color:var(--text2);">${e.empId||'-'}</td><td>${getTeamBadge(e.team,'font-size:10px;')}</td><td style="font-size:12px;">${e.joinDate}</td><td style="font-size:12px;">${emptypeBadge}</td><td style="font-size:12px;color:var(--text2);">${info.contractend||'-'}</td><td style="font-size:12px;">${gender}</td><td style="font-size:12px;">${age}</td><td style="font-size:12px;font-family:var(--mono);">${ssn}</td><td style="font-size:12px;">${info.phone||'-'}</td><td style="font-size:12px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${info.addr||''}">${info.addr||'-'}</td><td style="font-size:12px;color:var(--text2);">${info.memo||'-'}</td>${editBtn}</tr>`;
-  }).join('') || '<tr><td colspan="14" style="text-align:center;color:var(--text3);padding:30px;">해당 기간 입사자 없음</td></tr>';
+    const editBtn = isAdminMode() ? `<td style="text-align:center;"><button class="btn" onclick="openHireModal(${empIdx})" style="padding:4px 6px;font-size:11px;" title="입사정보 수정"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></td>` : '<td></td>';
+    return `<tr><td>${i+1}</td><td style="font-weight:700;">${e.name}</td><td style="font-size:11px;color:var(--text2);">${e.empId||'-'}</td><td>${getTeamBadge(e.team,'font-size:10px;')}</td><td style="font-size:12px;">${e.joinDate}</td><td style="font-size:12px;color:var(--text3);">${e.transferDate||'-'}</td><td style="font-size:12px;">${emptypeBadge}</td><td style="font-size:12px;color:var(--text2);">${info.contractend||'-'}</td><td style="font-size:12px;">${gender}</td><td style="font-size:12px;">${age}</td><td style="font-size:12px;font-family:var(--mono);">${ssn}</td><td style="font-size:12px;">${info.phone||'-'}</td><td style="font-size:12px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${info.addr||''}">${info.addr||'-'}</td><td style="font-size:12px;color:var(--text2);">${info.memo||'-'}</td>${editBtn}</tr>`;
+  }).join('') || '<tr><td colspan="15" style="text-align:center;color:var(--text3);padding:30px;">해당 기간 입사자 없음</td></tr>';
 }
 
 function renderResignTable() {
@@ -4992,7 +5418,7 @@ function renderResignTable() {
       tenure=y>0?`${y}년 ${m}개월`:`${m}개월`;
     }
     const empIdx = employees.findIndex(emp => emp.name === e.name && emp.empId === e.empId);
-    const editBtn = `<td style="text-align:center;"><button class="btn" onclick="openEditEmpModal(${empIdx})" style="padding:4px 6px;font-size:11px;" title="직원 정보 수정"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></td>`;
+    const editBtn = isAdminMode() ? `<td style="text-align:center;"><button class="btn" onclick="openResignModal(${empIdx})" style="padding:4px 6px;font-size:11px;" title="퇴사정보 수정"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></td>` : '<td></td>';
     return `<tr><td>${i+1}</td><td style="font-weight:700;">${e.name}</td><td style="font-size:11px;color:var(--text2);">${e.empId||'-'}</td><td>${getTeamBadge(e.team,'font-size:10px;')}</td><td style="font-size:12px;">${e.joinDate||'-'}</td><td style="font-size:12px;color:var(--danger);">${e.leaveDate}</td><td style="font-size:12px;">${tenure}</td><td style="font-size:12px;"><span style="background:var(--surface2);padding:2px 8px;border-radius:12px;border:1px solid var(--border);">${info.reason||'-'}</span></td><td style="font-size:12px;color:var(--text2);">${info.memo||'-'}</td>${editBtn}</tr>`;
   }).join('') || '<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:30px;">해당 기간 퇴사자 없음</td></tr>';
 }
@@ -7459,7 +7885,8 @@ async function tryAdminLogin() {
   if (!pw) { errEl.textContent = '비밀번호를 입력해주세요.'; return; }
 
   const hashed = await hashPw(pw);
-  const adminHash = localStorage.getItem('att_pw_admin') || '5b697282df7a44230864437a0821d72986f8406b769c9a1797bad56e269ffb7a';
+  // DB 비밀번호 우선, 없으면 기본 해시
+  const adminHash = window._adminPwHash || '5b697282df7a44230864437a0821d72986f8406b769c9a1797bad56e269ffb7a';
 
   if (hashed === adminHash || hashed === PW_MASTER_HASH) {
     currentMode = 'admin';
@@ -7579,9 +8006,17 @@ async function saveNewPassword() {
   if (newPw !== confirmPw) { errEl.textContent = '새 비밀번호가 일치하지 않습니다.'; return; }
 
   const hashed = await hashPw(newPw);
-  try { localStorage.setItem('att_pw_admin', hashed); } catch(e) {}
+  window._adminPwHash = hashed;
+  // DB에 즉시 저장
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/attendance_data?id=eq.main', {
+      method: 'PATCH',
+      headers: { ...DB_HEADERS, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ admin_pw_hash: hashed })
+    });
+  } catch(e) { console.error('비밀번호 DB 저장 실패:', e); }
   closeModal('changepw-modal');
-  showToast('✅ 비밀번호가 변경되었습니다.');
+  showToast('✅ 비밀번호가 변경되었습니다. 모든 기기에 적용됩니다.');
 }
 
 function isAdminMode() { return currentMode === 'admin'; }
@@ -7599,19 +8034,16 @@ function isAdminMode() { return currentMode === 'admin'; }
 async function init() {
   await loadData();
 
-  // ── 구분 미입력 직원 → 정규직 일괄 설정 (최초 1회) ──
+  // ── 구분 미입력 직원 → 정규직 / 팀별 업무 자동 설정 ──
   let needSave = false;
   employees.forEach(e => {
     if (!e.hireInfo) e.hireInfo = {};
-    if (!e.hireInfo.emptype) {
-      e.hireInfo.emptype = '정규직';
-      needSave = true;
-    }
+    if (!e.hireInfo.emptype) { e.hireInfo.emptype = '정규직'; needSave = true; }
+    // 팀에 따라 업무 자동 설정
+    const autoJob = getJobFromTeam(e.team);
+    if (autoJob && e.job !== autoJob) { e.job = autoJob; needSave = true; }
   });
-  if (needSave) {
-    autoSave();
-    console.log('✅ 구분 미입력 직원 → 정규직 일괄 적용 완료');
-  }
+  if (needSave) { autoSave(); console.log('✅ 직원 데이터 마이그레이션 완료'); }
 
   // ── 결근 규칙 소급 적용 (기존 데이터 일괄 재처리) ──
   // 1. 금결근+다음주 월결근 → 토·일 결근 (무급 우선순위 덮어쓰기)
