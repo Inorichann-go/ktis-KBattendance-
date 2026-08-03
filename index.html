@@ -2015,7 +2015,7 @@
         <thead>
           <tr>
             <th>No</th><th>이름</th><th>사번</th><th>팀</th><th>입사일</th><th>전보일</th>
-            <th>구분</th><th>계약종료일</th><th>성별</th><th>나이</th><th>주민번호</th><th>메모</th><th style="width:36px;"></th>
+            <th>구분</th><th>계약종료일</th><th>성별</th><th>나이</th><th>생년월일</th><th>메모</th><th style="width:36px;"></th>
           </tr>
         </thead>
         <tbody id="hire-tbody"></tbody>
@@ -2120,7 +2120,6 @@
       <input type="checkbox" id="leave-show-settlement" onchange="renderLeaveTable()" style="width:15px;height:15px;cursor:pointer;accent-color:#cc9900;">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 이번달 정산대상자만
     </label>
-    <button class="btn" onclick="renderLeaveTable()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
   </div>
 
   <!-- 요약 통계 -->
@@ -2162,7 +2161,6 @@
       <option value="fiscal">회계연도 정산 기준</option>
     </select>
     <select class="form-select" id="cert-ref-year" style="width:90px;display:none;" onchange="renderCert()"></select>
-    <button class="btn" onclick="renderCert()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
     <button class="btn" onclick="printCert()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> 인쇄</button>
   </div>
   <div id="cert-wrap"></div>
@@ -2331,7 +2329,7 @@
         </select>
       </div>
       <div class="form-group" id="hm-contractend-wrap" style="display:none;"><label class="form-label">계약종료일</label><input type="date" id="hm-contractend" class="form-input"></div>
-      <div class="form-group"><label class="form-label">주민번호 (앞6자리-뒷1자리)</label>
+      <div class="form-group"><label class="form-label">생년월일 (앞6자리-뒷1자리)</label>
         <div style="display:flex;gap:6px;align-items:center;">
           <input type="text" id="hm-ssn1" class="form-input" placeholder="YYMMDD" maxlength="6" style="width:90px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo();if(this.value.length===6)document.getElementById('hm-ssn2').focus();">
           <span>-</span>
@@ -4269,7 +4267,7 @@ function openEmpDetail(idx) {
         </button>
         <div id="private-info-wrap" style="display:none;margin-top:4px;">
           ${row2('성별', gender, '나이', age)}
-          ${row1('주민번호', ssn)}
+          ${row1('생년월일', ssn)}
         </div>
       </div>
 
@@ -4425,25 +4423,10 @@ function renderAttTable() {
     dayHeaders += `<th class="day-col${cls} day-col-clickable"${holTitle} onclick="openDayBulkModal(${year},${month},${d})" title="${d}일 클릭: 날짜별 일괄변경">${d}<br><span style="font-size:9px;font-weight:400">${dayNames[dow]}</span></th>`;
   }
   // 날짜별 출근인원 집계 (○=1, 반차=0.5)
-  let countHeaders = '';
-  for (let d = 1; d <= days; d++) {
-    const dow = getDayOfWeek(year, month, d);
-    const hol = isHoliday(year, month, d);
-    let bgStyle = '';
-    if (hol) bgStyle = 'background:#fff5f5;';
-    else if (dow === 0) bgStyle = 'background:#fff5f5;';
-    else if (dow === 6) bgStyle = 'background:#f5f8ff;';
+  // 날짜별 출근인원 카운트 배열 (행 렌더링 후 채움)
+  const dayCnt = new Array(days + 1).fill(0);
 
-    let cnt = 0;
-    emps.forEach(e => {
-      const v = getAtt(e.name, year, month, d);
-      if (v === '○') cnt += 1;
-      else if (v === '반차') cnt += 0.5;
-    });
-    const disp = cnt === 0 ? '' : (cnt % 1 === 0 ? cnt : cnt.toFixed(1));
-    const color = cnt > 0 ? 'color:var(--accent);font-weight:700;' : 'color:var(--text3);';
-    countHeaders += `<td style="text-align:center;font-size:10px;padding:3px 1px;${bgStyle}${color}">${disp}</td>`;
-  }
+  let countHeaders = ''; // 나중에 채울 placeholder용 (행 렌더링 후 교체)
 
   // 월별 합계 집계
   let totalCnt = {연차:0, 반차:0, 결근:0, 청휴:0, 기타:0};
@@ -4478,12 +4461,6 @@ function renderAttTable() {
   </tr>
   <tr style="background:var(--surface2);border-bottom:2px solid var(--border);">
     <td colspan="6" style="font-size:10px;font-weight:700;color:var(--text2);padding:4px 8px;position:sticky;left:0;background:var(--surface2);z-index:3;white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 출근인원</td>
-    ${countHeaders}
-    ${sumCell(totalCnt['연차'], 'var(--accent)')}
-    ${sumCell(totalCnt['반차'], '#5090dd')}
-    ${sumCell(totalCnt['결근'], 'var(--danger)')}
-    ${sumCell(totalCnt['청휴'], '#3dba8c')}
-    ${sumCell(totalCnt['기타'], 'var(--text2)')}
   </tr>`;
 
   const tbody = document.getElementById('att-tbody');
@@ -4548,10 +4525,11 @@ function renderAttTable() {
       const titleText = val ? `${d}일: ${val}` : `${d}일`;
       cells += `<td${tdStyle}><div class="att-cell-wrap"><span class="att-cell ${cls}" onclick="openAttModal('${e.name}',${year},${month},${d})" title="${titleText}">${display}</span>${getAttMemo(e.name,year,month,d)?`<div class="att-memo-pin"></div><div class="att-memo-tooltip">${getAttMemo(e.name,year,month,d)}</div>`:''}</div></td>`;
       if (val==='연차') cnt['연차']++;
-      else if (val==='반차') cnt['반차']++;
+      else if (val==='반차') { cnt['반차']++; dayCnt[d] += 0.5; }
       else if (val==='결근') cnt['결근']++;
       else if (val==='청휴') cnt['청휴']++;
       else if (val && !['○','공휴일','휴무','휴일',''].includes(val)) cnt['기타']++;
+      if (val === '○') dayCnt[d] += 1;
     }
     const isLeft = !!e.leaveDate;
     const attCurPH = getParentalHours(e, year, month, 15);
@@ -4572,6 +4550,45 @@ function renderAttTable() {
       <td class="summary-col"><span class="num ${cnt['기타']?'':'num-0'}">${cnt['기타']||0}</span></td>
     </tr>`;
   }).join('');
+
+  // 행 렌더링 후 dayCnt로 출근인원 헤더 생성 및 주입
+  // DEBUG: 31일 카운트 확인
+  if (days >= 31) {
+    console.log(`[DEBUG] ${year}년 ${month}월 31일 dayCnt:`, dayCnt[31]);
+    let debug31 = [];
+    emps.forEach(e => {
+      const ld = e.leaveDate ? new Date(e.leaveDate.replace(/-/g,'/')) : null;
+      const jd = e.joinDate  ? new Date(e.joinDate.replace(/-/g,'/'))  : null;
+      const cell31 = new Date(year, month-1, 31);
+      if (jd && cell31 < jd) return;
+      if (ld && cell31 > ld) return;
+      const v = getAtt(e.name, year, month, 31);
+      if (v === '○') debug31.push(e.name + (e.leaveDate ? `(퇴:${e.leaveDate})` : ''));
+    });
+    console.log(`[DEBUG] 31일 ○ 직원 수: ${debug31.length}`, debug31.slice(0,10));
+  }
+  countHeaders = '';
+  for (let d = 1; d <= days; d++) {
+    const dow = getDayOfWeek(year, month, d);
+    const hol = isHoliday(year, month, d);
+    let bgStyle = '';
+    if (hol || dow === 0) bgStyle = 'background:#fff5f5;';
+    else if (dow === 6) bgStyle = 'background:#f5f8ff;';
+    const c = dayCnt[d];
+    const disp = c === 0 ? '' : (c % 1 === 0 ? c : c.toFixed(1));
+    const color = c > 0 ? 'color:var(--accent);font-weight:700;' : 'color:var(--text3);';
+    countHeaders += `<td style="text-align:center;font-size:10px;padding:3px 1px;${bgStyle}${color}">${disp}</td>`;
+  }
+  const countRow = thead.querySelector('tr:nth-child(2)');
+  if (countRow) {
+    const firstTd = countRow.querySelector('td:first-child');
+    countRow.innerHTML = firstTd.outerHTML + countHeaders +
+      sumCell(totalCnt['연차'], 'var(--accent)') +
+      sumCell(totalCnt['반차'], '#5090dd') +
+      sumCell(totalCnt['결근'], 'var(--danger)') +
+      sumCell(totalCnt['청휴'], '#3dba8c') +
+      sumCell(totalCnt['기타'], 'var(--text2)');
+  }
 }
 
 function confirmResetMonthAtt() {
@@ -5226,8 +5243,6 @@ function saveHireInfo() {
   const joinDate = document.getElementById('hm-joindate').value;
   const ssn1 = document.getElementById('hm-ssn1').value.trim();
   const ssn2 = document.getElementById('hm-ssn2').value.trim();
-  const phone = document.getElementById('hm-phone').value.trim();
-  const addr = document.getElementById('hm-addr').value.trim();
   const memo = document.getElementById('hm-memo').value.trim();
   const errEl = document.getElementById('hm-error');
   if (!name) { errEl.textContent = '이름을 입력해주세요.'; return; }
