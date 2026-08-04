@@ -531,37 +531,8 @@
   .settings-item:hover { background: var(--surface2); }
 
   /* ── 열람모드 차단 ── */
-  body.view-mode [onclick*="openEmpModal"],
-  body.view-mode [onclick*="deleteEmp"],
-  body.view-mode [onclick*="openDayBulkModal"],
-  body.view-mode [onclick*="openAttModal"],
-  body.view-mode [onclick*="openPasteModal"],
-  body.view-mode [onclick*="confirmReset"],
-  body.view-mode [onclick*="saveIssueMemo"],
-  body.view-mode [onclick*="clearIssueMemo"],
-  body.view-mode [onclick*="toggleIssueMemoEdit"],
-  body.view-mode input[onchange*="teamColor"],
-  body.view-mode .att-cell { pointer-events: none !important; cursor: default !important; }
-
-  body.view-mode .admin-only { display: none !important; }
-  body.view-mode #mode-switch-btn { display: none !important; }
-  body.readonly-mode [onclick*="openBulkModal"],
-  body.readonly-mode [onclick*="openEditEmpModal"] {
-    pointer-events: none !important; cursor: not-allowed !important;
-  }
-  body.readonly-mode .att-cell { pointer-events: none !important; cursor: default !important; }
-  body.readonly-mode .emp-name { pointer-events: none !important; text-decoration: none !important; color: var(--text) !important; cursor: default !important; }
 
   /* 회색 처리 (비활성화 시각화) */
-  body.readonly-mode .btn-add,
-  body.readonly-mode .btn-warn,
-  body.readonly-mode [onclick*="deleteEmp"],
-  body.readonly-mode [onclick*="resetEmpData"],
-  body.readonly-mode [onclick*="confirmResetMonthAtt"],
-  body.readonly-mode [onclick*="openTeamColorModal"] {
-    pointer-events: none !important; cursor: not-allowed !important;
-    opacity: 0.4 !important; filter: grayscale(1) !important;
-  }
   #lock-btn { background: #fff0e0; color: #cc6000; border: 1.5px solid #ffcc80; border-radius: 8px; padding: 7px 13px; font-size: 12px; cursor: pointer; font-family: var(--font); transition: all .15s; }
   #lock-btn:hover { background: #cc6000; color: #fff; }
 
@@ -598,14 +569,14 @@
       공지사항
     </button>
     <span id="save-status" style="font-size:11px;color:var(--text3);"></span>
-    <span id="mode-badge" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600;display:inline;"></span>
+    <span id="mode-badge" style="display:none;" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600;display:inline;"></span>
     <!-- 설정 드롭다운 -->
     <div style="position:relative;" id="settings-wrap">
       <button id="btn-settings" class="btn" onclick="toggleSettingsMenu()" style="font-size:12px;padding:6px 10px;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
       <div id="settings-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);min-width:160px;z-index:999;overflow:hidden;">
-        <div id="menu-admin-only" style="display:none;">
+        <div id="menu-">
           <button class="settings-item" onclick="openNoticeEdit();toggleSettingsMenu()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4L12 14.01l-3-3"/><path d="M3 8.67v9.45a2 2 0 0 0 2.4 1.96l12-3A2 2 0 0 0 19 15V9.67a2 2 0 0 0-1.6-1.96l-12-3A2 2 0 0 0 3 6.71v1.96"/></svg>
             공지사항 관리
@@ -628,11 +599,7 @@
             비밀번호 변경
           </button>
         </div>
-        <button class="settings-item" id="menu-switch-btn" onclick="switchToAdmin();toggleSettingsMenu()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          관리자 전환
-        </button>
-      </div>
+        </div>
     </div>
     <input type="file" id="import-file" accept=".json,.html" style="display:none;" onchange="handleImportFile(event)">
   </div>
@@ -640,13 +607,12 @@
 
 <div class="tabs">
   <div class="tab active" onclick="showTab(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Summary</div>
-  <div class="tab" onclick="showTab(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 직원 명단</div>
-  <div class="tab" onclick="showTab(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 월별 요약</div>
-  <div class="tab" onclick="showTab(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 개인 근태</div>
-  <div class="tab" onclick="showTab(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> 근태 상세</div>
-  <div class="tab" onclick="showTab(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> 연차 현황</div>
-  <div class="tab" onclick="showTab(6)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> 연차 확인서</div>
-  <div class="tab" onclick="showTab(7)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 이달의 이슈</div>
+
+  <div class="tab" onclick="showTab(1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 월별 요약</div>
+  <div class="tab" onclick="showTab(2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 개인 근태</div>
+  <div class="tab" onclick="showTab(3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg> 근태 상세</div>
+  <div class="tab" onclick="showTab(4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> 연차 현황</div>
+  <div class="tab" onclick="showTab(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 이달의 이슈</div>
   
 </div>
 
@@ -1249,7 +1215,143 @@
     </div></div>
 </div>
 
-<div id="panel1" class="panel">
+
+<!-- ═══════════════════════════════ TAB 3: 월별 요약 ═══════════════════════════════ -->
+<div id="panel3" class="panel">
+  <div class="ctrl-bar">
+    <select class="form-select" id="sum-year" style="width:90px;"></select>
+    <select class="form-select" id="sum-month" style="width:80px;"></select>
+    <select class="form-select" id="sum-team" style="width:150px;"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
+    <select class="form-select" id="sum-status" style="width:100px;" onchange="renderSummary()">
+      <option value="">전체</option>
+      <option value="active">재직중</option>
+      <option value="onleave">휴직</option>
+      <option value="left">퇴사자</option>
+    </select>
+    <input class="form-input" id="sum-search" placeholder="이름 검색..." style="width:130px;" oninput="renderSummary()">
+  </div>
+
+  <div class="stat-row" id="stat-row"></div>
+
+  <div class="card">
+    <div class="emp-table-wrap">
+      <table class="summary-table" id="sum-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th class="name-col sortable" onclick="sortSum('name')">성명 <span class="sort-icon" id="ssi-name"></span></th>
+            <th class="sortable" onclick="sortSum('team')">팀 <span class="sort-icon" id="ssi-team"></span></th>
+            <th class="sortable" onclick="sortSum('출근')">출근 <span class="sort-icon" id="ssi-출근"></span></th>
+            <th class="sortable" onclick="sortSum('연차')">연차 <span class="sort-icon" id="ssi-연차"></span></th>
+            <th class="sortable" onclick="sortSum('반차')">반차 <span class="sort-icon" id="ssi-반차"></span></th>
+            <th>공가</th><th>청휴</th>
+            <th class="sortable" onclick="sortSum('결근')">결근 <span class="sort-icon" id="ssi-결근"></span></th>
+            <th>무급휴가</th><th>보건</th><th>가족돌봄</th><th>병가</th><th>공휴일</th><th>유급</th>
+          </tr>
+          <tr id="sum-total-row">
+            <th colspan="3" style="text-align:center;color:var(--accent);">합계</th>
+            <th id="sum-tot-출근"></th>
+            <th id="sum-tot-연차"></th>
+            <th id="sum-tot-반차"></th>
+            <th id="sum-tot-공가"></th>
+            <th id="sum-tot-청휴"></th>
+            <th id="sum-tot-결근" style="color:var(--danger);"></th>
+            <th id="sum-tot-무급휴가"></th>
+            <th id="sum-tot-보건"></th>
+            <th id="sum-tot-가족돌봄"></th>
+            <th id="sum-tot-병가"></th>
+            <th id="sum-tot-공휴일"></th>
+            <th id="sum-tot-유급"></th>
+          </tr>
+        </thead>
+        <tbody id="sum-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="pagination" id="sum-pages"></div>
+</div>
+<!-- 직원 상세보기 팝업 (읽기전용) -->
+<div class="modal-overlay" id="emp-detail-modal">
+  <div class="modal" style="width:520px;max-height:85vh;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
+      <h3 style="margin:0;" id="emp-detail-name"></h3>
+      <button class="btn" onclick="closeModal('emp-detail-modal')" style="padding:4px 10px;font-size:20px;line-height:1;">×</button>
+    </div>
+    <div id="emp-detail-content" style="overflow-y:auto;flex:1;"></div>
+    <div class="modal-btns" style="margin-top:14px;flex-shrink:0;">
+      <button class="btn" id="emp-detail-edit-btn" style="font-size:12px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        입사현황에서 수정
+      </button>
+      <button class="btn-save" onclick="closeModal('emp-detail-modal')">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 근태 입력 모달 -->
+<div class="modal-overlay" id="att-modal">
+  <div class="modal" style="width:380px;">
+    <h3 id="att-modal-title">근태 입력</h3>
+    <p id="att-modal-info" style="font-size:11px;color:var(--text3);margin-bottom:12px;"></p>
+    <div class="select-type-grid" id="att-type-grid"></div>
+    <div class="form-group" style="margin-top:10px;">
+      <label class="form-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 메모 <span style="font-weight:400;color:var(--text3)">(선택사항)</span></label>
+      <textarea class="form-input" id="att-memo-input" rows="2" style="resize:vertical;font-size:12px;" placeholder="이슈나 특이사항을 기록하세요..."></textarea>
+    </div>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('att-modal')">취소</button>
+      <button class="btn-save" onclick="saveAttEntry()">적용</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TAB 2: 개인 근태 ═══════════════════════════════ -->
+<div id="panel2" class="panel">
+  <div class="ctrl-bar">
+    <select class="form-select" id="att-year" style="width:90px;"></select>
+    <select class="form-select" id="att-month" style="width:80px;"></select>
+    <select class="form-select" id="att-team-filter" style="width:150px;"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
+    <select class="form-select" id="att-status-filter" style="width:100px;" onchange="renderAttTable()">
+      <option value="">전체</option>
+      <option value="active">재직중</option>
+      <option value="onleave">휴직</option>
+      <option value="left">퇴사자</option>
+    </select>
+    <input class="form-input" id="att-search" placeholder="이름 검색..." style="width:130px;" oninput="renderAttTable()">
+    <select class="form-select" id="att-sort" style="width:120px;" onchange="renderAttTable()">
+      <option value="default">기본순</option>
+      <option value="name">이름순</option>
+      <option value="team">팀순</option>
+      <option value="joinDate">입사일순</option>
+    </select>
+    <button class="btn btn-warn" onclick="confirmResetMonthAtt()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 이달 초기화</button>
+    <button class="btn-save" onclick="openPasteModal()" style="background:#16a34a;border-color:#16a34a;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 엑셀 붙여넣기</button>
+    <button class="btn" onclick="exportAttExcel()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 엑셀 내보내기</button>
+  </div>
+
+  <div class="card">
+    <div class="att-grid-wrap">
+      <table class="att-grid" id="att-table">
+        <thead id="att-thead"></thead>
+        <tbody id="att-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TAB 4: 입퇴사 현황 ═══════════════════════════════ -->
+<div id="panel4" class="panel">
+  <!-- 하위 탭 -->
+  <div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;">
+    <div class="sub-tab active" onclick="showSubTab('emplist')" id="sub-emplist" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid var(--accent);color:var(--accent);margin-bottom:-2px;">직원 명단</div>
+    <div class="sub-tab" onclick="showSubTab('hire')" id="sub-hire" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">입사 현황</div>
+    <div class="sub-tab" onclick="showSubTab('leave')" id="sub-leave" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">퇴사 현황</div>
+    <div class="sub-tab" onclick="showSubTab('parental')" id="sub-parental" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">육아단축</div>
+    <div class="sub-tab" onclick="showSubTab('leavehist')" id="sub-leavehist" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">휴직</div>
+  </div>
+
+  <!-- 직원 명단 하위탭 -->
+  <div id="subtab-emplist">
   <div class="ctrl-bar">
     <input class="form-input" id="search-emp" placeholder="이름 / 사번 / 팀 검색..." style="width:210px;" oninput="renderEmpTable()">
     <select class="form-select" id="filter-team" style="width:150px;" onchange="renderEmpTable()"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
@@ -1260,7 +1362,7 @@
       <option value="left">퇴사자</option>
     </select>
     <button class="btn btn-warn" onclick="resetEmpData()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 명단 초기화</button>
-    <button class="btn team-color-btn admin-only" onclick="openTeamColorModal()" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> 팀 색상</button>
+    <button class="btn team-color-btn" onclick="openTeamColorModal()" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> 팀 색상</button>
     <span style="flex:1;"></span>
     <span id="emp-count" style="font-size:12px;color:var(--text2);font-weight:600;">총 204명</span>
   </div>
@@ -1860,139 +1962,6 @@
     </div>
   </div>
   <div class="pagination" id="emp-pages"><button class="page-btn active">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">4</button><button class="page-btn">5</button><button class="page-btn">6</button><button class="page-btn">7</button></div>
-</div>
-
-<!-- ═══════════════════════════════ TAB 3: 월별 요약 ═══════════════════════════════ -->
-<div id="panel3" class="panel">
-  <div class="ctrl-bar">
-    <select class="form-select" id="sum-year" style="width:90px;"></select>
-    <select class="form-select" id="sum-month" style="width:80px;"></select>
-    <select class="form-select" id="sum-team" style="width:150px;"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
-    <select class="form-select" id="sum-status" style="width:100px;" onchange="renderSummary()">
-      <option value="">전체</option>
-      <option value="active">재직중</option>
-      <option value="onleave">휴직</option>
-      <option value="left">퇴사자</option>
-    </select>
-    <input class="form-input" id="sum-search" placeholder="이름 검색..." style="width:130px;" oninput="renderSummary()">
-  </div>
-
-  <div class="stat-row" id="stat-row"></div>
-
-  <div class="card">
-    <div class="emp-table-wrap">
-      <table class="summary-table" id="sum-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th class="name-col sortable" onclick="sortSum('name')">성명 <span class="sort-icon" id="ssi-name"></span></th>
-            <th class="sortable" onclick="sortSum('team')">팀 <span class="sort-icon" id="ssi-team"></span></th>
-            <th class="sortable" onclick="sortSum('출근')">출근 <span class="sort-icon" id="ssi-출근"></span></th>
-            <th class="sortable" onclick="sortSum('연차')">연차 <span class="sort-icon" id="ssi-연차"></span></th>
-            <th class="sortable" onclick="sortSum('반차')">반차 <span class="sort-icon" id="ssi-반차"></span></th>
-            <th>공가</th><th>청휴</th>
-            <th class="sortable" onclick="sortSum('결근')">결근 <span class="sort-icon" id="ssi-결근"></span></th>
-            <th>무급휴가</th><th>보건</th><th>가족돌봄</th><th>병가</th><th>공휴일</th><th>유급</th>
-          </tr>
-          <tr id="sum-total-row">
-            <th colspan="3" style="text-align:center;color:var(--accent);">합계</th>
-            <th id="sum-tot-출근"></th>
-            <th id="sum-tot-연차"></th>
-            <th id="sum-tot-반차"></th>
-            <th id="sum-tot-공가"></th>
-            <th id="sum-tot-청휴"></th>
-            <th id="sum-tot-결근" style="color:var(--danger);"></th>
-            <th id="sum-tot-무급휴가"></th>
-            <th id="sum-tot-보건"></th>
-            <th id="sum-tot-가족돌봄"></th>
-            <th id="sum-tot-병가"></th>
-            <th id="sum-tot-공휴일"></th>
-            <th id="sum-tot-유급"></th>
-          </tr>
-        </thead>
-        <tbody id="sum-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-  <div class="pagination" id="sum-pages"></div>
-</div>
-<!-- 직원 상세보기 팝업 (읽기전용) -->
-<div class="modal-overlay" id="emp-detail-modal">
-  <div class="modal" style="width:520px;max-height:85vh;display:flex;flex-direction:column;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-shrink:0;">
-      <h3 style="margin:0;" id="emp-detail-name"></h3>
-      <button class="btn" onclick="closeModal('emp-detail-modal')" style="padding:4px 10px;font-size:20px;line-height:1;">×</button>
-    </div>
-    <div id="emp-detail-content" style="overflow-y:auto;flex:1;"></div>
-    <div class="modal-btns" style="margin-top:14px;flex-shrink:0;">
-      <button class="btn admin-only" id="emp-detail-edit-btn" style="font-size:12px;">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        입사현황에서 수정
-      </button>
-      <button class="btn-save" onclick="closeModal('emp-detail-modal')">닫기</button>
-    </div>
-  </div>
-</div>
-
-<!-- 근태 입력 모달 -->
-<div class="modal-overlay" id="att-modal">
-  <div class="modal" style="width:380px;">
-    <h3 id="att-modal-title">근태 입력</h3>
-    <p id="att-modal-info" style="font-size:11px;color:var(--text3);margin-bottom:12px;"></p>
-    <div class="select-type-grid" id="att-type-grid"></div>
-    <div class="form-group" style="margin-top:10px;">
-      <label class="form-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 메모 <span style="font-weight:400;color:var(--text3)">(선택사항)</span></label>
-      <textarea class="form-input" id="att-memo-input" rows="2" style="resize:vertical;font-size:12px;" placeholder="이슈나 특이사항을 기록하세요..."></textarea>
-    </div>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('att-modal')">취소</button>
-      <button class="btn-save" onclick="saveAttEntry()">적용</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════ TAB 2: 개인 근태 ═══════════════════════════════ -->
-<div id="panel2" class="panel">
-  <div class="ctrl-bar">
-    <select class="form-select" id="att-year" style="width:90px;"></select>
-    <select class="form-select" id="att-month" style="width:80px;"></select>
-    <select class="form-select" id="att-team-filter" style="width:150px;"><option value="">전체 팀</option><option value="관리자">관리자</option><option value="보유계약지원">보유계약지원</option><option value="실효OB">실효OB</option><option value="장기사고 1팀">장기사고 1팀</option><option value="장기사고 2팀">장기사고 2팀</option><option value="장기사고 3팀">장기사고 3팀</option><option value="장기사고 4팀">장기사고 4팀</option><option value="장기사고 5팀">장기사고 5팀</option><option value="장기사고 6팀">장기사고 6팀</option><option value="제휴상담 1팀">제휴상담 1팀</option><option value="제휴상담 2팀">제휴상담 2팀</option><option value="제휴상담 3팀">제휴상담 3팀</option><option value="제휴지원팀">제휴지원팀</option></select>
-    <select class="form-select" id="att-status-filter" style="width:100px;" onchange="renderAttTable()">
-      <option value="">전체</option>
-      <option value="active">재직중</option>
-      <option value="onleave">휴직</option>
-      <option value="left">퇴사자</option>
-    </select>
-    <input class="form-input" id="att-search" placeholder="이름 검색..." style="width:130px;" oninput="renderAttTable()">
-    <select class="form-select" id="att-sort" style="width:120px;" onchange="renderAttTable()">
-      <option value="default">기본순</option>
-      <option value="name">이름순</option>
-      <option value="team">팀순</option>
-      <option value="joinDate">입사일순</option>
-    </select>
-    <button class="btn btn-warn" onclick="confirmResetMonthAtt()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 이달 초기화</button>
-    <button class="btn-save" onclick="openPasteModal()" style="background:#16a34a;border-color:#16a34a;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> 엑셀 붙여넣기</button>
-    <button class="btn" onclick="exportAttExcel()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 엑셀 내보내기</button>
-  </div>
-
-  <div class="card">
-    <div class="att-grid-wrap">
-      <table class="att-grid" id="att-table">
-        <thead id="att-thead"></thead>
-        <tbody id="att-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════ TAB 4: 입퇴사 현황 ═══════════════════════════════ -->
-<div id="panel4" class="panel">
-  <!-- 하위 탭 -->
-  <div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;">
-    <div class="sub-tab active" onclick="showSubTab('hire')" id="sub-hire" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid var(--accent);color:var(--accent);margin-bottom:-2px;">입사 현황</div>
-    <div class="sub-tab" onclick="showSubTab('leave')" id="sub-leave" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">퇴사 현황</div>
-    <div class="sub-tab" onclick="showSubTab('parental')" id="sub-parental" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">육아단축</div>
-    <div class="sub-tab" onclick="showSubTab('leavehist')" id="sub-leavehist" style="padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--text3);margin-bottom:-2px;">휴직</div>
   </div>
 
   <!-- 입사 현황 -->
@@ -2007,7 +1976,7 @@
         <option value="10">10월</option><option value="11">11월</option><option value="12">12월</option>
       </select>
       <input class="form-input" id="hire-search" placeholder="이름 검색..." style="width:130px;" oninput="renderHireTable()">
-      <button class="btn-add admin-only" onclick="openAddEmpModal()" style="margin-left:4px;">＋ 직원 추가</button>
+      <button class="btn-add" onclick="openAddEmpModal()" style="margin-left:4px;">＋ 직원 추가</button>
       <span id="hire-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
     </div>
     <div style="overflow-x:auto;">
@@ -2036,8 +2005,8 @@
       </select>
       <input class="form-input" id="resign-search" placeholder="이름 검색..." style="width:130px;" oninput="renderResignTable()">
       <span id="resign-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
-      <button class="btn-add admin-only" onclick="openQuickResignModal()" style="font-size:12px;">＋ 퇴사 추가</button>
-      <button class="btn admin-only" onclick="openResignReasonMgr()" style="font-size:12px;margin-left:auto;">
+      <button class="btn-add" onclick="openQuickResignModal()" style="font-size:12px;">＋ 퇴사 추가</button>
+      <button class="btn" onclick="openResignReasonMgr()" style="font-size:12px;margin-left:auto;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         퇴사사유 관리
       </button>
@@ -2060,7 +2029,7 @@
   <div id="subtab-parental" style="display:none;">
     <div class="ctrl-bar" style="margin-bottom:14px;">
       <input class="form-input" id="parental-filter" placeholder="이름 검색..." style="width:160px;" oninput="renderParentalTable()">
-      <button class="btn-add admin-only" onclick="openParentalAddModal()" style="font-size:12px;">＋ 육아단축 추가</button>
+      <button class="btn-add" onclick="openParentalAddModal()" style="font-size:12px;">＋ 육아단축 추가</button>
       <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);cursor:pointer;margin-left:4px;">
         <input type="checkbox" id="parental-active-only" onchange="renderParentalTable()" style="accent-color:var(--accent);">
         진행중만 보기
@@ -2080,7 +2049,7 @@
   <div id="subtab-leavehist" style="display:none;">
     <div class="ctrl-bar" style="margin-bottom:14px;">
       <input class="form-input" id="leavehist-filter" placeholder="이름 검색..." style="width:160px;" oninput="renderLeaveHistTable()">
-      <button class="btn-add admin-only" onclick="openLeaveHistAddModal()" style="font-size:12px;">＋ 휴직 추가</button>
+      <button class="btn-add" onclick="openLeaveHistAddModal()" style="font-size:12px;">＋ 휴직 추가</button>
       <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);cursor:pointer;margin-left:4px;">
         <input type="checkbox" id="leavehist-active-only" onchange="renderLeaveHistTable()" style="accent-color:var(--accent);">
         진행중만 보기
@@ -2151,328 +2120,11 @@
   </div>
   <div class="pagination" id="leave-pages"></div>
 </div>
-<div id="panel6" class="panel">
-  <div class="ctrl-bar">
-    <input class="form-input" id="cert-search" placeholder="이름 또는 사번 검색..." style="width:200px;" oninput="renderCert()">
-    <select class="form-select" id="cert-ref-type" style="width:200px;" onchange="renderCert()">
-      <option value="today">현재 기준 (오늘)</option>
-      <option value="anniv2">2년차 정산 기준</option>
-      <option value="proportional">비례연차 정산 기준</option>
-      <option value="fiscal">회계연도 정산 기준</option>
-    </select>
-    <select class="form-select" id="cert-ref-year" style="width:90px;display:none;" onchange="renderCert()"></select>
-    <button class="btn" onclick="printCert()" style="margin-left:auto;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> 인쇄</button>
-  </div>
-  <div id="cert-wrap"></div>
-</div>
-<div class="modal-overlay" id="bulk-modal">
-  <div class="modal" style="width:680px;max-width:96vw;max-height:92vh;overflow-y:auto;">
-    <h3 id="bulk-modal-title">근태 일괄 변경</h3>
-    <p id="bulk-modal-info" style="font-size:12px;color:var(--text2);margin-bottom:14px;"></p>
 
-    <!-- 날짜 선택 달력 -->
-    <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 날짜 선택 <span style="font-weight:400;color:var(--text3);margin-left:6px;">클릭 또는 드래그로 여러 날 선택</span>
-      <button class="btn" onclick="bulkSelectAll()" style="font-size:11px;padding:3px 9px;margin-left:8px;">전체선택</button>
-      <button class="btn" onclick="bulkClearSel()" style="font-size:11px;padding:3px 9px;margin-left:4px;">선택해제</button>
-    </div>
-    <div id="bulk-cal" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px;user-select:none;"></div>
-
-    <!-- 근태 유형 선택 + 적용 -->
-    <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 선택한 날짜에 적용 <span style="font-size:11px;font-weight:400;color:var(--text3)">아래 근태 유형을 클릭하면 선택된 날짜에 즉시 반영됩니다</span></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;" id="bulk-type-btns"></div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-        <label style="font-size:11px;color:var(--text2);display:flex;align-items:center;gap:4px;cursor:pointer;">
-          <input type="checkbox" id="bulk-skip-hol" checked=""> 공휴일 제외
-        </label>
-        <span id="bulk-sel-count" style="font-size:12px;color:var(--text2);font-weight:600;"></span>
-      </div>
-    </div>
-
-    <div class="modal-btns" style="margin-top:16px;">
-      <button class="btn" onclick="closeModal('bulk-modal')">닫기</button>
-      <button class="btn-save" onclick="saveBulkEdit()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- 엑셀 붙여넣기 모달 -->
-<div class="modal-overlay" id="paste-modal">
-  <div class="modal" style="width:820px;max-width:96vw;max-height:92vh;display:flex;flex-direction:column;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-      <h3 style="margin:0;display:flex;align-items:center;gap:8px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
-        엑셀 붙여넣기
-      </h3>
-      <button class="btn" onclick="closeModal('paste-modal')" style="padding:4px 10px;">✕</button>
-    </div>
-    <div style="font-size:12px;color:var(--text2);background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:12px;line-height:1.8;">
-      <strong style="color:var(--accent);">컬럼 순서:</strong>
-      날짜 &nbsp;│&nbsp; 이름 &nbsp;│&nbsp; 사번 &nbsp;│&nbsp; 팀 &nbsp;│&nbsp; 근태구분 &nbsp;│&nbsp; 메모 <span style="color:var(--text3)">(선택)</span>
-      <br>
-      <strong style="color:var(--accent);">날짜 형식:</strong> 2026/7/6(월) &nbsp;·&nbsp; 2026-07-06 &nbsp;·&nbsp; 2026.7.6 모두 인식
-    </div>
-
-    <!-- 붙여넣기 영역 -->
-    <div id="paste-input-wrap" style="flex:1;min-height:0;">
-      <textarea id="paste-textarea"
-        style="width:100%;height:160px;padding:10px;border:2px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--mono);resize:vertical;box-sizing:border-box;outline:none;transition:border .15s;"
-        placeholder="여기에 엑셀에서 복사한 내용을 붙여넣으세요 (Ctrl+V)"
-        oninput="parsePasteData()"
-        onfocus="this.style.borderColor='var(--accent)'"
-        onblur="this.style.borderColor='var(--border)'"></textarea>
-    </div>
-
-    <!-- 미리보기 -->
-    <div id="paste-preview-wrap" style="margin-top:12px;display:none;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-        <div style="font-size:12px;font-weight:700;color:var(--text);">미리보기</div>
-        <div id="paste-summary" style="font-size:11px;color:var(--text2);"></div>
-      </div>
-      <div style="max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;">
-        <table style="width:100%;border-collapse:collapse;font-size:12px;">
-          <thead>
-            <tr style="background:var(--surface2);position:sticky;top:0;">
-              <th style="padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;">날짜</th>
-              <th style="padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;">이름</th>
-              <th style="padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;">팀</th>
-              <th style="padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;">근태</th>
-              <th style="padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;">메모</th>
-              <th style="padding:7px 10px;text-align:center;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600;">상태</th>
-            </tr>
-          </thead>
-          <tbody id="paste-preview-body"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="modal-btns" style="margin-top:14px;">
-      <button class="btn" onclick="closeModal('paste-modal')">취소</button>
-      <button class="btn-save" id="paste-apply-btn" onclick="applyPasteData()" disabled style="opacity:.4;">적용하기</button>
-    </div>
-  </div>
-</div>
-
-<!-- 비밀번호 변경 모달 -->
-<div class="modal-overlay" id="changepw-modal">
-  <div class="modal" style="width:360px;">
-    <h3 style="margin:0 0 20px;font-size:16px;display:flex;align-items:center;gap:8px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
-      관리자 비밀번호 변경
-    </h3>
-    <div style="font-size:12px;color:var(--text2);background:var(--surface2);border-radius:8px;padding:10px 12px;margin-bottom:16px;line-height:1.7;">
-      변경 시 마스터 비밀번호 확인이 필요합니다.
-    </div>
-    <div class="form-group">
-      <label class="form-label">마스터 비밀번호 확인</label>
-      <input type="password" id="cpw-master" class="form-input" placeholder="마스터 비밀번호 입력">
-    </div>
-    <div class="form-group" style="margin-top:12px;">
-      <label class="form-label">새 비밀번호</label>
-      <input type="password" id="cpw-new" class="form-input" placeholder="새 비밀번호 (4자 이상)">
-    </div>
-    <div class="form-group" style="margin-top:12px;">
-      <label class="form-label">새 비밀번호 확인</label>
-      <input type="password" id="cpw-confirm" class="form-input" placeholder="새 비밀번호 다시 입력"
-        onkeydown="if(event.key==='Enter')saveNewPassword()">
-    </div>
-    <div id="cpw-error" style="color:var(--danger);font-size:12px;min-height:18px;margin:10px 0;"></div>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('changepw-modal');document.getElementById('cpw-master').value='';document.getElementById('cpw-new').value='';document.getElementById('cpw-confirm').value='';document.getElementById('cpw-error').textContent='';">취소</button>
-      <button class="btn-save" onclick="saveNewPassword()">변경 저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- 관리자 로그인 모달 -->
-<div class="modal-overlay" id="admin-login-modal">
-  <div class="modal" style="width:340px;text-align:center;">
-    <h3 style="margin:0 0 20px;font-size:16px;">관리자 로그인</h3>
-    <input type="password" id="admin-pw-input"
-      style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);font-size:14px;box-sizing:border-box;outline:none;transition:border .15s;"
-      placeholder="관리자 비밀번호 입력"
-      onfocus="this.style.borderColor='var(--accent)'"
-      onblur="this.style.borderColor='var(--border)'"
-      onkeydown="if(event.key==='Enter')tryAdminLogin()">
-    <div id="admin-pw-error" style="color:var(--danger);font-size:12px;min-height:18px;margin:10px 0;"></div>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('admin-login-modal');document.getElementById('admin-pw-input').value='';document.getElementById('admin-pw-error').textContent='';">취소</button>
-      <button class="btn-save" onclick="tryAdminLogin()">로그인</button>
-    </div>
-  </div>
-</div>
-
-<!-- 입사 정보 모달 -->
-<div class="modal-overlay" id="hire-modal">
-  <div class="modal" style="width:520px;max-height:90vh;overflow-y:auto;">
-    <h3 style="margin:0 0 18px;">신규 입사 등록</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="form-group"><label class="form-label">이름 *</label><input type="text" id="hm-name" class="form-input" placeholder="홍길동"></div>
-      <div class="form-group"><label class="form-label">사번 *</label><input type="text" id="hm-empid" class="form-input" placeholder="2390001"></div>
-      <div class="form-group"><label class="form-label">팀 *</label>
-        <input type="text" id="hm-team" class="form-input" placeholder="팀 입력 또는 선택" list="hm-team-list" autocomplete="off">
-        <datalist id="hm-team-list">
-          <option>제휴상담 1팀</option><option>제휴상담 2팀</option><option>제휴상담 3팀</option><option>제휴지원팀</option>
-          <option>장기사고 1팀</option><option>장기사고 2팀</option><option>장기사고 3팀</option><option>장기사고 4팀</option><option>장기사고 5팀</option><option>장기사고 6팀</option>
-          <option>보유계약지원</option><option>실효OB</option><option>관리자</option>
-        </datalist>
-      </div>
-      <div class="form-group"><label class="form-label">입사일 *</label><input type="date" id="hm-joindate" class="form-input"></div>
-      <div class="form-group"><label class="form-label">전보일</label><input type="date" id="hm-transferdate" class="form-input"></div>
-      <div class="form-group"><label class="form-label">구분 *</label>
-        <select id="hm-emptype" class="form-select" onchange="toggleContractEnd()">
-          <option value="">선택</option>
-          <option value="정규직">정규직</option>
-          <option value="계약직">계약직</option>
-          <option value="촉탁직">촉탁직</option>
-        </select>
-      </div>
-      <div class="form-group" id="hm-contractend-wrap" style="display:none;"><label class="form-label">계약종료일</label><input type="date" id="hm-contractend" class="form-input"></div>
-      <div class="form-group"><label class="form-label">생년월일 (앞6자리-뒷1자리)</label>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <input type="text" id="hm-ssn1" class="form-input" placeholder="YYMMDD" maxlength="6" style="width:90px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo();if(this.value.length===6)document.getElementById('hm-ssn2').focus();">
-          <span>-</span>
-          <input type="text" id="hm-ssn2" class="form-input" placeholder="1" maxlength="1" style="width:40px;" oninput="this.value=this.value.replace(/\D/g,'');calcHireInfo();">
-          <span id="hm-gender" style="font-size:12px;color:var(--accent);font-weight:600;"></span>
-          <span id="hm-age" style="font-size:12px;color:var(--text2);"></span>
-        </div>
-      </div>
-    </div>
-    <div class="form-group" style="margin-top:8px;"><label class="form-label">메모</label><textarea id="hm-memo" class="form-input" rows="2" style="resize:none;" placeholder="특이사항 메모"></textarea></div>
-    <div id="hm-error" style="color:var(--danger);font-size:12px;min-height:16px;margin-top:8px;"></div>
-    <div class="modal-btns" style="margin-top:14px;">
-      <button class="btn" onclick="closeModal('hire-modal')">취소</button>
-      <button class="btn-save" onclick="saveHireInfo()">등록</button>
-    </div>
-  </div>
-</div>
-
-<!-- 퇴사 처리 모달 -->
-<!-- 육아단축 추가/수정 모달 -->
-<div class="modal-overlay" id="parental-add-modal">
-  <div class="modal" style="width:440px;">
-    <h3 id="parental-modal-title" style="margin:0 0 16px;">육아단축 추가</h3>
-    <div class="form-group" style="margin-bottom:12px;">
-      <label class="form-label">직원 *</label>
-      <input type="text" id="pm-search" class="form-input" placeholder="이름 또는 사번 검색..." oninput="searchPmEmp()" autocomplete="off">
-      <div id="pm-search-result" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;display:none;margin-top:4px;"></div>
-      <input type="hidden" id="pm-emp-idx">
-      <div id="pm-emp-name" style="font-size:12px;color:var(--accent);margin-top:4px;font-weight:700;"></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-      <div class="form-group"><label class="form-label">시작일 *</label><input type="date" id="pm-start" class="form-input"></div>
-      <div class="form-group"><label class="form-label">종료일 (미입력=진행중)</label><input type="date" id="pm-end" class="form-input"></div>
-    </div>
-    <div class="form-group" style="margin-bottom:12px;">
-      <label class="form-label">단축시간 *</label>
-      <select id="pm-hours" class="form-select">
-        <option value="4">4h</option><option value="5">5h</option><option value="6">6h</option><option value="7">7h</option>
-      </select>
-    </div>
-    <input type="hidden" id="pm-edit-idx">
-    <div style="font-size:10px;color:var(--text3);margin-bottom:12px;">※ 기간 내 사용 연차는 단축시간(h)으로 차감됩니다.</div>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('parental-add-modal')">취소</button>
-      <button class="btn-save" onclick="saveParentalEntry()">저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- 휴직 추가/수정 모달 -->
-<div class="modal-overlay" id="leavehist-add-modal">
-  <div class="modal" style="width:440px;">
-    <h3 id="leavehist-modal-title" style="margin:0 0 16px;">휴직 추가</h3>
-    <div class="form-group" style="margin-bottom:12px;">
-      <label class="form-label">직원 *</label>
-      <input type="text" id="lm-search" class="form-input" placeholder="이름 또는 사번 검색..." oninput="searchLmEmp()" autocomplete="off">
-      <div id="lm-search-result" style="max-height:140px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;display:none;margin-top:4px;"></div>
-      <input type="hidden" id="lm-emp-idx">
-      <div id="lm-emp-name" style="font-size:12px;color:var(--accent);margin-top:4px;font-weight:700;"></div>
-    </div>
-    <div class="form-group" style="margin-bottom:12px;">
-      <label class="form-label">휴직구분 *</label>
-      <select id="lm-type" class="form-select">
-        <option>산휴</option><option>육아휴직</option><option>육아휴직(부모연장)</option>
-        <option>육아휴직(임신중)</option><option>병가휴직</option><option>가족돌봄휴직</option><option>유산휴가</option>
-      </select>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-      <div class="form-group"><label class="form-label">시작일 *</label><input type="date" id="lm-start" class="form-input"></div>
-      <div class="form-group"><label class="form-label">종료일 (미입력=진행중)</label><input type="date" id="lm-end" class="form-input"></div>
-    </div>
-    <input type="hidden" id="lm-edit-idx">
-    <div style="font-size:10px;color:var(--text3);margin-bottom:12px;">※ 휴직 기간은 개인근태에 휴직구분으로 표시됩니다.</div>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('leavehist-add-modal')">취소</button>
-      <button class="btn-save" onclick="saveLeaveHistEntry()">저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- 퇴사처리 - 직원 검색 팝업 -->
-<!-- 통합 퇴사처리 팝업 (검색+입력) -->
-<div class="modal-overlay" id="resign-modal">
-  <div class="modal" style="width:460px;">
-    <h3 style="margin:0 0 16px;">퇴사 처리</h3>
-    <!-- 직원 검색 -->
-    <div class="form-group" style="margin-bottom:12px;">
-      <label class="form-label">직원 *</label>
-      <input type="text" id="rm-search" class="form-input" placeholder="이름 또는 사번 검색..." oninput="searchResignEmp()" autocomplete="off">
-      <div id="qr-search-result" style="max-height:160px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;display:none;margin-top:4px;"></div>
-      <input type="hidden" id="rm-emp-idx">
-      <div id="resign-emp-info" style="font-size:12px;color:var(--accent);margin-top:4px;font-weight:700;"></div>
-    </div>
-    <!-- 퇴사 정보 -->
-    <div class="form-group" style="margin-bottom:12px;"><label class="form-label">퇴사일 *</label><input type="date" id="rm-leavedate" class="form-input"></div>
-    <div class="form-group" style="margin-bottom:12px;"><label class="form-label">퇴사사유 *</label>
-      <select id="rm-reason" class="form-select"><option value="">선택해주세요</option></select>
-    </div>
-    <div class="form-group" style="margin-bottom:8px;"><label class="form-label">메모</label>
-      <textarea id="rm-memo" class="form-input" rows="2" style="resize:none;" placeholder="특이사항 메모"></textarea>
-    </div>
-    <div id="rm-error" style="color:var(--danger);font-size:12px;min-height:16px;"></div>
-    <div class="modal-btns" style="margin-top:14px;">
-      <button class="btn" onclick="closeModal('resign-modal')">취소</button>
-      <button class="btn-save" style="background:var(--danger);border-color:var(--danger);" onclick="saveResignInfo()">퇴사 처리</button>
-    </div>
-  </div>
-</div>
-
-<!-- 퇴사사유 관리 모달 -->
-<div class="modal-overlay" id="resign-reason-modal">
-  <div class="modal" style="width:360px;">
-    <h3 style="margin:0 0 16px;">퇴사사유 관리</h3>
-    <div id="resign-reason-list" style="margin-bottom:12px;"></div>
-    <div style="display:flex;gap:8px;">
-      <input type="text" id="new-reason-input" class="form-input" placeholder="새 퇴사사유 입력" style="flex:1;">
-      <button class="btn-save" onclick="addResignReason()" style="padding:8px 14px;">추가</button>
-    </div>
-    <div class="modal-btns" style="margin-top:14px;">
-      <button class="btn" onclick="closeModal('resign-reason-modal')">닫기</button>
-    </div>
-  </div>
-</div>
-
-<!-- 확인 팝업 (커스텀) -->
-<div class="modal-overlay" id="confirm-modal">
-  <div class="modal" style="width:320px;">
-    <h3 id="confirm-title" style="margin-bottom:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 확인</h3>
-    <p id="confirm-msg" style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:4px;"></p>
-    <p style="font-size:11px;color:var(--text3);margin-bottom:0;">이 작업은 되돌릴 수 없습니다.</p>
-    <div class="modal-btns">
-      <button class="btn" onclick="closeModal('confirm-modal')">취소</button>
-      <button class="btn-danger" id="confirm-ok-btn" style="padding:8px 18px;font-size:13px;border-radius:8px;">확인</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════ TAB 6: 이달의 이슈 ═══════════════════════════════ -->
 <div id="panel7" class="panel">
   <div class="ctrl-bar">
     <select class="form-select" id="issue-year" style="width:95px;" onchange="renderIssue()"></select>
     <select class="form-select" id="issue-month" style="width:80px;" onchange="renderIssue()"></select>
-    <button class="btn" onclick="renderIssue()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
   </div>
   <div id="issue-memo-section" class="issue-section" style="margin-bottom:12px;">
     <div class="issue-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 기타 특이사항 메모</div>
@@ -2642,7 +2294,7 @@
     </div>
     <div id="nd-body" style="font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-break:break-word;min-height:60px;"></div>
     <div class="modal-btns" style="margin-top:20px;">
-      <div style="display:flex;gap:8px;" id="nd-admin-btns" class="admin-only">
+      <div style="display:flex;gap:8px;" id="nd-admin-btns" class="">
         <button class="btn" onclick="editNoticeItem(currentNoticeId)" style="font-size:12px;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정
         </button>
@@ -2680,6 +2332,20 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> 저장
       </button>
     </div>
+  </div>
+</div>
+
+<!-- 연차확인서 팝업 -->
+<div class="modal-overlay" id="cert-popup-modal" style="z-index:9990;">
+  <div class="modal" style="width:760px;max-height:90vh;overflow-y:auto;padding:0;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;">
+      <h3 style="margin:0;font-size:15px;">✦ 연차 확인서</h3>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" onclick="window.print()" style="font-size:12px;">🖨 인쇄</button>
+        <button class="btn" onclick="closeModal('cert-popup-modal')" style="padding:4px 10px;font-size:18px;line-height:1;">×</button>
+      </div>
+    </div>
+    <div id="cert-popup-content" style="padding:20px;"></div>
   </div>
 </div>
 
@@ -3187,13 +2853,11 @@ function showTab(i) {
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', j===i));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
   if (i===0) renderSummaryDash();
-  if (i===1) renderEmpTable();
-  if (i===2) renderSummary();
-  if (i===3) renderAttTable();
-  if (i===4) { initHireResignControls(); showSubTab('hire'); }
-  if (i===5) renderLeaveTable();
-  if (i===6) renderCert();
-  if (i===7) renderIssue();
+  if (i===1) renderSummary();
+  if (i===2) renderAttTable();
+  if (i===3) { initHireResignControls(); showSubTab('emplist'); }
+  if (i===4) { initLeaveControls(); renderLeaveTable(); }
+  if (i===5) { initIssueControls(); renderIssue(); }
 }
 
 // ══════════════════════════════
@@ -3693,7 +3357,7 @@ function renderEmpTable() {
       <td>
         <div class="action-btns">
           <button class="btn btn-sm" onclick="openEmpDetail(${realIdx})" title="상세보기"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-          <button class="btn btn-sm btn-danger admin-only" onclick="deleteEmp(${realIdx})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteEmp(${realIdx})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
         </div>
       </td>
     </tr>`;
@@ -4285,7 +3949,7 @@ function openEmpDetail(idx) {
   // 관리자 편집 버튼
   const editBtn = document.getElementById('emp-detail-edit-btn');
   if (editBtn) {
-    editBtn.setAttribute('onclick', `closeModal('emp-detail-modal');showTab(4);showSubTab('hire');`);
+    editBtn.setAttribute('onclick', `closeModal('emp-detail-modal');showTab(3);showSubTab('hire');`);
   }
   document.getElementById('emp-detail-modal').classList.add('show');
 }
@@ -4296,6 +3960,7 @@ function openEmpDetail(idx) {
 function initAttControls() {
   const ysel = document.getElementById('att-year');
   const msel = document.getElementById('att-month');
+  if (ysel.options.length > 0) return;
   const now = new Date();
   for (let y = 2023; y <= 2028; y++) {
     const o = document.createElement('option');
@@ -4314,6 +3979,7 @@ function initAttControls() {
 function initSumControls() {
   const ysel = document.getElementById('sum-year');
   const msel = document.getElementById('sum-month');
+  if (ysel.options.length > 0) return;
   const now = new Date();
   for (let y = 2023; y <= 2028; y++) {
     const o = document.createElement('option');
@@ -4389,13 +4055,13 @@ function renderAttTable() {
       return true;
     })();
     // 퇴사 다음달부터 목록 제외
-    if (e.leaveDate) {
+    if (e.leaveDate && e.leaveDate.length >= 10) {
       const ldYear  = parseInt(e.leaveDate.slice(0,4));
       const ldMonth = parseInt(e.leaveDate.slice(5,7));
       if (year > ldYear || (year === ldYear && month > ldMonth)) return false;
     }
     // 입사 이전달까지 목록 제외 (입사월부터 표시)
-    if (e.joinDate) {
+    if (e.joinDate && e.joinDate.length >= 10) {
       const jYear  = parseInt(e.joinDate.slice(0,4));
       const jMonth = parseInt(e.joinDate.slice(5,7));
       if (year < jYear || (year === jYear && month < jMonth)) return false;
@@ -4423,8 +4089,24 @@ function renderAttTable() {
     dayHeaders += `<th class="day-col${cls} day-col-clickable"${holTitle} onclick="openDayBulkModal(${year},${month},${d})" title="${d}일 클릭: 날짜별 일괄변경">${d}<br><span style="font-size:9px;font-weight:400">${dayNames[dow]}</span></th>`;
   }
   // 날짜별 출근인원 집계 (○=1, 반차=0.5)
-  // 날짜별 출근인원 카운트 배열 (행 렌더링 후 채움)
+  // 날짜별 출근인원 집계 - 재직자 기준, 평일/공휴일 제외
   const dayCnt = new Array(days + 1).fill(0);
+  employees.forEach(e => {
+    const jd = e.joinDate  && e.joinDate.length  >= 10 ? new Date(e.joinDate.replace(/-/g,'/'))  : null;
+    const ld = e.leaveDate && e.leaveDate.length >= 10 ? new Date(e.leaveDate.replace(/-/g,'/')) : null;
+    for (let d = 1; d <= days; d++) {
+      const cellDate = new Date(year, month-1, d);
+      if (jd && cellDate < jd) continue;   // 입사 전
+      if (ld && cellDate > ld) continue;   // 퇴사 후
+      const dow = cellDate.getDay();
+      if (dow === 0 || dow === 6) continue; // 토/일
+      if (isHoliday(year, month, d)) continue; // 공휴일
+      if (isOnLeaveHistory(e, year, month, d)) continue; // 휴직중
+      const v = getAtt(e.name, year, month, d);
+      if (v === '○') dayCnt[d] += 1;
+      else if (v === '반차') dayCnt[d] += 0.5;
+    }
+  });
 
   let countHeaders = ''; // 나중에 채울 placeholder용 (행 렌더링 후 교체)
 
@@ -4460,19 +4142,20 @@ function renderAttTable() {
     <th class="summary-col summary-head">기타</th>
   </tr>
   <tr style="background:var(--surface2);border-bottom:2px solid var(--border);">
-    <td colspan="6" style="font-size:10px;font-weight:700;color:var(--text2);padding:4px 8px;position:sticky;left:0;background:var(--surface2);z-index:3;white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 출근인원</td>
+    <td colspan="7" style="font-size:10px;font-weight:700;color:var(--text2);padding:4px 8px;position:sticky;left:0;background:var(--surface2);z-index:3;white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 출근인원</td>
   </tr>`;
 
   const tbody = document.getElementById('att-tbody');
   if (!emps.length) { tbody.innerHTML=`<tr><td colspan="${days+11}" class="empty-msg">표시할 직원이 없습니다.</td></tr>`; return; }
 
+  // ── 1단계: tbody 먼저 렌더링해서 dayCnt 누적 ──
   tbody.innerHTML = emps.map((e, idx) => {
     let cells = '';
     let cnt = {연차:0,반차:0,결근:0,청휴:0,기타:0};
 
     // 입사일/퇴사일 파싱 (로컬 시간 기준으로 정규화)
-    const joinDate  = e.joinDate  ? new Date(e.joinDate.replace(/-/g, '/'))  : null;
-    const leaveDate = e.leaveDate ? new Date(e.leaveDate.replace(/-/g, '/')) : null;
+    const joinDate  = e.joinDate  && e.joinDate.length >= 10  ? new Date(e.joinDate.replace(/-/g, '/'))  : null;
+    const leaveDate = e.leaveDate && e.leaveDate.length >= 10 ? new Date(e.leaveDate.replace(/-/g, '/')) : null;
 
     for (let d = 1; d <= days; d++) {
       const cellDate = new Date(year, month-1, d);
@@ -4525,11 +4208,10 @@ function renderAttTable() {
       const titleText = val ? `${d}일: ${val}` : `${d}일`;
       cells += `<td${tdStyle}><div class="att-cell-wrap"><span class="att-cell ${cls}" onclick="openAttModal('${e.name}',${year},${month},${d})" title="${titleText}">${display}</span>${getAttMemo(e.name,year,month,d)?`<div class="att-memo-pin"></div><div class="att-memo-tooltip">${getAttMemo(e.name,year,month,d)}</div>`:''}</div></td>`;
       if (val==='연차') cnt['연차']++;
-      else if (val==='반차') { cnt['반차']++; dayCnt[d] += 0.5; }
+      else if (val==='반차') cnt['반차']++;
       else if (val==='결근') cnt['결근']++;
       else if (val==='청휴') cnt['청휴']++;
       else if (val && !['○','공휴일','휴무','휴일',''].includes(val)) cnt['기타']++;
-      if (val === '○') dayCnt[d] += 1;
     }
     const isLeft = !!e.leaveDate;
     const attCurPH = getParentalHours(e, year, month, 15);
@@ -4567,27 +4249,27 @@ function renderAttTable() {
     });
     console.log(`[DEBUG] 31일 ○ 직원 수: ${debug31.length}`, debug31.slice(0,10));
   }
-  countHeaders = '';
-  for (let d = 1; d <= days; d++) {
-    const dow = getDayOfWeek(year, month, d);
-    const hol = isHoliday(year, month, d);
-    let bgStyle = '';
-    if (hol || dow === 0) bgStyle = 'background:#fff5f5;';
-    else if (dow === 6) bgStyle = 'background:#f5f8ff;';
-    const c = dayCnt[d];
-    const disp = c === 0 ? '' : (c % 1 === 0 ? c : c.toFixed(1));
-    const color = c > 0 ? 'color:var(--accent);font-weight:700;' : 'color:var(--text3);';
-    countHeaders += `<td style="text-align:center;font-size:10px;padding:3px 1px;${bgStyle}${color}">${disp}</td>`;
+  // dayCnt로 출근인원 행 완성
+  let finalCountHtml = '';
+  for (let d2 = 1; d2 <= days; d2++) {
+    const dow2 = getDayOfWeek(year, month, d2);
+    const hol2 = isHoliday(year, month, d2);
+    let bg2 = '';
+    if (hol2 || dow2 === 0) bg2 = 'background:#fff5f5;';
+    else if (dow2 === 6) bg2 = 'background:#f5f8ff;';
+    const isWD = dow2 !== 0 && dow2 !== 6 && !hol2;
+    const c2 = isWD ? dayCnt[d2] : 0;
+    const disp2 = c2 > 0 ? (c2 % 1 === 0 ? c2 : c2.toFixed(1)) : '';
+    const col2 = c2 > 0 ? 'color:var(--accent);font-weight:700;' : '';
+    finalCountHtml += `<td style="text-align:center;font-size:10px;padding:3px 1px;${bg2}${col2}">${disp2}</td>`;
   }
-  const countRow = thead.querySelector('tr:nth-child(2)');
-  if (countRow) {
-    const firstTd = countRow.querySelector('td:first-child');
-    countRow.innerHTML = firstTd.outerHTML + countHeaders +
-      sumCell(totalCnt['연차'], 'var(--accent)') +
-      sumCell(totalCnt['반차'], '#5090dd') +
-      sumCell(totalCnt['결근'], 'var(--danger)') +
-      sumCell(totalCnt['청휴'], '#3dba8c') +
-      sumCell(totalCnt['기타'], 'var(--text2)');
+  const countRowEl = thead.rows[1];
+  if (countRowEl) {
+    const label = countRowEl.cells[0].outerHTML;
+    countRowEl.innerHTML = label + finalCountHtml +
+      sumCell(totalCnt['연차'],'var(--accent)') + sumCell(totalCnt['반차'],'#5090dd') +
+      sumCell(totalCnt['결근'],'var(--danger)') + sumCell(totalCnt['청휴'],'#3dba8c') +
+      sumCell(totalCnt['기타'],'var(--text2)');
   }
 }
 
@@ -5086,7 +4768,7 @@ function saveResignReasons() {
 }
 
 function showSubTab(name) {
-  ['hire','leave','parental','leavehist'].forEach(t => {
+  ['emplist','hire','leave','parental','leavehist'].forEach(t => {
     const el = document.getElementById('subtab-'+t);
     if (el) el.style.display = t===name ? '' : 'none';
     const btn = document.getElementById('sub-'+t);
@@ -5094,7 +4776,8 @@ function showSubTab(name) {
     btn.style.color = t===name ? 'var(--accent)' : 'var(--text3)';
     btn.style.borderBottomColor = t===name ? 'var(--accent)' : 'transparent';
   });
-  if (name==='hire') renderHireTable();
+  if (name==='emplist') renderEmpTable();
+  else if (name==='hire') renderHireTable();
   else if (name==='leave') renderResignTable();
   else if (name==='parental') { renderParentalTable(); }
   else if (name==='leavehist') { renderLeaveHistTable(); }
@@ -5270,7 +4953,7 @@ function saveHireInfo() {
   renderHireTable();
   // 신규 직원 추가면 입퇴사 현황 탭으로 이동
   if (isNaN(idx) || idx < 0) {
-    showTab(4);
+    showTab(3);
     showSubTab('hire');
   }
   showToast('✅ 입사 정보가 저장됐습니다.');
@@ -6470,7 +6153,9 @@ function renderLeaveTable() {
 
     return `<tr${rowBg}>
       <td style="color:var(--text3)">${startNo+i+1}</td>
-      <td class="name-col" style="font-weight:700">${e.name}${parentalTag}${resignedTag}${settlementTag}</td>
+      <td class="name-col" style="font-weight:700">${e.name}${parentalTag}${resignedTag}${settlementTag}
+        <button onclick="openCertPopup('${e.name}')" title="연차확인서 보기" style="margin-left:4px;background:none;border:1px solid var(--border);border-radius:4px;padding:1px 4px;cursor:pointer;color:var(--text3);vertical-align:middle;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></button>
+      </td>
       <td style="font-size:11px;color:var(--text2);font-family:var(--mono)">${e.empId||'-'}</td>
       <td>${getTeamBadge(e.team,"font-size:10px;")}</td>
       <td style="font-size:11px">${baseDate}</td>
@@ -7111,6 +6796,7 @@ function initIssueControls() {
   const ysel = document.getElementById('issue-year');
   const msel = document.getElementById('issue-month');
   if (!ysel || !msel) return;
+  if (ysel.options.length > 0) return; // 이미 초기화됨
   const now = new Date();
   for (let y = 2024; y <= 2028; y++) {
     const o = document.createElement('option');
@@ -7472,8 +7158,43 @@ function updateCertRefOptions(emp) {
     sel.value === 'fiscal' ? '' : 'none';
 }
 
+function openCertPopup(name) {
+  // renderCert에 필요한 임시 요소 생성
+  const temps = [];
+  const ensure = (id, tag='input', attrs={}) => {
+    if (!document.getElementById(id)) {
+      const el = document.createElement(tag);
+      el.id = id; el.style.display = 'none';
+      Object.entries(attrs).forEach(([k,v]) => el[k] = v);
+      document.body.appendChild(el);
+      temps.push(el);
+    }
+  };
+  ensure('cert-search', 'input', {value: name});
+  ensure('cert-ref-type', 'select');
+  ensure('cert-ref-year', 'select');
+  ensure('cert-wrap', 'div');
+
+  // cert-ref-type에 기본 옵션 추가
+  const refType = document.getElementById('cert-ref-type');
+  if (refType && !refType.options.length) {
+    refType.innerHTML = '<option value="today">현재 기준 (오늘)</option>';
+  }
+
+  document.getElementById('cert-search').value = name;
+  renderCert();
+
+  const certWrap = document.getElementById('cert-wrap');
+  document.getElementById('cert-popup-content').innerHTML = certWrap ? certWrap.innerHTML : '';
+
+  // 임시 요소 제거
+  temps.forEach(el => document.body.removeChild(el));
+
+  document.getElementById('cert-popup-modal').classList.add('show');
+}
+
 function renderCert() {
-  const q = (document.getElementById('cert-search').value || '').trim();
+  const q = (document.getElementById('cert-search')?.value || '').trim();
   const year = new Date().getFullYear();
   const refType  = document.getElementById('cert-ref-type')?.value || 'today';
   const refYear  = parseInt(document.getElementById('cert-ref-year')?.value) || year;
@@ -7826,15 +7547,9 @@ function handleImportFile(event) {
           populateTeamFilter();
           populateAttTeamFilter();
           renderEmpTable();
-          // 읽기전용 여부 적용
-          if (data.readonly && data.pwHash) {
-            setReadOnly(true, data.pwHash);
-            showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 읽기전용 모드로 불러왔습니다. 편집하려면 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 버튼을 누르세요.`);
-          } else {
-            setReadOnly(false, null);
-            saveData();
-            showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${employees.length}명 데이터를 불러왔습니다.`);
-          }
+          setReadOnly(false, null);
+          saveData();
+          showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${employees.length}명 데이터를 불러왔습니다.`);
         }
       );
     } catch {
@@ -7845,30 +7560,14 @@ function handleImportFile(event) {
 }
 
 function setReadOnly(val, hash) {
-  isReadOnly = val;
-  _readOnlyHash = hash || null;
-
-  // 잠금 버튼 표시/숨김
+  // 읽기전용 모드 비활성화 - 항상 편집 가능
+  isReadOnly = false;
+  _readOnlyHash = null;
+  document.body.classList.remove('readonly-mode');
   const lockBtn = document.getElementById('lock-btn');
-  if (lockBtn) lockBtn.style.display = val ? 'inline-flex' : 'none';
-
-  // 저장 버튼 숨김
+  if (lockBtn) lockBtn.style.display = 'none';
   const saveBtn = document.getElementById('manual-save-btn');
-  if (saveBtn) saveBtn.style.display = val ? 'none' : '';
-
-  // 저장 상태 텍스트
-  const status = document.getElementById('save-status');
-  if (status) status.innerHTML = val ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 읽기전용 모드' : '변경 시 자동저장';
-
-  // 편집 버튼들 비활성화/활성화
-  const editSelectors = [
-    '.btn-add', '.btn-warn', '[onclick*="openEditEmpModal"]',
-    '[onclick*="openAttModal"]', '[onclick*="openBulkModal"]',
-    '[onclick*="deleteEmp"]', '[onclick*="resetEmpData"]',
-    '[onclick*="confirmResetMonthAtt"]', '#att-sort',
-  ];
-  // CSS 클래스로 일괄 처리
-  document.body.classList.toggle('readonly-mode', val);
+  if (saveBtn) saveBtn.style.display = '';
 }
 
 function toggleLock() {
@@ -7899,7 +7598,7 @@ async function doUnlock() {
 // ══════════════════════════════
 const PW_MASTER_HASH = 'debd5f44db8beeea9694ff3048a64a956e36ba71f70b944cdebd19b2e2d6849e'; // tvxq0507**
 
-let currentMode = 'view'; // 기본: 열람모드
+let currentMode = 'admin';
 
 async function hashPw(pw) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
@@ -7908,16 +7607,8 @@ async function hashPw(pw) {
 
 // 관리자 전환 버튼 클릭 → 비밀번호 입력 팝업
 function switchToAdmin() {
-  if (currentMode === 'admin') {
-    // 관리자 → 열람으로 전환
-    currentMode = 'view';
-    try { sessionStorage.removeItem('att_mode'); } catch(e) {}
-    applyMode('view');
-    return;
-  }
-  // 관리자 비밀번호 입력 모달 표시
-  document.getElementById('admin-login-modal').classList.add('show');
-  setTimeout(() => document.getElementById('admin-pw-input').focus(), 100);
+  // 항상 관리자 모드 유지
+  applyMode('admin');
 }
 
 async function tryAdminLogin() {
@@ -7946,64 +7637,16 @@ async function tryAdminLogin() {
 }
 
 function applyMode(mode) {
-  const isAdmin = mode === 'admin';
+  currentMode = 'admin';
+  document.body.classList.remove('view-mode', 'readonly-mode', 'admin-mode');
+  document.body.classList.add('admin-mode');
   const badge = document.getElementById('mode-badge');
-  const switchBtn = document.getElementById('mode-switch-btn');
-
-  // 배지
-  if (badge) {
-    badge.style.display = 'inline';
-    if (isAdmin) {
-      badge.textContent = '관리자';
-      badge.style.background = '#1d4ed8';
-      badge.style.color = '#fff';
-    } else {
-      badge.textContent = '열람';
-      badge.style.background = '#e2e8f0';
-      badge.style.color = '#64748b';
-    }
-  }
-
-  // 설정 메뉴 내 전환 버튼 텍스트
+  if (badge) { badge.style.display = 'none'; }
   const menuSwitchBtn = document.getElementById('menu-switch-btn');
-  if (menuSwitchBtn) {
-    menuSwitchBtn.innerHTML = isAdmin
-      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> 열람으로 전환'
-      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 관리자 전환';
-  }
-
-  // 관리자 전용 메뉴 표시/숨김
-  const adminMenu = document.getElementById('menu-admin-only');
-  if (adminMenu) adminMenu.style.display = isAdmin ? 'block' : 'none';
-
-  // body에 모드 클래스 적용 → CSS로 일괄 차단
-  document.body.classList.toggle('view-mode', !isAdmin);
-  document.body.classList.toggle('admin-mode', isAdmin);
-
-  // 수정 버튼 data-view-blocked (동적 생성 버튼용 fallback)
-  const editSelectors = [
-    '.btn-save', '.btn-warn', '.btn-add',
-    'button[onclick*="openPasteModal"]',
-    'button[onclick*="confirmReset"]',
-    'button[onclick*="saveIssueMemo"]',
-    'button[onclick*="clearIssueMemo"]',
-    'button[onclick*="toggleIssueMemoEdit"]',
-    '#issue-memo-edit-btn',
-    '#issue-memo-save-btn',
-  ];
-  document.querySelectorAll(editSelectors.join(',')).forEach(el => {
-    const oc = el.getAttribute('onclick') || '';
-    if (oc.includes('saveAsHtml') || oc.includes('exportAtt') || el.id === 'manual-save-btn') return;
-    if (oc.includes('closeNotice') || oc.includes('tryAdminLogin') || oc.includes('closeModal') || oc.includes('saveNewPassword')) return;
-    if (isAdmin) el.removeAttribute('data-view-blocked');
-    else el.setAttribute('data-view-blocked', '1');
-  });
-
-  // 이달의이슈 메모 영역
-  const memoSection = document.getElementById('issue-memo-section');
-  if (memoSection) memoSection.style.display = isAdmin ? '' : 'none';
+  if (menuSwitchBtn) menuSwitchBtn.style.display = 'none';
+  const adminMenu = document.getElementById('menu-');
+  if (adminMenu) adminMenu.style.display = 'block';
 }
-
 function toggleSettingsMenu() {
   const menu = document.getElementById('settings-menu');
   if (!menu) return;
@@ -8060,7 +7703,7 @@ async function saveNewPassword() {
   showToast('✅ 비밀번호가 변경되었습니다. 모든 기기에 적용됩니다.');
 }
 
-function isAdminMode() { return currentMode === 'admin'; }
+function isAdminMode() { return true; }
 
 // 세션 복원 체크
 (function() {
@@ -8156,19 +7799,8 @@ async function init() {
     if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); saveData(); }
   });
 
-  // 열람모드 버튼 클릭 전역 차단 (data-view-blocked + body.view-mode 함수 직접 호출 방어)
-  document.addEventListener('click', e => {
-    if (!document.body.classList.contains('view-mode')) return;
-    const btn = e.target.closest('[data-view-blocked="1"]');
-    if (btn) { e.preventDefault(); e.stopImmediatePropagation(); }
-  }, true);
-
   // 세션 복원 or 기본 열람모드
-  if (window._savedMode === 'admin') {
-    applyMode('admin');
-  } else {
-    applyMode('view');
-  }
+  applyMode('admin');
 
   setTimeout(loadNotice, 300);
 }
