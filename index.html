@@ -544,14 +544,25 @@
   body.view-mode .att-cell { pointer-events: none !important; cursor: default !important; }
 
   body.view-mode .admin-only { display: none !important; }
-  body.view-mode #settings-wrap { display: none !important; }
+  body.view-mode #issue-memo-section { display: none !important; }
   body.view-mode #mode-switch-btn { display: none !important; }
-  
-  
-  
+  body.readonly-mode [onclick*="openBulkModal"],
+  body.readonly-mode [onclick*="openEditEmpModal"] {
+    pointer-events: none !important; cursor: not-allowed !important;
+  }
+  body.readonly-mode .att-cell { pointer-events: none !important; cursor: default !important; }
+  body.readonly-mode .emp-name { pointer-events: none !important; text-decoration: none !important; color: var(--text) !important; cursor: default !important; }
 
   /* 회색 처리 (비활성화 시각화) */
-  
+  body.readonly-mode .btn-add,
+  body.readonly-mode .btn-warn,
+  body.readonly-mode [onclick*="deleteEmp"],
+  body.readonly-mode [onclick*="resetEmpData"],
+  body.readonly-mode [onclick*="confirmResetMonthAtt"],
+  body.readonly-mode [onclick*="openTeamColorModal"] {
+    pointer-events: none !important; cursor: not-allowed !important;
+    opacity: 0.4 !important; filter: grayscale(1) !important;
+  }
   #lock-btn { background: #fff0e0; color: #cc6000; border: 1.5px solid #ffcc80; border-radius: 8px; padding: 7px 13px; font-size: 12px; cursor: pointer; font-family: var(--font); transition: all .15s; }
   #lock-btn:hover { background: #cc6000; color: #fff; }
 
@@ -590,8 +601,9 @@
     <span id="save-status" style="font-size:11px;color:var(--text3);"></span>
     <button id="auth-toggle-btn" onclick="toggleAuthMode()" style="background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:5px;" title="권한 전환">
       <svg id="auth-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <span id="auth-label">읽기</span>
+      <span id="auth-label" style="color:var(--text3);">읽기</span>
     </button>
+    <span id="mode-badge" style="font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600;display:inline;"></span>
     <!-- 설정 드롭다운 -->
     <div style="position:relative;display:none;" id="settings-wrap">
       <button id="btn-settings" class="btn" onclick="toggleSettingsMenu()" style="font-size:12px;padding:6px 10px;">
@@ -617,6 +629,7 @@
           </button>
         </div>
       </div>
+    </div>
     <input type="file" id="import-file" accept=".json,.html" style="display:none;" onchange="handleImportFile(event)">
   </div>
 </header>
@@ -638,580 +651,7 @@
     <select class="form-select" id="sum-base-year" style="width:95px;" onchange="renderSummaryDash()"></select>
     <select class="form-select" id="sum-base-month" style="width:80px;" onchange="renderSummaryDash()"></select>
   </div>
-  <div id="summary-dash">
-    
-    <div class="dash-kpi-row">
-      <div class="kpi-card kpi-active">
-        <div class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-        <div class="kpi-val green">188</div>
-        <div class="kpi-label">재직 인원</div>
-        <div class="kpi-sub">2026년 7월 기준 (퇴사자·휴직자 제외)</div>
-      </div>
-      <div class="kpi-card kpi-join">
-        <div class="kpi-icon">🆕</div>
-        <div class="kpi-val blue">4</div>
-        <div class="kpi-label">7월 입사</div>
-        <div class="kpi-sub">이은희B, 최시라, 하동행, 홍수민</div>
-      </div>
-      <div class="kpi-card kpi-leave">
-        <div class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
-        <div class="kpi-val red">2</div>
-        <div class="kpi-label">7월 퇴사</div>
-        <div class="kpi-sub">김지언, 김문</div>
-      </div>
-      <div class="kpi-card kpi-short">
-        <div class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M12 22V12"/><path d="M12 12C12 12 7 9 7 5a5 5 0 0 1 10 0c0 4-5 7-5 7z"/></svg></div>
-        <div class="kpi-val sky">24</div>
-        <div class="kpi-label">육아단축 인원</div>
-        <div class="kpi-sub">김지혜, 황수경, 김영란, 박은하, 김혜민, 허응경, 임미주, 문선영, 김은주, 이정은, 윤유진, 이지희, 이정하, 이혜림, 김은미, 진난희, 송아름, 강선미, 조윤주, 임경혜, 허희진, 김은경, 유상희, 홍혜나</div>
-      </div>
-      <div class="kpi-card kpi-avg">
-        <div class="kpi-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <div class="kpi-val orange">50.6</div>
-        <div class="kpi-label">평균 근속 (개월)</div>
-        <div class="kpi-sub">재직자 기준</div>
-      </div>
-    </div>
-    <div class="dash-section">
-      <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 팀별 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">2026년 7월 기준</span></div>
-      <div class="card" style="overflow-x:auto;"><table class="dash-table">
-      <thead><tr>
-        <th class="left">구분</th>
-        <th>전체</th>
-        <th>재직</th>
-        <th style="color:#cc6000">휴직</th>
-        <th style="color:#3dba8c">복직</th>
-        <th>입사</th><th>퇴사</th><th>단축</th><th>평균근속</th>
-      </tr></thead>
-      <tbody><tr>
-        <td class="left">관리자</td>
-        <td><span class="dash-num">27</span></td>
-        <td><span class="dash-num">27</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:14%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">130.1</td>
-      </tr><tr>
-        <td class="left">보유계약지원</td>
-        <td><span class="dash-num">7</span></td>
-        <td><span class="dash-num">7</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:4%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">50.1</td>
-      </tr><tr>
-        <td class="left">실효OB</td>
-        <td><span class="dash-num">4</span></td>
-        <td><span class="dash-num">4</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:2%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">52.5</td>
-      </tr><tr>
-        <td class="left">장기사고 1팀</td>
-        <td><span class="dash-num">18</span></td>
-        <td><span class="dash-num">17</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:9%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">1</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num">4</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">22.8</td>
-      </tr><tr>
-        <td class="left">장기사고 2팀</td>
-        <td><span class="dash-num">17</span></td>
-        <td><span class="dash-num">17</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:9%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num">4</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">44.2</td>
-      </tr><tr>
-        <td class="left">장기사고 3팀</td>
-        <td><span class="dash-num">18</span></td>
-        <td><span class="dash-num">18</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:9%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num">1</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num">3</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">18.7</td>
-      </tr><tr>
-        <td class="left">장기사고 4팀</td>
-        <td><span class="dash-num">18</span></td>
-        <td><span class="dash-num">17</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:9%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num">2</span></td>
-        <td style="color:#e04040"><span class="dash-num">1</span></td>
-        <td style="color:#5090dd"><span class="dash-num">4</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">16.6</td>
-      </tr><tr>
-        <td class="left">장기사고 5팀</td>
-        <td><span class="dash-num">19</span></td>
-        <td><span class="dash-num">18</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:9%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num">1</span></td>
-        <td style="color:#5090dd"><span class="dash-num">2</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">18.7</td>
-      </tr><tr>
-        <td class="left">장기사고 6팀</td>
-        <td><span class="dash-num">19</span></td>
-        <td><span class="dash-num">18</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:9%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">1</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num">1</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num">5</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">24.7</td>
-      </tr><tr>
-        <td class="left">제휴상담 1팀</td>
-        <td><span class="dash-num">10</span></td>
-        <td><span class="dash-num">10</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:5%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">41.9</td>
-      </tr><tr>
-        <td class="left">제휴상담 2팀</td>
-        <td><span class="dash-num">12</span></td>
-        <td><span class="dash-num">11</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:6%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">1</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">52.3</td>
-      </tr><tr>
-        <td class="left">제휴상담 3팀</td>
-        <td><span class="dash-num">14</span></td>
-        <td><span class="dash-num">14</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:7%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">76.4</td>
-      </tr><tr>
-        <td class="left">제휴지원팀</td>
-        <td><span class="dash-num">10</span></td>
-        <td><span class="dash-num">10</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:5%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num">2</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">94.4</td>
-      </tr><tr class="total-row">
-        <td class="left"><strong>Total</strong></td>
-        <td><span class="dash-num">193</span></td>
-        <td><span class="dash-num">188</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:100%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">3</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num">4</span></td>
-        <td style="color:#e04040"><span class="dash-num">2</span></td>
-        <td style="color:#5090dd"><span class="dash-num">24</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">50.6</td>
-      </tr></tbody>
-    </table></div>
-    </div>
-    <div class="dash-section">
-      <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 업무별 현황</div>
-      <div class="card" style="overflow-x:auto;"><table class="dash-table">
-      <thead><tr>
-        <th class="left">구분</th>
-        <th>전체</th>
-        <th>재직</th>
-        <th style="color:#cc6000">휴직</th>
-        <th style="color:#3dba8c">복직</th>
-        <th>입사</th><th>퇴사</th><th>단축</th><th>평균근속</th>
-      </tr></thead>
-      <tbody><tr>
-        <td class="left">MG</td>
-        <td><span class="dash-num">2</span></td>
-        <td><span class="dash-num">2</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:1%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">216.5</td>
-      </tr><tr>
-        <td class="left">QA</td>
-        <td><span class="dash-num">8</span></td>
-        <td><span class="dash-num">8</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:4%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">111.1</td>
-      </tr><tr>
-        <td class="left">교육강사</td>
-        <td><span class="dash-num">3</span></td>
-        <td><span class="dash-num">3</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:2%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">65.3</td>
-      </tr><tr>
-        <td class="left">보유계약지원</td>
-        <td><span class="dash-num">7</span></td>
-        <td><span class="dash-num">7</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:4%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">50.1</td>
-      </tr><tr>
-        <td class="left">센터장</td>
-        <td><span class="dash-num">1</span></td>
-        <td><span class="dash-num">1</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:1%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">254.0</td>
-      </tr><tr>
-        <td class="left">실장</td>
-        <td><span class="dash-num">2</span></td>
-        <td><span class="dash-num">2</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:1%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">56.0</td>
-      </tr><tr>
-        <td class="left">실효OB</td>
-        <td><span class="dash-num">4</span></td>
-        <td><span class="dash-num">4</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:2%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">52.5</td>
-      </tr><tr>
-        <td class="left">장기사고</td>
-        <td><span class="dash-num">109</span></td>
-        <td><span class="dash-num">105</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:55%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">2</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num">4</span></td>
-        <td style="color:#e04040"><span class="dash-num">2</span></td>
-        <td style="color:#5090dd"><span class="dash-num">22</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">24.2</td>
-      </tr><tr>
-        <td class="left">제휴상담</td>
-        <td><span class="dash-num">36</span></td>
-        <td><span class="dash-num">35</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:18%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">1</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">59.0</td>
-      </tr><tr>
-        <td class="left">제휴지원</td>
-        <td><span class="dash-num">10</span></td>
-        <td><span class="dash-num">10</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:5%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num">2</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">94.4</td>
-      </tr><tr>
-        <td class="left">통계</td>
-        <td><span class="dash-num">1</span></td>
-        <td><span class="dash-num">1</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:1%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">40.0</td>
-      </tr><tr>
-        <td class="left">팀장</td>
-        <td><span class="dash-num">10</span></td>
-        <td><span class="dash-num">10</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:5%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#e04040"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#5090dd"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">158.9</td>
-      </tr><tr class="total-row">
-        <td class="left"><strong>Total</strong></td>
-        <td><span class="dash-num">193</span></td>
-        <td><span class="dash-num">188</span>
-          <div style="margin-top:3px;width:44px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:4px">
-            <div style="width:100%;height:100%;background:var(--accent);border-radius:2px;"></div>
-          </div>
-        </td>
-        <td style="color:#cc6000"><span class="dash-num">3</span></td>
-        <td style="color:#3dba8c"><span class="dash-num dash-num-0">-</span></td>
-        <td style="color:#3a78cc"><span class="dash-num">4</span></td>
-        <td style="color:#e04040"><span class="dash-num">2</span></td>
-        <td style="color:#5090dd"><span class="dash-num">24</span></td>
-        <td style="color:var(--text2);font-family:var(--mono)">50.6</td>
-      </tr></tbody>
-    </table></div>
-    </div>
-    <div class="dash-grid-2 dash-section">
-      <div>
-        <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 2026년 연간 입퇴사 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">누적 입사 42명 · 퇴사 13명</span></div>
-        <div class="card" style="padding:12px 16px;"><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">1월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:#3a78cc;border-radius:3px;"></div></div><span style="font-size:10px;color:#3a78cc;font-weight:700;">입사 12</span></div>
-        
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">2월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:17%;height:100%;background:#3a78cc;border-radius:3px;"></div></div><span style="font-size:10px;color:#3a78cc;font-weight:700;">입사 2</span></div>
-        
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">3월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:#3a78cc;border-radius:3px;"></div></div><span style="font-size:10px;color:#3a78cc;font-weight:700;">입사 12</span></div>
-        
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">4월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:42%;height:100%;background:#3a78cc;border-radius:3px;"></div></div><span style="font-size:10px;color:#3a78cc;font-weight:700;">입사 5</span></div>
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:33%;height:100%;background:#e04040;border-radius:3px;"></div></div><span style="font-size:10px;color:#e04040;font-weight:700;">퇴사 4</span></div>
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">5월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:58%;height:100%;background:#3a78cc;border-radius:3px;"></div></div><span style="font-size:10px;color:#3a78cc;font-weight:700;">입사 7</span></div>
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:50%;height:100%;background:#e04040;border-radius:3px;"></div></div><span style="font-size:10px;color:#e04040;font-weight:700;">퇴사 6</span></div>
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">6월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:8%;height:100%;background:#e04040;border-radius:3px;"></div></div><span style="font-size:10px;color:#e04040;font-weight:700;">퇴사 1</span></div>
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">7월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:33%;height:100%;background:#3a78cc;border-radius:3px;"></div></div><span style="font-size:10px;color:#3a78cc;font-weight:700;">입사 4</span></div>
-        <div style="display:flex;align-items:center;gap:4px;"><div style="width:50px;height:10px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:17%;height:100%;background:#e04040;border-radius:3px;"></div></div><span style="font-size:10px;color:#e04040;font-weight:700;">퇴사 2</span></div>
-        
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">8월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        
-        
-        <span style="font-size:10px;color:var(--text3);">-</span>
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">9월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        
-        
-        <span style="font-size:10px;color:var(--text3);">-</span>
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">10월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        
-        
-        <span style="font-size:10px;color:var(--text3);">-</span>
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">11월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        
-        
-        <span style="font-size:10px;color:var(--text3);">-</span>
-      </div>
-    </div><div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
-      <div style="width:36px;font-size:11px;color:var(--text2);font-weight:600;">12월</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
-        
-        
-        <span style="font-size:10px;color:var(--text3);">-</span>
-      </div>
-    </div></div>
-      </div>
-      <div>
-        <div class="dash-grid-2" style="gap:12px;margin-bottom:12px;">
-          <div>
-            <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 근속 구간 분포</div>
-            <div class="card" style="padding:12px 16px;"><div class="trend-row">
-      <div class="trend-label">1년 미만</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:90%;background:var(--accent)">47명</div></div>
-      <div class="trend-val">47</div>
-    </div><div class="trend-row">
-      <div class="trend-label">1~2년</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:75%;background:var(--accent)">39명</div></div>
-      <div class="trend-val">39</div>
-    </div><div class="trend-row">
-      <div class="trend-label">2~3년</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:44%;background:var(--accent)">23명</div></div>
-      <div class="trend-val">23</div>
-    </div><div class="trend-row">
-      <div class="trend-label">3~5년</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:58%;background:var(--accent)">30명</div></div>
-      <div class="trend-val">30</div>
-    </div><div class="trend-row">
-      <div class="trend-label">5년 이상</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:100%;background:var(--accent)">52명</div></div>
-      <div class="trend-val">52</div>
-    </div></div>
-          </div>
-          <div>
-            <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 근무시간 분포</div>
-            <div class="card" style="padding:12px 16px;"><div class="trend-row">
-      <div class="trend-label">8시간 근무</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:87%;background:#5090dd">167명</div></div>
-      <div class="trend-val">167</div>
-    </div><div class="trend-row">
-      <div class="trend-label">6시간 근무</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:1%;background:#5090dd">1명</div></div>
-      <div class="trend-val">1</div>
-    </div><div class="trend-row">
-      <div class="trend-label">4시간 근무</div>
-      <div class="trend-bar"><div class="trend-bar-fill" style="width:12%;background:#5090dd">23명</div></div>
-      <div class="trend-val">23</div>
-    </div></div>
-          </div>
-        </div>
-      </div>
-    </div></div>
+  <div id="summary-dash"><div style="text-align:center;padding:40px;color:var(--text3);">불러오는 중...</div></div>
 </div>
 
 
@@ -2480,7 +1920,21 @@
 </div>
 
 <!-- 잠금 해제 모달 -->
-
+<div class="modal-overlay" id="unlock-modal">
+  <div class="modal" style="width:340px;">
+    <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 편집 모드 전환</h3>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:16px;">비밀번호를 입력하면 편집 모드로 전환됩니다.</p>
+    <div class="form-group">
+      <label class="form-label">비밀번호</label>
+      <input class="form-input" id="unlock-pw" type="password" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doUnlock()">
+    </div>
+    <p id="unlock-error" style="font-size:12px;color:var(--danger);margin-top:8px;display:none;">비밀번호가 올바르지 않습니다.</p>
+    <div class="modal-btns">
+      <button class="btn" onclick="closeModal('unlock-modal')">취소</button>
+      <button class="btn-save" onclick="doUnlock()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> 잠금 해제</button>
+    </div>
+  </div>
+</div>
 
 <!-- 날짜별 일괄변경 모달 -->
 <div class="modal-overlay" id="day-bulk-modal">
@@ -2635,7 +2089,6 @@
     <div id="cert-popup-content" style="padding:20px;"></div>
   </div>
 </div>
-
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -3140,6 +2593,7 @@ function showTab(i) {
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', j===i));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
   if (i===0) { initSummaryDashControls(); renderSummaryDash(); }
+  if (i===1) renderEmpTable();
   if (i===1) renderSummary();
   if (i===2) renderAttTable();
   if (i===3) { initHireResignControls(); showSubTab('emplist'); }
@@ -3154,7 +2608,6 @@ function initSummaryDashControls() {
   const ysel = document.getElementById('sum-base-year');
   const msel = document.getElementById('sum-base-month');
   const now = new Date();
-  if (ysel.options.length === 0) {
   for (let y = 2023; y <= 2028; y++) {
     const o = document.createElement('option');
     o.value = y; o.textContent = y+'년';
@@ -3167,15 +2620,12 @@ function initSummaryDashControls() {
     if (m === now.getMonth()+1) o.selected = true;
     msel.appendChild(o);
   }
-  }
 }
 
 function renderSummaryDash() {
-  const now = new Date();
-  const ysel = document.getElementById('sum-base-year');
-  const msel = document.getElementById('sum-base-month');
-  const year  = (ysel && ysel.value && parseInt(ysel.value) > 0) ? parseInt(ysel.value) : now.getFullYear();
-  const month = (msel && msel.value && parseInt(msel.value) > 0) ? parseInt(msel.value) : now.getMonth()+1;
+  try {
+  const year  = parseInt(document.getElementById('sum-base-year').value)  || new Date().getFullYear();
+  const month = parseInt(document.getElementById('sum-base-month').value) || new Date().getMonth()+1;
 
   const ym1 = `${year}-${String(month).padStart(2,'0')}-01`;
   const ym2Last = new Date(year, month, 0).getDate();
@@ -3459,6 +2909,10 @@ function renderSummaryDash() {
         </div>
       </div>
     </div>`;
+  } catch(err) {
+    console.error('renderSummaryDash 오류:', err);
+    document.getElementById('summary-dash').innerHTML = '<div style="padding:20px;color:red;">오류: ' + err.message + '</div>';
+  }
 }
 
 // 팀 색상 상태 (bg, text 저장)
@@ -7849,9 +7303,7 @@ function setReadOnly(val, hash) {
   if (lockBtn) lockBtn.style.display = 'none';
 }
 
-
 function toggleLock() { /* 비활성화 */ }
-function doUnlock() { /* 비활성화 */ }
 
 async function doUnlock() {
   const pw = document.getElementById('unlock-pw').value;
@@ -7875,7 +7327,7 @@ async function doUnlock() {
 // ══════════════════════════════
 const PW_MASTER_HASH = 'cb480ad0b2579189fc0416f84e10e5068ba2ade498306b4f0281fcf5ba6fa661'; // tvxq0507**
 
-let currentMode = 'view';
+let currentMode = 'view'; // 기본: 열람모드
 
 async function hashPw(pw) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
@@ -7908,8 +7360,7 @@ async function tryAdminLogin() {
   if (hashed === adminHash || hashed === PW_MASTER_HASH) {
     currentMode = 'admin';
     try { sessionStorage.setItem('att_mode', 'admin'); } catch(e) {}
-    const savedMode = sessionStorage.getItem('att_mode') || 'view';
-  applyMode(savedMode);
+    applyMode('admin');
     closeModal('admin-login-modal');
     document.getElementById('admin-pw-input').value = '';
     errEl.textContent = '';
@@ -7927,7 +7378,6 @@ function applyMode(mode) {
   const isAdmin = mode === 'admin';
   document.body.classList.toggle('view-mode', !isAdmin);
   document.body.classList.toggle('admin-mode', isAdmin);
-  // 권한 버튼 업데이트
   const icon = document.getElementById('auth-icon');
   const label = document.getElementById('auth-label');
   if (icon && label) {
@@ -7943,7 +7393,6 @@ function applyMode(mode) {
   }
   const settingsWrap = document.getElementById('settings-wrap');
   if (settingsWrap) settingsWrap.style.display = isAdmin ? '' : 'none';
-  // 메모 섹션
   const memoSection = document.getElementById('issue-memo-section');
   if (memoSection) memoSection.style.display = isAdmin ? '' : 'none';
   try { sessionStorage.setItem('att_mode', mode); } catch(e) {}
@@ -7951,17 +7400,14 @@ function applyMode(mode) {
 
 function toggleAuthMode() {
   if (currentMode === 'admin') {
-    // 관리자 → 읽기
     applyMode('view');
   } else {
-    // 읽기 → 관리자 (비밀번호 확인)
     document.getElementById('admin-pw-input').value = '';
     document.getElementById('admin-pw-error').textContent = '';
     document.getElementById('admin-login-modal').classList.add('show');
     setTimeout(() => document.getElementById('admin-pw-input').focus(), 100);
   }
 }
-
 
 function toggleSettingsMenu() {
   const menu = document.getElementById('settings-menu');
@@ -8108,14 +7554,9 @@ async function init() {
   initIssueControls();
   initHireResignControls();
   loadResignReasons();
-  renderEmpTable();
-  // 셀렉트 값 명시적 설정 후 렌더링
-  const _now = new Date();
-  const _ys = document.getElementById('sum-base-year');
-  const _ms = document.getElementById('sum-base-month');
-  if (_ys) _ys.value = _now.getFullYear();
-  if (_ms) _ms.value = _now.getMonth()+1;
+  const _now=new Date(); const _ys=document.getElementById("sum-base-year"); const _ms=document.getElementById("sum-base-month"); if(_ys)_ys.value=_now.getFullYear(); if(_ms)_ms.value=_now.getMonth()+1;
   renderSummaryDash();
+  renderEmpTable();
 
   document.addEventListener('keydown', e => {
     if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); saveData(); }
@@ -8131,6 +7572,16 @@ async function init() {
   // 세션 복원 or 기본 열람모드
   const savedMode = sessionStorage.getItem('att_mode') || 'view';
   applyMode(savedMode);
+
+  // applyMode 후 DOM 안정화 뒤 Summary 렌더
+  setTimeout(() => {
+    const sd = document.getElementById('summary-dash');
+    console.log('[DEBUG] summary-dash element:', sd ? 'found' : 'NOT FOUND');
+    console.log('[DEBUG] sum-base-year value:', document.getElementById('sum-base-year')?.value);
+    console.log('[DEBUG] employees count:', typeof employees !== 'undefined' ? employees.length : 'undefined');
+    renderSummaryDash();
+    console.log('[DEBUG] renderSummaryDash called, summary-dash innerHTML length:', sd?.innerHTML?.length);
+  }, 100);
 
   setTimeout(loadNotice, 300);
 }
