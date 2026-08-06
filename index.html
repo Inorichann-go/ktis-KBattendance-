@@ -6841,10 +6841,12 @@ function renderIssue() {
 }
 
 function initCertControls() {
-  // 초기 연도 셀렉트는 비워둠 - 직원 선택 시 updateCertRefOptions에서 채움
-  document.getElementById('cert-ref-type').addEventListener('change', function() {
-    document.getElementById('cert-ref-year').style.display =
-      this.value === 'fiscal' ? '' : 'none';
+  // cert panel 제거됨 - openCertPopup에서 임시 요소로 처리
+  const el = document.getElementById('cert-ref-type');
+  if (!el) return;
+  el.addEventListener('change', function() {
+    const yr = document.getElementById('cert-ref-year');
+    if (yr) yr.style.display = this.value === 'fiscal' ? '' : 'none';
   });
 }
 
@@ -7573,15 +7575,8 @@ async function init() {
   const savedMode = sessionStorage.getItem('att_mode') || 'view';
   applyMode(savedMode);
 
-  // applyMode 후 DOM 안정화 뒤 Summary 렌더
-  setTimeout(() => {
-    const sd = document.getElementById('summary-dash');
-    console.log('[DEBUG] summary-dash element:', sd ? 'found' : 'NOT FOUND');
-    console.log('[DEBUG] sum-base-year value:', document.getElementById('sum-base-year')?.value);
-    console.log('[DEBUG] employees count:', typeof employees !== 'undefined' ? employees.length : 'undefined');
-    renderSummaryDash();
-    console.log('[DEBUG] renderSummaryDash called, summary-dash innerHTML length:', sd?.innerHTML?.length);
-  }, 100);
+  // applyMode 후 Summary 렌더
+  setTimeout(renderSummaryDash, 50);
 
   setTimeout(loadNotice, 300);
 }
