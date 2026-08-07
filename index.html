@@ -1867,7 +1867,6 @@
   <div class="ctrl-bar">
     <select class="form-select" id="issue-year" style="width:95px;" onchange="renderIssue()"></select>
     <select class="form-select" id="issue-month" style="width:80px;" onchange="renderIssue()"></select>
-    <button class="btn" onclick="renderIssue()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
   </div>
   <div id="issue-memo-section" class="issue-section" style="margin-bottom:12px;">
     <div class="issue-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 기타 특이사항 메모</div>
@@ -2883,13 +2882,15 @@ function renderSummaryDash() {
   // ── 최종 렌더 ──
   document.getElementById('summary-dash').innerHTML = `
     ${kpiHtml}
-    <div class="dash-section">
-      <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 팀별 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">${year}년 ${month}월 기준</span></div>
-      <div class="card" style="overflow-x:auto;">${teamTableHtml}</div>
-    </div>
-    <div class="dash-section">
-      <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 업무별 현황</div>
-      <div class="card" style="overflow-x:auto;">${jobTableHtml}</div>
+    <div class="dash-grid-2 dash-section" style="align-items:start;">
+      <div>
+        <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 팀별 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">${year}년 ${month}월 기준</span></div>
+        <div class="card" style="overflow-x:auto;">${teamTableHtml}</div>
+      </div>
+      <div>
+        <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 업무별 현황</div>
+        <div class="card" style="overflow-x:auto;">${jobTableHtml}</div>
+      </div>
     </div>
     <div class="dash-grid-2 dash-section">
       <div>
