@@ -1417,6 +1417,9 @@
       <input class="form-input" id="hire-search" placeholder="이름 검색..." style="width:130px;" oninput="renderHireTable()">
       <button class="btn-add admin-only" onclick="openAddEmpModal()" style="margin-left:4px;">＋ 직원 추가</button>
       <span id="hire-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
+      <button onclick="openHireCaution()" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="입사 처리 주의사항">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </button>
     </div>
     <div style="overflow-x:auto;">
       <table class="summary-table" id="hire-table">
@@ -1444,7 +1447,7 @@
       </select>
       <input class="form-input" id="resign-search" placeholder="이름 검색..." style="width:130px;" oninput="renderResignTable()">
       <span id="resign-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
-      <button onclick="document.getElementById('resign-caution-modal').classList.add('show')" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="퇴사 처리 주의사항">
+      <button onclick="openResignCaution()" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="퇴사 처리 주의사항">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       </button>
       <button class="btn-add admin-only" onclick="openQuickResignModal()" style="font-size:12px;">＋ 퇴사 추가</button>
@@ -1837,6 +1840,23 @@
   </div>
 </div>
 
+<!-- 입사 처리 주의사항 모달 -->
+<div class="modal-overlay" id="hire-caution-modal">
+  <div class="modal" style="width:560px;max-height:80vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="margin:0;font-size:15px;color:#cc6000;display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        입사 처리 주의사항
+      </h3>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button id="hire-caution-edit-btn" onclick="toggleCautionEdit('hire')" style="display:none;background:none;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--text2);">✏️ 편집</button>
+        <button class="btn" onclick="closeModal('hire-caution-modal')" style="padding:4px 10px;font-size:18px;line-height:1;">×</button>
+      </div>
+    </div>
+    <ol id="hire-caution-list" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.6;color:var(--text);"></ol>
+  </div>
+</div>
+
 <!-- 퇴사 처리 주의사항 모달 -->
 <div class="modal-overlay" id="resign-caution-modal">
   <div class="modal" style="width:560px;max-height:80vh;overflow-y:auto;">
@@ -1845,17 +1865,12 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         퇴사 처리 주의사항
       </h3>
-      <button class="btn" onclick="closeModal('resign-caution-modal')" style="padding:4px 10px;font-size:18px;line-height:1;">×</button>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <button id="resign-caution-edit-btn" onclick="toggleCautionEdit('resign')" style="display:none;background:none;border:1px solid var(--border);border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--text2);">✏️ 편집</button>
+        <button class="btn" onclick="closeModal('resign-caution-modal')" style="padding:4px 10px;font-size:18px;line-height:1;">×</button>
+      </div>
     </div>
-    <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.6;color:var(--text);">
-      <li>50세 이상 근로자 퇴사시 <strong>재취업지원서비스 교육 미참여 확인서</strong> 제출</li>
-      <li>퇴직금 정산 대상자 <strong>IRP계좌 제출</strong><br><span style="font-size:12px;color:var(--text3);">퇴직금이 300만원 미만이거나 만55세 이상인 경우 급여계좌로 지급가능</span></li>
-      <li>퇴직금 정산 대상자 <strong>월 중도 퇴사시 퇴직금 정산을 위해 급여 별도 선마감</strong></li>
-      <li><strong>잔여 연차 확인</strong><br><span style="font-size:12px;color:var(--text3);">비례연차 대상자는 잔여비례연차 합산 정산</span></li>
-      <li>퇴직일 기준 <strong>최근 3개월간 리프레쉬 사용 유무 확인</strong></li>
-      <li>퇴사월 <strong>인센티브 및 프로모션 등 수당 지급 대상 확인</strong><br><span style="font-size:12px;color:var(--text3);">기타포상비 지급 대상인 경우 월 중도 퇴사시 미지급</span></li>
-      <li><strong>출입카드 반납</strong></li>
-    </ol>
+    <ol id="resign-caution-list" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.6;color:var(--text);"></ol>
   </div>
 </div>
 
@@ -6958,6 +6973,83 @@ function openCertPopup(name) {
   temps.forEach(function(el) { document.body.removeChild(el); });
   document.getElementById('cert-popup-modal').classList.add('show');
 }
+
+// ── 주의사항 시스템 ──
+const DEFAULT_CAUTION = {
+  hire: [
+    '입사시 근로계약서, 입사서류, 등본, 급여계좌 제출 (본인 주민등록번호 전체 표기된 등본)',
+    '3개월 이내 재입사 인원 혹은 교육없이 즉시 입사하는 인원은 별도 내용 공유 필요',
+    '계약직/촉탁직의 경우 근로계약서 양식 및 작성 내용 별도 문의',
+    '사번발급 후 개인 연락처로 전자 근로계약서 발송, 서명 필수',
+  ],
+  resign: [
+    '50세 이상 근로자 퇴사시 재취업지원서비스 교육 미참여 확인서 제출',
+    '퇴직금 정산 대상자 IRP계좌 제출 (퇴직금이 300만원 미만이거나 만55세 이상인 경우 급여계좌로 지급가능)',
+    '퇴직금 정산 대상자 월 중도 퇴사시 퇴직금 정산을 위해 급여 별도 선마감',
+    '잔여 연차 확인 (비례연차 대상자는 잔여비례연차 합산 정산)',
+    '퇴직일 기준 최근 3개월간 리프레쉬 사용 유무 확인',
+    '퇴사월 인센티브 및 프로모션 등 수당 지급 대상 확인 (기타포상비 지급 대상인 경우 월 중도 퇴사시 미지급)',
+    '출입카드 반납',
+  ]
+};
+
+function getCautionNotes(type) {
+  try {
+    const saved = localStorage.getItem('att_caution_' + type);
+    return saved ? JSON.parse(saved) : DEFAULT_CAUTION[type];
+  } catch(e) { return DEFAULT_CAUTION[type]; }
+}
+
+function saveCautionNotes(type, notes) {
+  try { localStorage.setItem('att_caution_' + type, JSON.stringify(notes)); } catch(e) {}
+}
+
+function renderCautionList(type) {
+  const list = document.getElementById(type + '-caution-list');
+  const editBtn = document.getElementById(type + '-caution-edit-btn');
+  if (!list) return;
+  const notes = getCautionNotes(type);
+  if (editBtn) editBtn.style.display = isAdminMode() ? '' : 'none';
+  list.innerHTML = notes.map((n, i) => `<li style="position:relative;">
+    <span id="caution-${type}-${i}">${n}</span>
+  </li>`).join('');
+}
+
+function toggleCautionEdit(type) {
+  const notes = getCautionNotes(type);
+  const list = document.getElementById(type + '-caution-list');
+  const btn = document.getElementById(type + '-caution-edit-btn');
+  const isEditing = btn.dataset.editing === '1';
+  if (!isEditing) {
+    // 편집 모드
+    list.innerHTML = notes.map((n, i) => `<li>
+      <textarea rows="2" style="width:100%;font-size:13px;line-height:1.5;padding:4px 6px;border:1px solid var(--border);border-radius:4px;resize:vertical;font-family:inherit;" id="caution-edit-${type}-${i}">${n}</textarea>
+    </li>`).join('');
+    btn.textContent = '💾 저장';
+    btn.dataset.editing = '1';
+  } else {
+    // 저장
+    const newNotes = notes.map((_, i) => {
+      const el = document.getElementById('caution-edit-' + type + '-' + i);
+      return el ? el.value.trim() : notes[i];
+    }).filter(n => n);
+    saveCautionNotes(type, newNotes);
+    btn.textContent = '✏️ 편집';
+    btn.dataset.editing = '0';
+    renderCautionList(type);
+  }
+}
+
+// 팝업 열 때 렌더링
+document.getElementById('hire-caution-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeModal('hire-caution-modal');
+});
+document.getElementById('resign-caution-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeModal('resign-caution-modal');
+});
+
+function openHireCaution() { renderCautionList('hire'); document.getElementById('hire-caution-modal').classList.add('show'); }
+function openResignCaution() { renderCautionList('resign'); document.getElementById('resign-caution-modal').classList.add('show'); }
 
 function renderCert() {
   const q = (document.getElementById('cert-search').value || '').trim();
