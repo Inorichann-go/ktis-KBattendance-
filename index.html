@@ -5781,6 +5781,15 @@ function calcAnnualLeave_normal(emp, year, refDate) {
     ? `비례연차 (${granted}h)`
     : grantType;
 
+  // ── 2주년비례 퇴사자 보정 계산 ──
+  // 비례연차 사용 중 퇴사(is2ndAnnivProp && leaveDate 있음)인 경우
+  // 정산연차 = 잔여비례 + (15 - 비례발생일수)
+  const isResignedProp2 = is2ndAnnivProp && !!emp.leaveDate;
+  const prop2GrantedDays = isProportional ? r1(grantedHours / 8) : 0;
+  const prop2Shortfall   = isResignedProp2 ? r1(15 - prop2GrantedDays) : 0;  // 보정분(정산only)
+  const prop2RemainDays  = isResignedProp2 ? r1(remainHours / 8) : 0;         // 잔여비례
+  const prop2Total       = isResignedProp2 ? r1(prop2RemainDays + prop2Shortfall) : 0; // 최종정산
+
   return {
     grantType: finalGrantType, granted: grantedDays, isProportional,
     usedAnnual: used.annual, usedHalf: used.half,
@@ -5789,7 +5798,8 @@ function calcAnnualLeave_normal(emp, year, refDate) {
     remain: remainDays,
     remainLabel: isParental ? `${remainDays}일 (${curParentalH}h기준)` : `${remainDays}일`,
     isParental, curParentalH, displayHours,
-    pct
+    pct,
+    isResignedProp2, prop2GrantedDays, prop2Shortfall, prop2RemainDays, prop2Total
   };
 }
 
@@ -5958,6 +5968,11 @@ function renderLeaveTable() {
       <td style="text-align:center"><span class="num">${lv.usedHalf}회</span></td>
       <td style="text-align:center;font-weight:700${isOver?';color:var(--danger)':''}">${lv.usedHours}h</td>
       <td style="text-align:center">
+        ${lv.isResignedProp2 ? `
+          <div style="font-size:11px;color:var(--text2);">${lv.prop2RemainDays}일 <span style="color:var(--text3);font-size:10px;">(잔여비례)</span></div>
+          <div style="font-size:11px;color:var(--accent);font-weight:600;">+${lv.prop2Shortfall}일 <span style="color:var(--text3);font-size:10px;">(정산분)</span></div>
+          <div style="font-weight:700;color:var(--danger);border-top:1px solid var(--border);margin-top:3px;padding-top:3px;">= ${lv.prop2Total}일</div>
+        ` : `
         <div style="font-weight:700;color:${isLow?'var(--danger)':isOver?'var(--danger)':'var(--accent)'};">${lv.remainHours}h</div>
         <div style="font-size:11px;color:var(--text2);margin:2px 0;">${lv.isParental?`${lv.remain}일 (${lv.curParentalH}h기준)`:`${lv.remain}일`}</div>
         ${lv.grantedHours > 0 ? `
@@ -5965,6 +5980,7 @@ function renderLeaveTable() {
           <div class="leave-bar" style="width:46px;"><div class="leave-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
           <span style="font-size:10px;color:var(--text3)">${lv.pct}%</span>
         </div>` : `<span style="font-size:10px;color:var(--text3);">-</span>`}
+        `}
       </td>
     </tr>`;
   }).join('');
@@ -6860,6 +6876,11 @@ function renderIssue() {
         ? `<span class="badge badge-red" style="font-size:10px;">퇴사(${e.leaveDate})</span>`
         : `<span class="settlement-badge" title="${refDate||'오늘'} 기준"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 2주년</span>`;
       const isLow = lv && lv.remain <= 3 && lv.granted > 0;
+      const remainCell = lv?.isResignedProp2
+        ? `<div style="font-size:11px;color:var(--text2);">${lv.prop2RemainDays}일 <span style="color:var(--text3);font-size:10px;">(잔여비례)</span></div>
+           <div style="font-size:11px;color:var(--accent);font-weight:600;">+${lv.prop2Shortfall}일 <span style="color:var(--text3);font-size:10px;">(정산분)</span></div>
+           <div style="font-weight:700;color:var(--danger);">= ${lv.prop2Total}일</div>`
+        : `${lv?.remain||'0'}일 (${lv?.remainHours||'0'}h)`;
       return `<tr${isResignedThis?' style="background:#fafafa;"':''}>
         <td style="font-weight:700">${e.name}</td>
         <td>${getTeamBadge(e.team,'font-size:10px;')}</td>
@@ -6867,7 +6888,7 @@ function renderIssue() {
         <td style="font-size:11px">${base}<br><span style="font-size:10px;color:var(--text3)">(${refLabel} 기준)</span></td>
         <td style="font-weight:700;color:var(--accent)">${lv?.granted||'-'}일 (${lv?.grantedHours||'-'}h)</td>
         <td style="text-align:center;color:var(--text2)">${lv?.totalUsed||'0'}일 (${lv?.usedHours||'0'}h)</td>
-        <td style="text-align:center;font-weight:700;color:${isLow?'var(--danger)':'var(--accent)'}">${lv?.remain||'0'}일 (${lv?.remainHours||'0'}h)</td>
+        <td style="text-align:center;font-weight:700;color:${isLow?'var(--danger)':'var(--accent)'}">${remainCell}</td>
         <td>${badge}</td>
       </tr>`;
     }).join('')}
@@ -7195,6 +7216,24 @@ function buildCertCard(emp, year, refType='today', refYear=null) {
   const lvRemain   = lv ? `${lv.remain}일 (${lv.remainHours}h)` : '-';
   const isLow      = lv && lv.remain <= 3 && lv.granted > 0;
 
+  // ── 2주년비례 퇴사자 보정행 ──
+  let prop2ResignRow = '';
+  if (lv?.isResignedProp2) {
+    prop2ResignRow = `
+    <tr>
+      <td style="background:#fff8e1;font-weight:700;color:#cc6000;width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">잔여 비례연차</td>
+      <td style="padding:8px 14px;font-size:13px;color:var(--text2);">${lv.prop2RemainDays}일</td>
+    </tr>
+    <tr>
+      <td style="background:#fff8e1;font-weight:700;color:#cc6000;width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">정산분 (사용불가)</td>
+      <td style="padding:8px 14px;font-size:13px;color:var(--accent);font-weight:600;">+${lv.prop2Shortfall}일 <span style="font-size:11px;font-weight:400;color:var(--text3);">(15일 - 발생비례${lv.prop2GrantedDays}일)</span></td>
+    </tr>
+    <tr>
+      <td style="background:#fff3cd;font-weight:700;color:var(--danger);width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">실제 정산 연차</td>
+      <td style="padding:8px 14px;font-size:14px;font-weight:700;color:var(--danger);">${lv.prop2Total}일</td>
+    </tr>`;
+  }
+
   // ── 2년 미만자: 예상 비례연차 (현재 기준 조회일 때만 표시) ──
   let nextPropRow = '';
   if (isUnder2yr && !isActuallyResigned && refType === 'today') {
@@ -7226,7 +7265,7 @@ function buildCertCard(emp, year, refType='today', refYear=null) {
     <tr>
       <td style="background:var(--accent-light);font-weight:700;color:var(--accent);width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">${k}</td>
       <td style="padding:8px 14px;font-size:13px;${s}">${v}</td>
-    </tr>`).join('') + nextPropRow;
+    </tr>`).join('') + prop2ResignRow + nextPropRow;
 
   // ── 상세 내역 테이블 ──
   function detailTable(title, icon, list, isHalf) {
