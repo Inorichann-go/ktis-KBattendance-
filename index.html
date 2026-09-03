@@ -79,44 +79,26 @@
   .btn-sm { padding: 4px 10px; font-size: 12px; }
 
   /* ── 탭 ── */
-  /* ── 사이드바 탭 ── */
-  .layout-wrap { display: flex; height: calc(100vh - 58px); overflow: hidden; }
   .tabs {
-    width: 88px;
-    min-width: 88px;
+    display: flex; gap: 0;
     background: #1e293b;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    height: 100%;
-    overflow-y: auto;
+    border-bottom: none;
+    padding: 0 24px;
+    box-shadow: 0 2px 8px rgba(30,41,59,.18);
+    position: sticky;
+    top: 58px;
     z-index: 20;
-    box-shadow: 2px 0 8px rgba(30,41,59,.18);
-    flex-shrink: 0;
   }
   .tab {
-    padding: 12px 6px;
-    font-size: 10px;
-    font-weight: 600;
-    color: rgba(255,255,255,.55);
-    cursor: pointer;
-    border-left: 3px solid transparent;
-    border-bottom: none;
-    transition: all 0.15s;
-    white-space: normal;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    line-height: 1.3;
+    padding: 13px 20px; font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,.55); cursor: pointer;
+    border-bottom: 3px solid transparent; margin-bottom: 0;
+    transition: all 0.15s; white-space: nowrap;
   }
   .tab:hover { color: rgba(255,255,255,.9); background: rgba(255,255,255,.07); }
-  .tab.active { color: #ffffff; border-left-color: #60a5fa; background: rgba(255,255,255,.1); }
-  .tab svg { flex-shrink: 0; }
+  .tab.active { color: #ffffff; border-bottom-color: #60a5fa; background: rgba(255,255,255,.1); }
 
   /* ── 패널 ── */
-  .panels-wrap { flex: 1; min-width: 0; overflow-y: auto; overflow-x: auto; height: 100%; }
   .panel { display: none; padding: 24px; }
   .panel.active { display: block; }
 
@@ -303,7 +285,7 @@
   .summary-head { background: var(--accent-light) !important; color: var(--accent) !important; }
 
   /* ── 월별 요약 ── */
-  .summary-table th, .summary-table td { padding: 7px 10px; text-align: center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .summary-table th, .summary-table td { padding: 7px 10px; text-align: center; }
   .summary-table .name-col { text-align: left; min-width: 80px; }
   .num { font-family: var(--mono); font-size: 12px; }
   .num-0 { color: var(--text3); }
@@ -389,7 +371,7 @@
   .page-btn:hover:not(.active) { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
 
   /* 월별 요약 */
-  .summary-table th, .summary-table td { padding: 7px 10px; text-align: center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .summary-table th, .summary-table td { padding: 7px 10px; text-align: center; }
   .summary-table .name-col { text-align: left; min-width: 80px; }
   .num { font-family: var(--mono); font-size: 12px; font-weight: 600; }
   .num-0 { color: var(--text3); font-weight: 400; }
@@ -595,12 +577,12 @@
   .issue-count { font-size: 11px; font-weight: 400; color: var(--text3); margin-left: 4px; }
   .issue-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .issue-table th { background: var(--surface2); padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text2); border-bottom: 2px solid var(--border); white-space: nowrap; }
-  .issue-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .issue-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
   .issue-table tr:last-child td { border-bottom: none; }
   .issue-table tr:hover td { background: #fff8fa; }
   .issue-empty { font-size: 12px; color: var(--text3); padding: 12px 0; text-align: center; }
   .issue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media(max-width:900px) { .issue-grid { grid-template-columns: 1fr; } }
+  @media(max-width:800px) { .issue-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -652,7 +634,6 @@
   </div>
 </header>
 
-<div class="layout-wrap">
 <div class="tabs">
   <div class="tab active" onclick="showTab(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Summary</div>
 
@@ -663,7 +644,6 @@
   <div class="tab" onclick="showTab(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 이달의 이슈</div>
   
 </div>
-<div class="panels-wrap">
 
 <!-- ═══════════════════════════════ TAB 0: SUMMARY ═══════════════════════════════ -->
 <div id="panel0" class="panel active">
@@ -671,7 +651,7 @@
     <select class="form-select" id="sum-base-year" style="width:95px;" onchange="renderSummaryDash()"></select>
     <select class="form-select" id="sum-base-month" style="width:80px;" onchange="renderSummaryDash()"></select>
   </div>
-  <div id="summary-dash"><div style="text-align:center;padding:40px;color:var(--text3);">불러오는 중...</div></div>
+  <div id="summary-dash"><div style="text-align:center;padding:40px;color:var(--text3);">불러오는 중...</div></div>/div>
 </div>
 
 
@@ -1437,17 +1417,10 @@
       <input class="form-input" id="hire-search" placeholder="이름 검색..." style="width:130px;" oninput="renderHireTable()">
       <button class="btn-add admin-only" onclick="openAddEmpModal()" style="margin-left:4px;">＋ 직원 추가</button>
       <span id="hire-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
-      <button onclick="openHireCaution()" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="입사 처리 주의사항">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </button>
+      <button onclick="openHireCaution()" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="입사 처리 주의사항"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></button>
     </div>
     <div style="overflow-x:auto;">
-      <table class="summary-table" id="hire-table" style="table-layout:fixed;width:100%;">
-        <colgroup>
-          <col style="width:40px"><col style="width:90px"><col style="width:90px"><col style="width:120px">
-          <col style="width:100px"><col style="width:100px"><col style="width:75px"><col style="width:100px">
-          <col style="width:55px"><col style="width:55px"><col style="width:110px"><col style="width:120px"><col style="width:36px">
-        </colgroup>
+      <table class="summary-table" id="hire-table">
         <thead>
           <tr>
             <th>No</th><th>이름</th><th>사번</th><th>팀</th><th>입사일</th><th>전보일</th>
@@ -1472,9 +1445,7 @@
       </select>
       <input class="form-input" id="resign-search" placeholder="이름 검색..." style="width:130px;" oninput="renderResignTable()">
       <span id="resign-count" style="font-size:13px;color:var(--text2);margin-left:4px;"></span>
-      <button onclick="openResignCaution()" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="퇴사 처리 주의사항">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </button>
+      <button onclick="openResignCaution()" style="background:none;border:none;cursor:pointer;padding:2px 4px;color:#cc6000;vertical-align:middle;" title="퇴사 처리 주의사항"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></button>
       <button class="btn-add admin-only" onclick="openQuickResignModal()" style="font-size:12px;">＋ 퇴사 추가</button>
       <button class="btn admin-only" onclick="openResignReasonMgr()" style="font-size:12px;margin-left:auto;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1482,12 +1453,7 @@
       </button>
     </div>
     <div style="overflow-x:auto;">
-      <table class="summary-table" id="resign-table" style="table-layout:fixed;width:100%;">
-        <colgroup>
-          <col style="width:40px"><col style="width:90px"><col style="width:90px"><col style="width:120px">
-          <col style="width:100px"><col style="width:100px"><col style="width:100px"><col style="width:130px">
-          <col style="width:90px"><col style="width:120px"><col style="width:36px">
-        </colgroup>
+      <table class="summary-table" id="resign-table">
         <thead>
           <tr>
             <th>No</th><th>이름</th><th>사번</th><th>팀</th>
@@ -1868,31 +1834,7 @@
       <button class="btn-save" style="background:var(--danger);border-color:var(--danger);" onclick="saveResignInfo()">퇴사 처리</button>
     </div>
   </div>
-
-<div id="panel7" class="panel">
-  <div class="ctrl-bar">
-    <select class="form-select" id="issue-year" style="width:95px;" onchange="renderIssue()"></select>
-    <select class="form-select" id="issue-month" style="width:80px;" onchange="renderIssue()"></select>
-  </div>
-  <div id="issue-memo-section" class="issue-section" style="margin-bottom:12px;">
-    <div class="issue-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 기타 특이사항 메모</div>
-    <div class="card" style="padding:12px 16px;">
-      <div id="issue-memo-view" style="min-height:60px;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-word;"></div>
-      <textarea id="issue-memo-text" placeholder="이번달 특이사항을 자유롭게 메모하세요..." style="display:none;width:100%;min-height:100px;border:1.5px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);resize:vertical;box-sizing:border-box;line-height:1.6;" oninput="saveIssueMemo()"></textarea>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-        <span id="issue-memo-status" style="font-size:11px;color:var(--text3);"></span>
-        <div style="display:flex;gap:6px;">
-          <button id="issue-memo-edit-btn" class="btn" style="font-size:11px;padding:4px 12px;" onclick="toggleIssueMemoEdit(true)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button>
-          <button id="issue-memo-save-btn" class="btn-save" style="font-size:11px;padding:4px 12px;display:none;" onclick="toggleIssueMemoEdit(false)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 완료</button>
-          <button class="btn btn-warn" style="font-size:11px;padding:4px 10px;" onclick="clearIssueMemo()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 삭제</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="issue-wrap"></div>
 </div>
-</div><!-- panels-wrap -->
-</div><!-- layout-wrap --></div>
 
 <!-- 입사 처리 주의사항 모달 -->
 <div class="modal-overlay" id="hire-caution-modal">
@@ -1957,7 +1899,29 @@
 </div>
 
 <!-- ═══════════════════════════════ TAB 6: 이달의 이슈 ═══════════════════════════════ -->
-
+<div id="panel7" class="panel">
+  <div class="ctrl-bar">
+    <select class="form-select" id="issue-year" style="width:95px;" onchange="renderIssue()"></select>
+    <select class="form-select" id="issue-month" style="width:80px;" onchange="renderIssue()"></select>
+    <button class="btn" onclick="renderIssue()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+  </div>
+  <div id="issue-memo-section" class="issue-section" style="margin-bottom:12px;display:none;">
+    <div class="issue-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 기타 특이사항 메모</div>
+    <div class="card" style="padding:12px 16px;">
+      <div id="issue-memo-view" style="min-height:60px;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-word;"></div>
+      <textarea id="issue-memo-text" placeholder="이번달 특이사항을 자유롭게 메모하세요..." style="display:none;width:100%;min-height:100px;border:1.5px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);resize:vertical;box-sizing:border-box;line-height:1.6;" oninput="saveIssueMemo()"></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span id="issue-memo-status" style="font-size:11px;color:var(--text3);"></span>
+        <div style="display:flex;gap:6px;">
+          <button id="issue-memo-edit-btn" class="btn" style="font-size:11px;padding:4px 12px;" onclick="toggleIssueMemoEdit(true)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button>
+          <button id="issue-memo-save-btn" class="btn-save" style="font-size:11px;padding:4px 12px;display:none;" onclick="toggleIssueMemoEdit(false)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 완료</button>
+          <button class="btn btn-warn" style="font-size:11px;padding:4px 10px;" onclick="clearIssueMemo()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="issue-wrap"></div>
+</div>
 
 <!-- 팀 색상 설정 모달 -->
 <div class="modal-overlay" id="team-color-modal">
@@ -2161,6 +2125,7 @@
     <div id="cert-popup-content" style="padding:20px;"></div>
   </div>
 </div>
+
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -2664,15 +2629,12 @@ let _localStorageAvailable = false;
 function showTab(i) {
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', j===i));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
-  // 탭 전환 시 스크롤 맨 위로
-  const pw = document.querySelector('.panels-wrap');
-  if (pw) pw.scrollTop = 0;
   if (i===0) { initSummaryDashControls(); renderSummaryDash(); }
   if (i===1) renderEmpTable();
   if (i===1) renderSummary();
   if (i===2) renderAttTable();
   if (i===3) { initHireResignControls(); showSubTab('emplist'); }
-  if (i===4) { initLeaveControls(); renderLeaveTable(); }
+  if (i===5) renderLeaveTable();
   if (i===5) { initIssueControls(); renderIssue(); }
 }
 
@@ -2698,9 +2660,9 @@ function initSummaryDashControls() {
 }
 
 function renderSummaryDash() {
-  try {
-  const year  = parseInt(document.getElementById('sum-base-year').value)  || new Date().getFullYear();
-  const month = parseInt(document.getElementById('sum-base-month').value) || new Date().getMonth()+1;
+  const _now2 = new Date();
+  const year  = parseInt(document.getElementById('sum-base-year')?.value)  || _now2.getFullYear();
+  const month = parseInt(document.getElementById('sum-base-month')?.value) || _now2.getMonth()+1;
 
   const ym1 = `${year}-${String(month).padStart(2,'0')}-01`;
   const ym2Last = new Date(year, month, 0).getDate();
@@ -2958,36 +2920,32 @@ function renderSummaryDash() {
   // ── 최종 렌더 ──
   document.getElementById('summary-dash').innerHTML = `
     ${kpiHtml}
-    <div class="dash-grid-2 dash-section" style="align-items:start;">
-      <div>
-        <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 팀별 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">${year}년 ${month}월 기준</span></div>
-        <div class="card" style="overflow-x:auto;">${teamTableHtml}</div>
-      </div>
-      <div>
-        <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 업무별 현황</div>
-        <div class="card" style="overflow-x:auto;">${jobTableHtml}</div>
-      </div>
+    <div class="dash-section">
+      <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 팀별 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">${year}년 ${month}월 기준</span></div>
+      <div class="card" style="overflow-x:auto;">${teamTableHtml}</div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 업무별 현황</div>
+      <div class="card" style="overflow-x:auto;">${jobTableHtml}</div>
     </div>
     <div class="dash-grid-2 dash-section">
       <div>
         <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${year}년 연간 입퇴사 현황 <span style="font-size:11px;font-weight:400;color:var(--text3)">누적 입사 ${yearlyJoin}명 · 퇴사 ${yearlyLeave}명</span></div>
         <div class="card" style="padding:12px 16px;">${monthlyRows}</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div>
-          <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 근속 구간 분포</div>
-          <div class="card" style="padding:12px 16px;">${bktHtml}</div>
-        </div>
-        <div>
-          <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 근무시간 분포</div>
-          <div class="card" style="padding:12px 16px;">${hrGroups}</div>
+      <div>
+        <div class="dash-grid-2" style="gap:12px;margin-bottom:12px;">
+          <div>
+            <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 근속 구간 분포</div>
+            <div class="card" style="padding:12px 16px;">${bktHtml}</div>
+          </div>
+          <div>
+            <div class="dash-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 근무시간 분포</div>
+            <div class="card" style="padding:12px 16px;">${hrGroups}</div>
+          </div>
         </div>
       </div>
     </div>`;
-  } catch(err) {
-    console.error('renderSummaryDash 오류:', err);
-    document.getElementById('summary-dash').innerHTML = '<div style="padding:20px;color:red;">오류: ' + err.message + '</div>';
-  }
 }
 
 // 팀 색상 상태 (bg, text 저장)
@@ -3770,7 +3728,7 @@ function openEmpDetail(idx) {
   // 관리자 편집 버튼
   const editBtn = document.getElementById('emp-detail-edit-btn');
   if (editBtn) {
-    editBtn.setAttribute('onclick', `openHireModal(${idx});closeModal('emp-detail-modal');`);
+    editBtn.setAttribute('onclick', `closeModal('emp-detail-modal');showTab(3);showSubTab('hire');`);
   }
   document.getElementById('emp-detail-modal').classList.add('show');
 }
@@ -4607,9 +4565,7 @@ function initHireResignControls() {
   ['hire-year','resign-year'].forEach(id => {
     const sel = document.getElementById(id);
     if (!sel || sel.options.length > 0) return;
-    const all = document.createElement('option');
-    all.value = ''; all.textContent = '전체';
-    sel.appendChild(all);
+    const allOpt = document.createElement('option'); allOpt.value=''; allOpt.textContent='전체'; sel.appendChild(allOpt);
     for (let y = yr; y >= 2022; y--) {
       const o = document.createElement('option');
       o.value = y; o.textContent = y+'년';
@@ -4904,8 +4860,8 @@ function deleteResignReason(idx) {
 }
 
 function renderHireTable() {
-  const yearVal = document.getElementById('hire-year')?.value || '';
-  const year = yearVal ? parseInt(yearVal) : null;
+  const hireYearVal = document.getElementById('hire-year')?.value || '';
+  const year = hireYearVal ? parseInt(hireYearVal) : null;
   const month = document.getElementById('hire-month')?.value || '';
   const q = (document.getElementById('hire-search')?.value || '').trim();
   let list = employees.filter(e => {
@@ -4959,9 +4915,8 @@ function renderResignTable() {
   tbody.innerHTML = list.map((e,i) => {
     const info = e.resignInfo || {};
     const empIdx = employees.findIndex(emp => emp.name === e.name && emp.empId === e.empId);
-    const days = e.joinDate && e.leaveDate ? Math.floor((new Date(e.leaveDate)-new Date(e.joinDate))/86400000) : 0;
+    const days = e.joinDate && e.leaveDate ? Math.floor((new Date(e.leaveDate.replace(/-/g,'/'))-new Date(e.joinDate.replace(/-/g,'\/')))/86400000) : 0;
     const tenureYears = days / 365;
-    // 퇴직금정산: 저장값 우선, 없으면 1년이상이면 자동 true
     if (info.severancePay === undefined && tenureYears >= 1) {
       info.severancePay = true;
       if (empIdx >= 0) employees[empIdx].resignInfo = info;
@@ -5821,15 +5776,6 @@ function calcAnnualLeave_normal(emp, year, refDate) {
     ? `비례연차 (${granted}h)`
     : grantType;
 
-  // ── 2주년비례 퇴사자 보정 계산 ──
-  // 비례연차 사용 중 퇴사(is2ndAnnivProp && leaveDate 있음)인 경우
-  // 정산연차 = 잔여비례 + (15 - 비례발생일수)
-  const isResignedProp2 = is2ndAnnivProp && !!emp.leaveDate;
-  const prop2GrantedDays = isProportional ? r1(grantedHours / 8) : 0;
-  const prop2Shortfall   = isResignedProp2 ? r1(15 - prop2GrantedDays) : 0;  // 보정분(정산only)
-  const prop2RemainDays  = isResignedProp2 ? r1(remainHours / 8) : 0;         // 잔여비례
-  const prop2Total       = isResignedProp2 ? r1(prop2RemainDays + prop2Shortfall) : 0; // 최종정산
-
   return {
     grantType: finalGrantType, granted: grantedDays, isProportional,
     usedAnnual: used.annual, usedHalf: used.half,
@@ -5838,8 +5784,7 @@ function calcAnnualLeave_normal(emp, year, refDate) {
     remain: remainDays,
     remainLabel: isParental ? `${remainDays}일 (${curParentalH}h기준)` : `${remainDays}일`,
     isParental, curParentalH, displayHours,
-    pct,
-    isResignedProp2, prop2GrantedDays, prop2Shortfall, prop2RemainDays, prop2Total
+    pct
   };
 }
 
@@ -6008,11 +5953,6 @@ function renderLeaveTable() {
       <td style="text-align:center"><span class="num">${lv.usedHalf}회</span></td>
       <td style="text-align:center;font-weight:700${isOver?';color:var(--danger)':''}">${lv.usedHours}h</td>
       <td style="text-align:center">
-        ${lv.isResignedProp2 ? `
-          <div style="font-size:11px;color:var(--text2);">${lv.prop2RemainDays}일 <span style="color:var(--text3);font-size:10px;">(잔여비례)</span></div>
-          <div style="font-size:11px;color:var(--accent);font-weight:600;">+${lv.prop2Shortfall}일 <span style="color:var(--text3);font-size:10px;">(정산분)</span></div>
-          <div style="font-weight:700;color:var(--danger);border-top:1px solid var(--border);margin-top:3px;padding-top:3px;">= ${lv.prop2Total}일</div>
-        ` : `
         <div style="font-weight:700;color:${isLow?'var(--danger)':isOver?'var(--danger)':'var(--accent)'};">${lv.remainHours}h</div>
         <div style="font-size:11px;color:var(--text2);margin:2px 0;">${lv.isParental?`${lv.remain}일 (${lv.curParentalH}h기준)`:`${lv.remain}일`}</div>
         ${lv.grantedHours > 0 ? `
@@ -6020,7 +5960,6 @@ function renderLeaveTable() {
           <div class="leave-bar" style="width:46px;"><div class="leave-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
           <span style="font-size:10px;color:var(--text3)">${lv.pct}%</span>
         </div>` : `<span style="font-size:10px;color:var(--text3);">-</span>`}
-        `}
       </td>
     </tr>`;
   }).join('');
@@ -6736,7 +6675,6 @@ function clearIssueMemo() {
 }
 
 function renderIssue() {
-  try {
   const year  = parseInt(document.getElementById('issue-year').value)  || new Date().getFullYear();
   const month = parseInt(document.getElementById('issue-month').value) || new Date().getMonth()+1;
   const days  = getDaysInMonth(year, month);
@@ -6917,11 +6855,6 @@ function renderIssue() {
         ? `<span class="badge badge-red" style="font-size:10px;">퇴사(${e.leaveDate})</span>`
         : `<span class="settlement-badge" title="${refDate||'오늘'} 기준"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 2주년</span>`;
       const isLow = lv && lv.remain <= 3 && lv.granted > 0;
-      const remainCell = lv?.isResignedProp2
-        ? `<div style="font-size:11px;color:var(--text2);">${lv.prop2RemainDays}일 <span style="color:var(--text3);font-size:10px;">(잔여비례)</span></div>
-           <div style="font-size:11px;color:var(--accent);font-weight:600;">+${lv.prop2Shortfall}일 <span style="color:var(--text3);font-size:10px;">(정산분)</span></div>
-           <div style="font-weight:700;color:var(--danger);">= ${lv.prop2Total}일</div>`
-        : `${lv?.remain||'0'}일 (${lv?.remainHours||'0'}h)`;
       return `<tr${isResignedThis?' style="background:#fafafa;"':''}>
         <td style="font-weight:700">${e.name}</td>
         <td>${getTeamBadge(e.team,'font-size:10px;')}</td>
@@ -6929,39 +6862,32 @@ function renderIssue() {
         <td style="font-size:11px">${base}<br><span style="font-size:10px;color:var(--text3)">(${refLabel} 기준)</span></td>
         <td style="font-weight:700;color:var(--accent)">${lv?.granted||'-'}일 (${lv?.grantedHours||'-'}h)</td>
         <td style="text-align:center;color:var(--text2)">${lv?.totalUsed||'0'}일 (${lv?.usedHours||'0'}h)</td>
-        <td style="text-align:center;font-weight:700;color:${isLow?'var(--danger)':'var(--accent)'}">${remainCell}</td>
+        <td style="text-align:center;font-weight:700;color:${isLow?'var(--danger)':'var(--accent)'}">${lv?.remain||'0'}일 (${lv?.remainHours||'0'}h)</td>
         <td>${badge}</td>
       </tr>`;
     }).join('')}
     </tbody></table>` : emptyMsg;
 
-  // ── 계약종료 예정자 (이번달 contractend 도래) ──
+  // 계약종료 예정자
   const contractExpiry = employees.filter(e => {
-    if (e.leaveDate) return false; // 이미 퇴사자 제외
+    if (e.leaveDate) return false;
     const ce = e.hireInfo?.contractend;
-    if (!ce) return false;
+    if (!ce || ce.length < 10) return false;
     const ceDate = new Date(ce.replace(/-/g,'/'));
-    return ceDate.getFullYear() === year && ceDate.getMonth()+1 === month;
+    return ceDate.getFullYear()===year && ceDate.getMonth()+1===month;
   });
-
   const contractHighlight = contractExpiry.length ? `
     <div style="background:#fff3cd;border:1.5px solid #ffc107;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px;">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#cc6000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <div>
         <div style="font-weight:700;color:#cc6000;font-size:13px;margin-bottom:6px;">⚠ 이번달 계약 종료 예정 ${contractExpiry.length}명</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
-          ${contractExpiry.map(e => `
-            <span style="background:#fff;border:1px solid #ffc107;border-radius:6px;padding:3px 10px;font-size:12px;">
-              <strong>${e.name}</strong>
-              <span style="color:var(--text3);margin-left:4px;">${getTeamBadge(e.team,'font-size:10px;')}</span>
-              <span style="color:#cc6000;margin-left:4px;font-size:11px;">${e.hireInfo?.contractend||''} 종료</span>
-            </span>`).join('')}
+          ${contractExpiry.map(e=>`<span style="background:#fff;border:1px solid #ffc107;border-radius:6px;padding:3px 10px;font-size:12px;"><strong>${e.name}</strong> <span style="color:#cc6000;font-size:11px;">${e.hireInfo?.contractend||''}</span></span>`).join('')}
         </div>
       </div>
     </div>` : '';
 
-  document.getElementById('issue-wrap').innerHTML = `
-    ${contractHighlight}
+  document.getElementById('issue-wrap').innerHTML = `\${contractHighlight}
     <div class="issue-grid">
       ${section('🆕', `${month}월 입사자`, joiners.length, joinHtml)}
       ${section('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>', `${month}월 퇴사자`, leavers.length, leaveHtml)}
@@ -6974,14 +6900,9 @@ function renderIssue() {
     ${section('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>', `${month}월 연차정산 대상자 (2주년 도래)`, settlement.length, settlementHtml)}
   `;
   loadIssueMemo();
-  } catch(err) {
-    console.error('renderIssue 오류:', err);
-    document.getElementById('issue-wrap').innerHTML = '<div style="padding:20px;color:red;">오류: ' + err.message + '</div>';
-  }
 }
 
 function initCertControls() {
-  // cert panel 제거됨 - openCertPopup에서 임시 요소로 처리
   const el = document.getElementById('cert-ref-type');
   if (!el) return;
   el.addEventListener('change', function() {
@@ -7083,67 +7004,37 @@ const DEFAULT_CAUTION = {
     '출입카드 반납',
   ]
 };
-
 function getCautionNotes(type) {
-  try {
-    const saved = localStorage.getItem('att_caution_' + type);
-    return saved ? JSON.parse(saved) : DEFAULT_CAUTION[type];
-  } catch(e) { return DEFAULT_CAUTION[type]; }
+  try { const s=localStorage.getItem('att_caution_'+type); return s?JSON.parse(s):DEFAULT_CAUTION[type]; } catch(e) { return DEFAULT_CAUTION[type]; }
 }
-
-function saveCautionNotes(type, notes) {
-  try { localStorage.setItem('att_caution_' + type, JSON.stringify(notes)); } catch(e) {}
-}
-
+function saveCautionNotes(type,notes) { try{localStorage.setItem('att_caution_'+type,JSON.stringify(notes));}catch(e){} }
 function renderCautionList(type) {
-  const list = document.getElementById(type + '-caution-list');
-  const editBtn = document.getElementById(type + '-caution-edit-btn');
-  if (!list) return;
-  const notes = getCautionNotes(type);
-  if (editBtn) editBtn.style.display = isAdminMode() ? '' : 'none';
-  list.innerHTML = notes.map((n, i) => `<li style="position:relative;">
-    <span id="caution-${type}-${i}">${n}</span>
-  </li>`).join('');
+  const list=document.getElementById(type+'-caution-list');
+  const editBtn=document.getElementById(type+'-caution-edit-btn');
+  if(!list)return;
+  const notes=getCautionNotes(type);
+  if(editBtn)editBtn.style.display=isAdminMode()?'':'none';
+  list.innerHTML=notes.map((n,i)=>`<li><span id="caution-${type}-${i}">${n}</span></li>`).join('');
 }
-
 function toggleCautionEdit(type) {
-  const notes = getCautionNotes(type);
-  const list = document.getElementById(type + '-caution-list');
-  const btn = document.getElementById(type + '-caution-edit-btn');
-  const isEditing = btn.dataset.editing === '1';
-  if (!isEditing) {
-    // 편집 모드
-    list.innerHTML = notes.map((n, i) => `<li>
-      <textarea rows="2" style="width:100%;font-size:13px;line-height:1.5;padding:4px 6px;border:1px solid var(--border);border-radius:4px;resize:vertical;font-family:inherit;" id="caution-edit-${type}-${i}">${n}</textarea>
-    </li>`).join('');
-    btn.textContent = '💾 저장';
-    btn.dataset.editing = '1';
+  const notes=getCautionNotes(type);
+  const list=document.getElementById(type+'-caution-list');
+  const btn=document.getElementById(type+'-caution-edit-btn');
+  const isEditing=btn.dataset.editing==='1';
+  if(!isEditing){
+    list.innerHTML=notes.map((n,i)=>`<li><textarea rows="2" style="width:100%;font-size:13px;padding:4px 6px;border:1px solid var(--border);border-radius:4px;resize:vertical;font-family:inherit;" id="caution-edit-${type}-${i}">${n}</textarea></li>`).join('');
+    btn.textContent='💾 저장'; btn.dataset.editing='1';
   } else {
-    // 저장
-    const newNotes = notes.map((_, i) => {
-      const el = document.getElementById('caution-edit-' + type + '-' + i);
-      return el ? el.value.trim() : notes[i];
-    }).filter(n => n);
-    saveCautionNotes(type, newNotes);
-    btn.textContent = '✏️ 편집';
-    btn.dataset.editing = '0';
+    const newNotes=notes.map((_,i)=>{const el=document.getElementById('caution-edit-'+type+'-'+i);return el?el.value.trim():notes[i];}).filter(n=>n);
+    saveCautionNotes(type,newNotes); btn.textContent='✏️ 편집'; btn.dataset.editing='0';
     renderCautionList(type);
   }
 }
-
-// 팝업 열 때 렌더링
-document.getElementById('hire-caution-modal')?.addEventListener('click', function(e) {
-  if (e.target === this) closeModal('hire-caution-modal');
-});
-document.getElementById('resign-caution-modal')?.addEventListener('click', function(e) {
-  if (e.target === this) closeModal('resign-caution-modal');
-});
-
 function openHireCaution() { renderCautionList('hire'); document.getElementById('hire-caution-modal').classList.add('show'); }
 function openResignCaution() { renderCautionList('resign'); document.getElementById('resign-caution-modal').classList.add('show'); }
 
 function renderCert() {
-  const q = (document.getElementById('cert-search').value || '').trim();
+  const q = (document.getElementById('cert-search')?.value || '').trim();
   const year = new Date().getFullYear();
   const refType  = document.getElementById('cert-ref-type')?.value || 'today';
   const refYear  = parseInt(document.getElementById('cert-ref-year')?.value) || year;
@@ -7286,24 +7177,6 @@ function buildCertCard(emp, year, refType='today', refYear=null) {
   const lvRemain   = lv ? `${lv.remain}일 (${lv.remainHours}h)` : '-';
   const isLow      = lv && lv.remain <= 3 && lv.granted > 0;
 
-  // ── 2주년비례 퇴사자 보정행 ──
-  let prop2ResignRow = '';
-  if (lv?.isResignedProp2) {
-    prop2ResignRow = `
-    <tr>
-      <td style="background:#fff8e1;font-weight:700;color:#cc6000;width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">잔여 비례연차</td>
-      <td style="padding:8px 14px;font-size:13px;color:var(--text2);">${lv.prop2RemainDays}일</td>
-    </tr>
-    <tr>
-      <td style="background:#fff8e1;font-weight:700;color:#cc6000;width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">정산분 (사용불가)</td>
-      <td style="padding:8px 14px;font-size:13px;color:var(--accent);font-weight:600;">+${lv.prop2Shortfall}일 <span style="font-size:11px;font-weight:400;color:var(--text3);">(15일 - 발생비례${lv.prop2GrantedDays}일)</span></td>
-    </tr>
-    <tr>
-      <td style="background:#fff3cd;font-weight:700;color:var(--danger);width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">실제 정산 연차</td>
-      <td style="padding:8px 14px;font-size:14px;font-weight:700;color:var(--danger);">${lv.prop2Total}일</td>
-    </tr>`;
-  }
-
   // ── 2년 미만자: 예상 비례연차 (현재 기준 조회일 때만 표시) ──
   let nextPropRow = '';
   if (isUnder2yr && !isActuallyResigned && refType === 'today') {
@@ -7335,7 +7208,7 @@ function buildCertCard(emp, year, refType='today', refYear=null) {
     <tr>
       <td style="background:var(--accent-light);font-weight:700;color:var(--accent);width:110px;padding:8px 14px;font-size:12px;white-space:nowrap;">${k}</td>
       <td style="padding:8px 14px;font-size:13px;${s}">${v}</td>
-    </tr>`).join('') + prop2ResignRow + nextPropRow;
+    </tr>`).join('') + nextPropRow;
 
   // ── 상세 내역 테이블 ──
   function detailTable(title, icon, list, isHalf) {
@@ -7541,6 +7414,7 @@ function setReadOnly(val, hash) {
 }
 
 function toggleLock() { /* 비활성화 */ }
+function doUnlock() { /* 비활성화 */ }
 
 async function doUnlock() {
   const pw = document.getElementById('unlock-pw').value;
@@ -7792,7 +7666,7 @@ async function init() {
   initHireResignControls();
   loadResignReasons();
   const _now=new Date(); const _ys=document.getElementById("sum-base-year"); const _ms=document.getElementById("sum-base-month"); if(_ys)_ys.value=_now.getFullYear(); if(_ms)_ms.value=_now.getMonth()+1;
-  renderSummaryDash();
+  setTimeout(renderSummaryDash, 50);
   renderEmpTable();
 
   document.addEventListener('keydown', e => {
@@ -7809,9 +7683,6 @@ async function init() {
   // 세션 복원 or 기본 열람모드
   const savedMode = sessionStorage.getItem('att_mode') || 'view';
   applyMode(savedMode);
-
-  // applyMode 후 Summary 렌더
-  setTimeout(renderSummaryDash, 50);
 
   setTimeout(loadNotice, 300);
 }
