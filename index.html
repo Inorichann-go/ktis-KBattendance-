@@ -80,25 +80,23 @@
 
   /* ── 탭 ── */
   /* ── 사이드바 탭 ── */
-  .layout-wrap { display: flex; min-height: calc(100vh - 58px); }
+  .layout-wrap { display: flex; height: calc(100vh - 58px); overflow: hidden; }
   .tabs {
-    width: 120px;
-    min-width: 120px;
+    width: 88px;
+    min-width: 88px;
     background: #1e293b;
     display: flex;
     flex-direction: column;
     gap: 0;
-    position: sticky;
-    top: 58px;
-    height: calc(100vh - 58px);
+    height: 100%;
     overflow-y: auto;
     z-index: 20;
     box-shadow: 2px 0 8px rgba(30,41,59,.18);
     flex-shrink: 0;
   }
   .tab {
-    padding: 14px 10px;
-    font-size: 11px;
+    padding: 12px 6px;
+    font-size: 10px;
     font-weight: 600;
     color: rgba(255,255,255,.55);
     cursor: pointer;
@@ -118,7 +116,7 @@
   .tab svg { flex-shrink: 0; }
 
   /* ── 패널 ── */
-  .panels-wrap { flex: 1; min-width: 0; overflow-x: auto; }
+  .panels-wrap { flex: 1; min-width: 0; overflow-y: auto; overflow-x: auto; height: 100%; }
   .panel { display: none; padding: 24px; }
   .panel.active { display: block; }
 
@@ -602,7 +600,7 @@
   .issue-table tr:hover td { background: #fff8fa; }
   .issue-empty { font-size: 12px; color: var(--text3); padding: 12px 0; text-align: center; }
   .issue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media(max-width:800px) { .issue-grid { grid-template-columns: 1fr; } }
+  @media(max-width:900px) { .issue-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1871,6 +1869,28 @@
     </div>
   </div>
 
+<div id="panel7" class="panel">
+  <div class="ctrl-bar">
+    <select class="form-select" id="issue-year" style="width:95px;" onchange="renderIssue()"></select>
+    <select class="form-select" id="issue-month" style="width:80px;" onchange="renderIssue()"></select>
+  </div>
+  <div id="issue-memo-section" class="issue-section" style="margin-bottom:12px;">
+    <div class="issue-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 기타 특이사항 메모</div>
+    <div class="card" style="padding:12px 16px;">
+      <div id="issue-memo-view" style="min-height:60px;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-word;"></div>
+      <textarea id="issue-memo-text" placeholder="이번달 특이사항을 자유롭게 메모하세요..." style="display:none;width:100%;min-height:100px;border:1.5px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);resize:vertical;box-sizing:border-box;line-height:1.6;" oninput="saveIssueMemo()"></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span id="issue-memo-status" style="font-size:11px;color:var(--text3);"></span>
+        <div style="display:flex;gap:6px;">
+          <button id="issue-memo-edit-btn" class="btn" style="font-size:11px;padding:4px 12px;" onclick="toggleIssueMemoEdit(true)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button>
+          <button id="issue-memo-save-btn" class="btn-save" style="font-size:11px;padding:4px 12px;display:none;" onclick="toggleIssueMemoEdit(false)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 완료</button>
+          <button class="btn btn-warn" style="font-size:11px;padding:4px 10px;" onclick="clearIssueMemo()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="issue-wrap"></div>
+</div>
 </div><!-- panels-wrap -->
 </div><!-- layout-wrap --></div>
 
@@ -1937,28 +1957,7 @@
 </div>
 
 <!-- ═══════════════════════════════ TAB 6: 이달의 이슈 ═══════════════════════════════ -->
-<div id="panel7" class="panel">
-  <div class="ctrl-bar">
-    <select class="form-select" id="issue-year" style="width:95px;" onchange="renderIssue()"></select>
-    <select class="form-select" id="issue-month" style="width:80px;" onchange="renderIssue()"></select>
-  </div>
-  <div id="issue-memo-section" class="issue-section" style="margin-bottom:12px;">
-    <div class="issue-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> 기타 특이사항 메모</div>
-    <div class="card" style="padding:12px 16px;">
-      <div id="issue-memo-view" style="min-height:60px;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-word;"></div>
-      <textarea id="issue-memo-text" placeholder="이번달 특이사항을 자유롭게 메모하세요..." style="display:none;width:100%;min-height:100px;border:1.5px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:13px;font-family:var(--font);color:var(--text);background:var(--surface);resize:vertical;box-sizing:border-box;line-height:1.6;" oninput="saveIssueMemo()"></textarea>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-        <span id="issue-memo-status" style="font-size:11px;color:var(--text3);"></span>
-        <div style="display:flex;gap:6px;">
-          <button id="issue-memo-edit-btn" class="btn" style="font-size:11px;padding:4px 12px;" onclick="toggleIssueMemoEdit(true)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button>
-          <button id="issue-memo-save-btn" class="btn-save" style="font-size:11px;padding:4px 12px;display:none;" onclick="toggleIssueMemoEdit(false)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 완료</button>
-          <button class="btn btn-warn" style="font-size:11px;padding:4px 10px;" onclick="clearIssueMemo()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> 삭제</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="issue-wrap"></div>
-</div>
+
 
 <!-- 팀 색상 설정 모달 -->
 <div class="modal-overlay" id="team-color-modal">
@@ -2665,6 +2664,9 @@ let _localStorageAvailable = false;
 function showTab(i) {
   document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', j===i));
   document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
+  // 탭 전환 시 스크롤 맨 위로
+  const pw = document.querySelector('.panels-wrap');
+  if (pw) pw.scrollTop = 0;
   if (i===0) { initSummaryDashControls(); renderSummaryDash(); }
   if (i===1) renderEmpTable();
   if (i===1) renderSummary();
@@ -6734,6 +6736,7 @@ function clearIssueMemo() {
 }
 
 function renderIssue() {
+  try {
   const year  = parseInt(document.getElementById('issue-year').value)  || new Date().getFullYear();
   const month = parseInt(document.getElementById('issue-month').value) || new Date().getMonth()+1;
   const days  = getDaysInMonth(year, month);
@@ -6971,6 +6974,10 @@ function renderIssue() {
     ${section('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>', `${month}월 연차정산 대상자 (2주년 도래)`, settlement.length, settlementHtml)}
   `;
   loadIssueMemo();
+  } catch(err) {
+    console.error('renderIssue 오류:', err);
+    document.getElementById('issue-wrap').innerHTML = '<div style="padding:20px;color:red;">오류: ' + err.message + '</div>';
+  }
 }
 
 function initCertControls() {
