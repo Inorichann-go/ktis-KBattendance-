@@ -79,26 +79,46 @@
   .btn-sm { padding: 4px 10px; font-size: 12px; }
 
   /* ── 탭 ── */
+  /* ── 사이드바 탭 ── */
+  .layout-wrap { display: flex; min-height: calc(100vh - 58px); }
   .tabs {
-    display: flex; gap: 0;
+    width: 120px;
+    min-width: 120px;
     background: #1e293b;
-    border-bottom: none;
-    padding: 0 24px;
-    box-shadow: 0 2px 8px rgba(30,41,59,.18);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     position: sticky;
     top: 58px;
+    height: calc(100vh - 58px);
+    overflow-y: auto;
     z-index: 20;
+    box-shadow: 2px 0 8px rgba(30,41,59,.18);
+    flex-shrink: 0;
   }
   .tab {
-    padding: 13px 20px; font-size: 13px; font-weight: 600;
-    color: rgba(255,255,255,.55); cursor: pointer;
-    border-bottom: 3px solid transparent; margin-bottom: 0;
-    transition: all 0.15s; white-space: nowrap;
+    padding: 14px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,.55);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    border-bottom: none;
+    transition: all 0.15s;
+    white-space: normal;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.3;
   }
   .tab:hover { color: rgba(255,255,255,.9); background: rgba(255,255,255,.07); }
-  .tab.active { color: #ffffff; border-bottom-color: #60a5fa; background: rgba(255,255,255,.1); }
+  .tab.active { color: #ffffff; border-left-color: #60a5fa; background: rgba(255,255,255,.1); }
+  .tab svg { flex-shrink: 0; }
 
   /* ── 패널 ── */
+  .panels-wrap { flex: 1; min-width: 0; overflow-x: auto; }
   .panel { display: none; padding: 24px; }
   .panel.active { display: block; }
 
@@ -634,6 +654,7 @@
   </div>
 </header>
 
+<div class="layout-wrap">
 <div class="tabs">
   <div class="tab active" onclick="showTab(0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Summary</div>
 
@@ -644,6 +665,7 @@
   <div class="tab" onclick="showTab(5)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 이달의 이슈</div>
   
 </div>
+<div class="panels-wrap">
 
 <!-- ═══════════════════════════════ TAB 0: SUMMARY ═══════════════════════════════ -->
 <div id="panel0" class="panel active">
@@ -1848,7 +1870,9 @@
       <button class="btn-save" style="background:var(--danger);border-color:var(--danger);" onclick="saveResignInfo()">퇴사 처리</button>
     </div>
   </div>
-</div>
+
+</div><!-- panels-wrap -->
+</div><!-- layout-wrap --></div>
 
 <!-- 입사 처리 주의사항 모달 -->
 <div class="modal-overlay" id="hire-caution-modal">
@@ -2261,7 +2285,7 @@ const DEFAULT_EMPLOYEES = [
   {no:36,name:'유미진',empId:'2690777',team:'제휴상담 3팀',job:'제휴상담',joinDate:'2026-04-15',transferDate:'',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
   {no:37,name:'전혜원',empId:'2690778',team:'제휴상담 3팀',job:'제휴상담',joinDate:'2026-04-15',transferDate:'',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
   {no:38,name:'이진영',empId:'2690874',team:'제휴상담 3팀',job:'제휴상담',joinDate:'2026-05-06',transferDate:'',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
-  {no:39,name:'박진선',empId:'2390521',team:'제휴지원팀',job:'제휴지원',joinDate:'2023-03-01',transferDate:'2015-12-24',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[{"type": "산휴", "endDate": "2025-10-25", "startDate": "2025-07-28"}, {"type": "육아휴직", "endDate": "2026-10-25", "startDate": "2025-10-26"}]},
+  {no:39,name:'박진선',empId:'2390521',team:'제휴지원팀',job:'제휴지원',joinDate:'2023-03-01',transferDate:'2015-12-24',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
   {no:40,name:'김지영',empId:'2390548',team:'제휴지원팀',job:'제휴지원',joinDate:'2023-03-01',transferDate:'2014-11-25',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
   {no:41,name:'강경미',empId:'2390546',team:'제휴지원팀',job:'제휴지원',joinDate:'2023-03-01',transferDate:'2013-07-08',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
   {no:42,name:'이수연',empId:'2390550',team:'제휴지원팀',job:'제휴지원',joinDate:'2023-03-01',transferDate:'2018-10-01',leaveDate:'',hours:8,memo:'',grade:'KB손해보험 부천센터_제휴상담(사원)',parentalLeave:[],leaveHistory:[]},
