@@ -6743,6 +6743,8 @@ function renderIssue() {
     const is2yr = (bd.getFullYear()+2) === year && (bd.getMonth()+1) === month;
     // 이번달 퇴사자도 포함
     const isResignedThisMonth = e.leaveDate && e.leaveDate >= ym1 && e.leaveDate <= ym2;
+    // 이미 퇴사한 사람은 제외 (이번달 퇴사자 제외)
+    if (e.leaveDate && !isResignedThisMonth) return false;
     return is2yr || isResignedThisMonth;
   });
 
@@ -6835,18 +6837,17 @@ function renderIssue() {
       const bd = new Date(base.replace(/-/g,'/'));
       const is2yr = (bd.getFullYear()+2) === year && (bd.getMonth()+1) === month;
 
-      // refDate 결정:
-      // - 퇴사자 → 퇴사일 기준
-      // - 2주년 도래 재직자 → 2주년 도래일 전날 기준 (정산 시점)
+      // refDate: 퇴사자는 퇴사일, 2주년 도래 재직자는 2주년 전날
       let refDate = null;
       let refLabel = '오늘';
       if (isActResigned) {
         refDate = e.leaveDate;
         refLabel = '퇴사일';
       } else if (is2yr) {
-        const anniv2 = new Date(bd); anniv2.setFullYear(bd.getFullYear()+2);
-        anniv2.setDate(anniv2.getDate()-1); // 도래일 전날
-        refDate = anniv2.toISOString().slice(0,10);
+        const anniv2 = new Date(bd.getFullYear()+2, bd.getMonth(), bd.getDate());
+        anniv2.setDate(anniv2.getDate()-1);
+        const y=anniv2.getFullYear(), m=String(anniv2.getMonth()+1).padStart(2,'0'), d=String(anniv2.getDate()).padStart(2,'0');
+        refDate = `${y}-${m}-${d}`;
         refLabel = '2주년 전날';
       }
 
